@@ -1,0 +1,3274 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" id="themeColor" content="#f8f2e8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Cantos">
+  <title>Cantos de Iglesia</title>
+  <style>
+    :root {
+      --bg: #f8f2e8;
+      --panel: #fffaf2;
+      --text: #24201a;
+      --muted: #71695d;
+      --line: #ddcfbb;
+      --accent: #0f766e;
+      --accent-dark: #0a5d57;
+      --primary-text: #ffffff;
+      --danger: #a43a2d;
+      --danger-bg: #fff5f2;
+      --danger-line: #e9c7bf;
+      --header-bg: rgba(248, 242, 232, .94);
+      --search-bg: rgba(248, 242, 232, .9);
+      --input-bg: #ffffff;
+      --button-bg: #ffffff;
+      --sheet-actions-bg: rgba(255, 255, 255, .45);
+      --image-bg: transparent;
+      --shadow: rgba(0, 0, 0, .26);
+      --toast-bg: #24201a;
+      --toast-text: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light;
+    }
+
+    body.dark {
+      --bg: #11100e;
+      --panel: #1d1b18;
+      --text: #f7f1e8;
+      --muted: #c9bfae;
+      --line: #403a33;
+      --accent: #2dd4bf;
+      --accent-dark: #5eead4;
+      --primary-text: #061311;
+      --danger: #fca5a5;
+      --danger-bg: #3a1f1f;
+      --danger-line: #7f3838;
+      --header-bg: rgba(17, 16, 14, .95);
+      --search-bg: rgba(17, 16, 14, .92);
+      --input-bg: #1a1815;
+      --button-bg: #25221e;
+      --sheet-actions-bg: rgba(255, 255, 255, .04);
+      --image-bg: transparent;
+      --shadow: rgba(0, 0, 0, .56);
+      --toast-bg: #f7f1e8;
+      --toast-text: #11100e;
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      width: 100%;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    button, input, textarea { font: inherit; }
+    button {
+      border: 0;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    input,
+    textarea,
+    select {
+      font-size: 16px;
+    }
+
+    .app {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      min-height: 100vh;
+      display: block;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    }
+
+    .app.user-home main,
+    .app.user-reading main {
+      display: block;
+    }
+
+    .app.user-home .list {
+      border-right: 0;
+      max-height: none;
+      padding: 0 clamp(12px, 4vw, 28px) 22px;
+    }
+
+    .app.user-home .detail {
+      display: none;
+    }
+
+    .app.user-reading .list {
+      display: none;
+    }
+
+    .app.user-reading .detail {
+      padding-top: 22px;
+    }
+
+    .app.user-reading header {
+      display: none;
+    }
+
+    .app.presentation-mode header,
+    .app.presentation-mode > .search-area,
+    .app.presentation-mode main {
+      display: none;
+    }
+
+    header {
+      position: relative;
+      top: 0;
+      z-index: 4;
+      padding: calc(clamp(10px, 2.8vw, 18px) + env(safe-area-inset-top)) clamp(12px, 4vw, 28px) clamp(10px, 2.8vw, 16px);
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      text-align: center;
+      min-width: 0;
+      padding-inline: 54px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(7px, 2vw, 14px);
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .brand-image {
+      width: auto;
+      height: auto;
+      max-width: min(86vw, 620px);
+      max-height: min(30svh, 320px);
+      border-radius: 8px;
+      object-fit: contain;
+      border: 0;
+      background: var(--image-bg);
+      flex: 0 0 auto;
+    }
+
+    .brand-image[hidden] {
+      display: none;
+    }
+
+    .brand-text {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+      position: absolute;
+      right: calc(max(12px, env(safe-area-inset-right)) + 58px);
+      top: calc(14px + env(safe-area-inset-top));
+    }
+
+    .admin-return,
+    .admin-logout {
+      display: none;
+    }
+
+    .admin-return {
+      min-height: 40px;
+      border: 0;
+      border-radius: 8px;
+      padding: 0 14px;
+      background: var(--accent);
+      color: var(--primary-text);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .admin-logout {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 11px;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .mobile-admin-panel {
+      display: none;
+    }
+
+    .app.admin-mode:not(.presentation-mode) .admin-return,
+    .app.admin-mode:not(.presentation-mode) .admin-logout {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.35rem, 5.4vw, 2.55rem);
+      line-height: 1.1;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .home-subtitle {
+      margin: 7px auto 0;
+      max-width: min(42rem, 92vw);
+      color: var(--muted);
+      font-size: clamp(.9rem, 3.4vw, 1.08rem);
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .home-subtitle:empty {
+      display: none;
+    }
+
+    .modebar {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mode-pill {
+      min-height: 34px;
+      padding: 0 11px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--button-bg);
+      color: var(--muted);
+      font-size: .86rem;
+      font-weight: 750;
+    }
+
+    .mode-pill.active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--primary-text);
+    }
+
+    .add {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: var(--primary-text);
+      font-size: 1.8rem;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .settings-button {
+      min-height: 48px;
+      padding: 0 12px;
+      border-radius: 8px;
+      background: var(--button-bg);
+      color: var(--accent-dark);
+      border: 1px solid var(--line);
+      font-weight: 750;
+    }
+
+    .theme-toggle {
+      min-width: 46px;
+      height: 48px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--button-bg);
+      color: var(--text);
+      border: 1px solid var(--line);
+      font-size: 1.12rem;
+      font-weight: 850;
+      position: fixed;
+      top: calc(10px + env(safe-area-inset-top));
+      right: max(10px, env(safe-area-inset-right));
+      z-index: 60;
+    }
+
+    .open-presentation {
+      min-width: 46px;
+      height: 48px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--button-bg);
+      color: var(--text);
+      border: 1px solid var(--line);
+      font-size: 1.25rem;
+      font-weight: 900;
+      position: fixed;
+      top: calc(10px + env(safe-area-inset-top));
+      left: max(10px, env(safe-area-inset-left));
+      z-index: 60;
+    }
+
+    .search-area {
+      padding: clamp(9px, 2.6vw, 14px) clamp(12px, 4vw, 28px);
+      background: var(--search-bg);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .search, .field, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--input-bg);
+      color: var(--text);
+      outline: none;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, .03);
+    }
+
+    .search, .field {
+      min-height: 48px;
+      padding: 0 14px;
+    }
+
+    .back-button {
+      display: none;
+      flex: 0 0 auto;
+      min-height: 48px;
+      border-radius: 8px;
+      padding: 0 13px;
+      background: var(--button-bg);
+      color: var(--accent-dark);
+      border: 1px solid var(--line);
+      font-weight: 750;
+    }
+
+    .app.user-reading .back-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .search:focus, .field:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, .16);
+    }
+
+    main {
+      display: block;
+      min-height: 0;
+      width: 100%;
+    }
+
+    .list {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+      max-height: 38svh;
+      padding: 0 clamp(12px, 4vw, 20px) 14px;
+    }
+
+    .song {
+      width: 100%;
+      min-height: 56px;
+      padding: 14px 12px;
+      background: transparent;
+      color: var(--text);
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+    }
+
+    .song.active {
+      background: var(--panel);
+      border-radius: 8px;
+      border-bottom-color: transparent;
+      box-shadow: inset 4px 0 0 var(--accent);
+    }
+
+    .song-title {
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .song-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 24px;
+      margin-right: 7px;
+      padding: 0 7px;
+      border-radius: 8px;
+      background: rgba(15, 118, 110, .11);
+      color: var(--accent-dark);
+      font-size: .82rem;
+      font-weight: 850;
+      vertical-align: 1px;
+    }
+
+    .song-preview {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: .88rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .app.user-home .song-preview {
+      display: none;
+    }
+
+    .app.user-home .song {
+      min-height: clamp(50px, 10vw, 64px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .app.user-home .song-title {
+      width: 100%;
+      text-align: center;
+    }
+
+    .detail {
+      min-width: 0;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 18px clamp(14px, 4vw, 34px) 28px;
+    }
+
+    .reader {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .reader .detail-head {
+      display: grid;
+      justify-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .reader .lyrics {
+      text-align: center;
+      font-size: clamp(1.12rem, 3vw, 1.35rem);
+      line-height: 1.85;
+    }
+
+    .reader .actions {
+      justify-content: center;
+    }
+
+    .empty {
+      min-height: 42vh;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .empty strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text);
+      font-size: 1.08rem;
+    }
+
+    .detail-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3vw, 2.15rem);
+      line-height: 1.1;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .detail-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      margin-bottom: 9px;
+      padding: 0 10px;
+      border-radius: 8px;
+      background: rgba(15, 118, 110, .11);
+      color: var(--accent-dark);
+      font-weight: 850;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .primary, .secondary, .danger {
+      min-height: 48px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 15px;
+      font-weight: 750;
+    }
+
+    .primary { background: var(--accent); color: var(--primary-text); }
+    .primary:active, .add:active { background: var(--accent-dark); }
+    .secondary { background: var(--button-bg); color: var(--accent-dark); border: 1px solid var(--line); }
+    .danger { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-line); }
+
+    .lyrics {
+      white-space: pre-wrap;
+      line-height: 1.72;
+      font-size: 1.08rem;
+      overflow-wrap: anywhere;
+    }
+
+    .app.user-reading .detail {
+      display: flex;
+      justify-content: center;
+    }
+
+    .app.user-reading .reader {
+      width: min(760px, 100%);
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .app.user-reading .reader .detail-head {
+      display: grid;
+      justify-content: center;
+      justify-items: center;
+      text-align: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .app.user-reading .reader .detail-head > div {
+      width: 100%;
+      display: grid;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .app.user-reading .reader .detail-number,
+    .app.user-reading .reader h2,
+    .app.user-reading .reader .lyrics {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .app.user-reading .reader h2 {
+      width: 100%;
+      font-size: clamp(2rem, 6vw, 3rem);
+      line-height: 1.12;
+    }
+
+    .app.user-reading .reader .lyrics {
+      width: 100%;
+      max-width: 42rem;
+      font-size: clamp(1.08rem, 3vw, 1.28rem);
+      line-height: 1.18;
+    }
+
+    @media (min-width: 721px) and (max-width: 1100px) {
+      .app.user-reading .detail {
+        padding-inline: clamp(22px, 5vw, 52px);
+      }
+
+      .app.user-reading .reader h2 {
+        font-size: clamp(2.15rem, 4.8vw, 3.15rem);
+      }
+
+      .app.user-reading .reader .lyrics {
+        max-width: 46rem;
+        font-size: clamp(1.18rem, 2.4vw, 1.42rem);
+        line-height: 1.2;
+      }
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: none;
+      align-items: end;
+      padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+      background: rgba(36, 32, 26, .42);
+    }
+
+    .modal.open { display: flex; }
+
+    .sheet {
+      width: min(720px, 100%);
+      max-height: min(820px, calc(100dvh - 16px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 20px 60px var(--shadow);
+    }
+
+    .sheet-head, .sheet-actions {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sheet-head h2 { font-size: 1.2rem; }
+
+    .close {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--button-bg);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-size: 1.35rem;
+    }
+
+    form {
+      min-height: 0;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 750;
+    }
+
+    textarea {
+      min-height: 360px;
+      padding: 12px;
+      resize: vertical;
+      line-height: 1.18;
+    }
+
+    .image-input {
+      padding: 11px;
+      min-height: 46px;
+    }
+
+    .image-preview {
+      width: min(100%, 260px);
+      aspect-ratio: 16 / 9;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      object-fit: cover;
+      background: var(--button-bg);
+    }
+
+    .image-preview[hidden] {
+      display: none;
+    }
+
+    .sheet-actions {
+      justify-content: flex-end;
+      border-top: 1px solid var(--line);
+      border-bottom: 0;
+      background: var(--sheet-actions-bg);
+      padding-bottom: calc(14px + env(safe-area-inset-bottom));
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(18px + env(safe-area-inset-bottom));
+      z-index: 20;
+      max-width: calc(100% - 32px);
+      padding: 11px 14px;
+      transform: translateX(-50%) translateY(12px);
+      opacity: 0;
+      border-radius: 8px;
+      background: var(--toast-bg);
+      color: var(--toast-text);
+      text-align: center;
+      pointer-events: none;
+      transition: .18s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .presentation-view {
+      display: none;
+      min-height: 100dvh;
+      padding: calc(14px + env(safe-area-inset-top)) clamp(12px, 4vw, 28px) calc(20px + env(safe-area-inset-bottom));
+    }
+
+    .app.presentation-mode .presentation-view {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .presentation-view-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .presentation-view-head h2 {
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+    }
+
+    .presentation-view-head .back-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .presentation-panel {
+      margin: 0 clamp(12px, 4vw, 28px) 18px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .presentation-panel {
+      margin: 0;
+      min-height: 0;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #presentationPanelMount .presentation-panel {
+      margin: 0;
+    }
+
+    .presentation-head,
+    .presentation-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .presentation-head h2,
+    .preview-song h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      letter-spacing: 0;
+    }
+
+    .presentation-list,
+    .preview-body,
+    .preview-song {
+      display: grid;
+      gap: 8px;
+    }
+
+    .presentation-item,
+    .preview-screen,
+    .preview-section {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg);
+    }
+
+    .presentation-item-title {
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .mini-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .mini-actions button,
+    .song-present {
+      min-height: 44px;
+      border-radius: 8px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      background: var(--button-bg);
+      color: var(--accent-dark);
+      font-weight: 750;
+    }
+
+    .song-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .song-open {
+      width: 100%;
+      min-height: 56px;
+      padding: 14px 12px;
+      background: transparent;
+      color: var(--text);
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .song-row.active {
+      background: var(--panel);
+      border-radius: 8px;
+      box-shadow: inset 4px 0 0 var(--accent);
+    }
+
+    .song-row.active .song-open {
+      border-bottom-color: transparent;
+    }
+
+    .preview-screen {
+      grid-template-columns: auto 1fr;
+    }
+
+    .preview-screen-count {
+      color: var(--accent-dark);
+      font-weight: 850;
+    }
+
+    .preview-section {
+      grid-template-columns: auto 1fr auto;
+    }
+
+    .preview-section select {
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--input-bg);
+      color: var(--text);
+      padding: 0 8px;
+    }
+
+    .presentation-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      grid-template-rows: minmax(0, 1fr) auto;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .presentation-stage.open {
+      display: grid;
+    }
+
+    .presentation-slide {
+      width: min(100%, 1680px);
+      min-height: 0;
+      margin: 0 auto;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(14px, 3vh, 32px);
+      padding: calc(clamp(30px, 5vh, 68px) + env(safe-area-inset-top)) clamp(36px, 7vw, 120px) clamp(18px, 4vh, 44px);
+      text-align: center;
+    }
+
+    .presentation-title-row {
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+    }
+
+    .presentation-title-row h2 {
+      margin: 0;
+      font-size: clamp(1.05rem, 2.2vw, 2rem);
+      line-height: 1.12;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+
+    .presentation-count {
+      position: absolute;
+      top: clamp(14px, 3vw, 28px);
+      right: clamp(16px, 4vw, 42px);
+      color: var(--muted);
+      font-size: clamp(.9rem, 1.8vw, 1.2rem);
+      font-weight: 800;
+    }
+
+    .song-present-mobile {
+      display: none;
+    }
+
+    .presentation-text {
+      min-height: 0;
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: pre;
+      font-size: var(--presentation-font-size, clamp(1.9rem, 4.2vw, 4.2rem));
+      line-height: 1.12;
+      font-weight: 750;
+      overflow-wrap: normal;
+      word-break: normal;
+      overflow: hidden;
+    }
+
+    .presentation-controls {
+      position: relative;
+      min-height: calc(68px + env(safe-area-inset-bottom));
+      padding: 10px clamp(16px, 4vw, 40px) calc(14px + env(safe-area-inset-bottom));
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      transition: opacity .2s ease;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+    }
+
+    .presentation-stage.hide-controls .presentation-controls {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .presentation-controls button {
+      min-height: 44px;
+      border-radius: 8px;
+      padding: 0 12px;
+      background: var(--button-bg);
+      color: var(--text);
+      border: 1px solid var(--line);
+      font-weight: 800;
+    }
+
+    @media (max-width: 720px) {
+      .app, main { display: block; }
+      header {
+        position: relative;
+      }
+      .brand-image {
+        max-width: min(88vw, 420px);
+        max-height: min(24svh, 210px);
+      }
+      h1 {
+        font-size: clamp(1.28rem, 7vw, 2rem);
+      }
+      .home-subtitle {
+        font-size: clamp(.86rem, 4vw, 1rem);
+      }
+      .list {
+        max-height: 38vh;
+        padding: 0 12px 12px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .detail { padding-top: 16px; }
+      .detail-head { display: grid; }
+      .app.user-reading .detail {
+        padding: 14px 14px 24px;
+      }
+      .app.user-reading .reader h2 {
+        font-size: clamp(1.65rem, 8vw, 2.35rem);
+      }
+      .app.user-reading .reader .detail-number {
+        min-height: 26px;
+        margin-bottom: 7px;
+        font-size: .95rem;
+      }
+      .app.user-reading .reader .lyrics {
+        max-width: 100%;
+        font-size: clamp(1rem, 4.7vw, 1.22rem);
+        line-height: 1.18;
+      }
+      .actions { justify-content: stretch; }
+      .secondary, .danger { flex: 1 1 130px; }
+      .topbar { align-items: center; padding-right: 54px; padding-left: 54px; }
+      .header-actions { right: calc(12px + 58px); }
+      .modal {
+        align-items: stretch;
+        padding: 8px;
+        padding-bottom: calc(8px + env(safe-area-inset-bottom));
+      }
+      .sheet {
+        max-height: none;
+        height: calc(100dvh - 16px - env(safe-area-inset-bottom));
+      }
+      textarea { min-height: 42dvh; }
+      .sheet-actions {
+        position: sticky;
+        bottom: 0;
+      }
+      .presentation-item {
+        grid-template-columns: 1fr;
+      }
+      .presentation-slide {
+        padding: calc(clamp(28px, 7vw, 52px) + env(safe-area-inset-top)) clamp(24px, 8vw, 58px) clamp(14px, 4vh, 28px);
+      }
+      .presentation-text {
+        font-size: var(--presentation-font-size, clamp(1.7rem, 7vw, 3.5rem));
+      }
+    }
+
+    @media (max-width: 599px) {
+      .presentation-view-head {
+        align-items: flex-start;
+      }
+
+      .presentation-view-head .back-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #songList .song-row {
+        grid-template-columns: minmax(0, 1fr) 48px;
+        gap: 12px;
+      }
+
+      #songList .song {
+        min-height: 64px;
+        padding-right: 4px;
+      }
+
+      #songList .song-preview {
+        display: none;
+      }
+
+      #songList .song-present {
+        width: 48px;
+        min-width: 48px;
+        min-height: 48px;
+        padding: 0;
+        border-radius: 8px;
+        font-size: 0;
+        line-height: 1;
+      }
+
+      #songList .song-present::after {
+        content: attr(data-mobile-label);
+        font-size: 1.45rem;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .open-presentation,
+      #songList .song-present {
+        display: none !important;
+      }
+
+      .header-actions .admin-return,
+      .header-actions .admin-logout {
+        display: none !important;
+      }
+
+      .app.admin-mode .header-actions {
+        right: max(6px, env(safe-area-inset-right));
+        gap: 6px;
+      }
+
+      .app.admin-mode:not(.presentation-mode) .mobile-admin-panel {
+        display: grid;
+        gap: 10px;
+        margin: 0 12px 12px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .mobile-admin-panel .admin-return,
+      .mobile-admin-panel .admin-logout {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .mobile-admin-panel .admin-return,
+      .mobile-admin-panel .admin-logout {
+        min-height: 48px;
+      }
+
+      #songList .song-row {
+        grid-template-columns: 1fr !important;
+      }
+
+      .app.presentation-mode .presentation-view {
+        display: none !important;
+      }
+    }
+
+    @media (min-width: 721px) {
+      .app {
+        display: grid;
+        grid-template-rows: auto auto minmax(0, 1fr);
+      }
+
+      header {
+        position: sticky;
+      }
+
+      .topbar {
+        padding-inline: 72px;
+      }
+
+      .list {
+        max-height: 34svh;
+      }
+
+      .app.user-home .list {
+        width: min(820px, 100%);
+        margin-inline: auto;
+      }
+
+      .sheet {
+        max-height: min(820px, calc(100dvh - 32px));
+      }
+    }
+
+    @media (min-width: 600px) and (max-width: 899px) {
+      .app {
+        width: min(100%, 860px);
+      }
+
+      .topbar {
+        padding-inline: 78px;
+      }
+
+      .brand-image {
+        max-width: min(78vw, 560px);
+        max-height: min(28svh, 300px);
+      }
+
+      .search-area {
+        padding-inline: clamp(24px, 6vw, 54px);
+      }
+
+      .list,
+      .app.user-home .list {
+        max-height: 42svh;
+        padding-inline: clamp(24px, 6vw, 54px);
+      }
+
+      .song {
+        min-height: 72px;
+        padding: 16px 16px;
+      }
+
+      .song-title {
+        font-size: clamp(1.08rem, 2.4vw, 1.28rem);
+        line-height: 1.28;
+      }
+
+      .song-number {
+        min-width: 40px;
+        height: 28px;
+        font-size: .92rem;
+      }
+
+      .detail {
+        padding-inline: clamp(28px, 7vw, 70px);
+      }
+
+      .app.user-reading .reader h2 {
+        font-size: clamp(2.1rem, 5vw, 3rem);
+      }
+
+      .app.user-reading .reader .lyrics {
+        font-size: clamp(1.18rem, 2.7vw, 1.42rem);
+        line-height: 1.22;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .app {
+        width: min(100%, 1440px);
+        display: grid;
+        grid-template-columns: minmax(360px, 40%) minmax(0, 1fr);
+        grid-template-rows: auto auto minmax(0, 1fr);
+        grid-template-areas:
+          "header header"
+          "search detail"
+          "list detail";
+        min-height: 100dvh;
+      }
+
+      header {
+        grid-area: header;
+      }
+
+      .search-area {
+        grid-area: search;
+        align-self: stretch;
+        padding: 14px 16px 12px 20px;
+      }
+
+      main {
+        display: contents;
+      }
+
+      .list {
+        grid-area: list;
+        max-height: none;
+        border-right: 1px solid var(--line);
+        border-bottom: 0;
+        padding: 0 12px 22px 20px;
+        min-height: 0;
+      }
+
+      .detail {
+        grid-area: detail;
+        padding: 22px clamp(24px, 4vw, 44px) 34px;
+        min-height: 0;
+      }
+
+      .song {
+        min-height: 74px;
+        padding: 16px 12px;
+      }
+
+      .song-title {
+        font-size: clamp(1.05rem, 1.35vw, 1.22rem);
+        line-height: 1.28;
+      }
+
+      .song-preview {
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+
+      .app.user-home main,
+      .app.user-reading main {
+        display: contents;
+      }
+
+      .app.user-home .list {
+        grid-area: list;
+        max-width: none;
+        width: auto;
+        margin-inline: 0;
+        border-right: 1px solid var(--line);
+        border-bottom: 0;
+      }
+
+      .app.user-home .detail {
+        display: block;
+      }
+
+      .app.user-reading .list {
+        display: block;
+      }
+
+      .app.user-reading .back-button {
+        display: none;
+      }
+
+      .app.user-reading .detail {
+        padding-top: 28px;
+      }
+
+      .app.user-reading .reader {
+        width: min(100%, 820px);
+      }
+
+      .app.user-reading .reader h2 {
+        font-size: clamp(2.35rem, 3.4vw, 3.6rem);
+      }
+
+      .app.user-reading .reader .lyrics {
+        max-width: 48rem;
+        font-size: clamp(1.22rem, 1.55vw, 1.48rem);
+        line-height: 1.24;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .app {
+        width: min(1320px, 100%);
+      }
+
+      main {
+        grid-template-columns: minmax(320px, 400px) minmax(0, 1fr);
+      }
+
+      .app.user-reading .reader {
+        width: min(860px, 100%);
+      }
+
+      .app.user-reading .reader .lyrics {
+        max-width: 50rem;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .app {
+        display: block;
+        width: min(1440px, 100%);
+        min-height: 100vh;
+      }
+
+      main,
+      .app.user-home main,
+      .app.user-reading main {
+        display: block;
+      }
+
+      .search-area {
+        padding-inline: clamp(24px, 5vw, 70px);
+      }
+
+      .list {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        max-height: 46svh;
+        padding: 0 clamp(24px, 5vw, 70px) 22px;
+      }
+
+      .app.user-home .list {
+        width: 100%;
+        max-width: none;
+        margin-inline: 0;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px 14px;
+        border-right: 0;
+      }
+
+      .presentation-panel {
+        margin-inline: clamp(24px, 5vw, 70px);
+      }
+
+      .app.user-home .detail {
+        display: none;
+      }
+
+      .app.user-reading header {
+        display: none;
+      }
+
+      .app.user-reading .list {
+        display: none;
+      }
+
+      .app.user-reading .back-button {
+        display: inline-flex;
+      }
+
+      .app.user-reading .detail {
+        display: flex;
+        padding: 26px clamp(28px, 6vw, 90px) 42px;
+      }
+
+      .app.user-reading .reader {
+        width: min(860px, 100%);
+      }
+    }
+
+    @media (max-height: 620px) {
+      .brand-image {
+        max-height: 18svh;
+      }
+
+      h1 {
+        font-size: clamp(1.2rem, 5vw, 1.75rem);
+      }
+
+      .home-subtitle {
+        margin-top: 5px;
+        line-height: 1.3;
+      }
+    }
+
+    .app.presentation-mode {
+      display: block;
+      width: min(900px, 100%);
+      min-height: 100dvh;
+    }
+
+    .app.presentation-mode header,
+    .app.presentation-mode > .search-area,
+    .app.presentation-mode main,
+    .app.presentation-mode .list,
+    .app.presentation-mode .detail,
+    .app.presentation-mode #songList {
+      display: none !important;
+    }
+
+    .app.presentation-mode .presentation-view {
+      display: grid !important;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .app:not(.presentation-mode) .presentation-view {
+      display: none !important;
+    }
+
+    .app.admin-mode .song-preview,
+    .app.admin-mode .song-present {
+      display: none !important;
+    }
+
+    .app.admin-mode .song {
+      min-height: 58px;
+    }
+
+    .app.admin-mode .song-title {
+      line-height: 1.28;
+    }
+
+    @media (max-width: 767px) {
+      .app.admin-mode.admin-detail .list {
+        display: none !important;
+      }
+
+      .app.admin-mode:not(.admin-detail) .detail {
+        display: none !important;
+        pointer-events: none;
+      }
+
+      .app.admin-mode.admin-detail .back-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .app.admin-mode {
+        width: min(1440px, 100%);
+        min-height: 100dvh;
+      }
+
+      .app.admin-mode main {
+        display: grid !important;
+        grid-template-columns: minmax(300px, 35%) minmax(0, 65%);
+        min-height: calc(100dvh - 154px);
+      }
+
+      .app.admin-mode .list {
+        grid-column: 1;
+        max-height: none !important;
+        min-height: 0;
+        border-right: 1px solid var(--line);
+        border-bottom: 0;
+        padding: 0 14px 22px clamp(18px, 3vw, 34px);
+      }
+
+      .app.admin-mode .detail {
+        grid-column: 2;
+        min-height: 0;
+        padding: 22px clamp(24px, 4vw, 52px) 34px;
+      }
+
+      .app.admin-mode .back-button {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar a modo oscuro" title="Modo oscuro">☾</button>
+  <button class="open-presentation" id="openPresentation" type="button" aria-label="Abrir presentación" title="Abrir presentación">▣</button>
+  <div class="app" id="app">
+    <header>
+      <div class="topbar">
+        <div class="brand">
+          <img class="brand-image" id="brandImage" alt="" hidden>
+          <div class="brand-text">
+            <h1 id="appTitle">Cantos de Iglesia</h1>
+            <div class="home-subtitle" id="homeSubtitle"></div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="admin-return" id="adminReturn" type="button">Volver a modo usuario</button>
+          <button class="admin-logout" id="adminLogout" type="button">Cerrar sesión</button>
+          <button class="settings-button" id="settingsButton" type="button">Inicio</button>
+          <button class="add" id="newSong" aria-label="Agregar canto" title="Agregar canto">+</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="search-area">
+      <input class="search" id="search" type="search" placeholder="Buscar por numero, titulo o letra" autocomplete="off">
+      <button class="back-button" id="searchBack" type="button">Volver</button>
+    </div>
+
+    <div class="mobile-admin-panel" id="mobileAdminPanel" aria-label="Controles de administrador">
+      <button class="admin-return" id="mobileAdminReturn" type="button">Volver a modo usuario</button>
+      <button class="admin-logout" id="mobileAdminLogout" type="button">Cerrar sesión</button>
+    </div>
+
+    <main>
+      <section class="list" id="songList" aria-label="Lista de cantos"></section>
+      <section class="detail" id="songDetail" aria-live="polite"></section>
+    </main>
+
+    <section class="presentation-panel" id="presentationPanel" aria-label="Presentación">
+      <div class="presentation-head">
+        <h2>Presentación</h2>
+        <div class="presentation-actions">
+          <button class="secondary" id="previewPresentation" type="button">Vista previa</button>
+          <button class="primary" id="startPresentation" type="button">Comenzar</button>
+        </div>
+      </div>
+      <div class="presentation-list" id="presentationList"></div>
+      <div class="presentation-actions">
+        <button class="secondary" id="clearPresentation" type="button">Vaciar lista</button>
+      </div>
+    </section>
+    <section class="presentation-view" id="presentationView" aria-label="Preparar presentaci&oacute;n">
+      <div class="presentation-view-head">
+        <h2>Presentaci&oacute;n</h2>
+        <button class="back-button" id="closePresentationView" type="button">Volver</button>
+      </div>
+      <div id="presentationPanelMount"></div>
+    </section>
+  </div>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2 id="modalTitle">Nuevo canto</h2>
+        <button class="close" id="closeModal" type="button" aria-label="Cerrar">×</button>
+      </div>
+      <form id="songForm">
+        <label>
+          Numero
+          <input class="field" id="numberInput" type="number" min="0" step="1" inputmode="numeric" autocomplete="off">
+        </label>
+        <label>
+          Título
+          <input class="field" id="titleInput" type="text" required autocomplete="off" autocorrect="on" autocapitalize="words" spellcheck="true" maxlength="120" lang="es">
+        </label>
+        <label>
+          Letra
+          <textarea id="lyricsInput" required autocorrect="on" autocapitalize="sentences" spellcheck="true" lang="es"></textarea>
+        </label>
+      </form>
+      <div class="sheet-actions">
+        <button class="secondary" id="cancelEdit" type="button">Cancelar</button>
+        <button class="primary" id="saveSong" type="submit" form="songForm">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2 id="settingsTitle">Personalizar inicio</h2>
+        <button class="close" id="closeSettings" type="button" aria-label="Cerrar">×</button>
+      </div>
+      <form id="settingsForm">
+        <label>
+          Titulo de la pantalla
+          <input class="field" id="homeTitleInput" type="text" required autocomplete="off" autocorrect="on" autocapitalize="words" spellcheck="true" maxlength="80" lang="es">
+        </label>
+        <label>
+          Texto biblico
+          <input class="field" id="homeSubtitleInput" type="text" autocomplete="off" autocorrect="on" autocapitalize="sentences" spellcheck="true" maxlength="160" lang="es">
+        </label>
+        <label>
+          Imagen
+          <input class="field image-input" id="homeImageInput" type="file" accept="image/*">
+        </label>
+        <img class="image-preview" id="homeImagePreview" alt="Vista previa" hidden>
+        <button class="danger" id="removeHomeImage" type="button">Quitar imagen</button>
+      </form>
+      <div class="sheet-actions">
+        <button class="secondary" id="cancelSettings" type="button">Cancelar</button>
+        <button class="primary" id="saveSettings" type="submit" form="settingsForm">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2 id="authTitle">Acceso administrativo</h2>
+        <button class="close" id="closeAuth" type="button" aria-label="Cerrar">×</button>
+      </div>
+      <form id="authForm">
+        <label>
+          Correo
+          <input class="field" id="authEmail" type="email" required autocomplete="username">
+        </label>
+        <label>
+          Contraseña
+          <input class="field" id="authPassword" type="password" required autocomplete="current-password">
+        </label>
+      </form>
+      <div class="sheet-actions">
+        <button class="secondary" id="cancelAuth" type="button">Cancelar</button>
+        <button class="primary" id="authSubmit" type="submit" form="authForm">Entrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="previewModal" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2 id="previewTitle">Vista previa</h2>
+        <button class="close" id="closePreview" type="button" aria-label="Cerrar">×</button>
+      </div>
+      <div class="preview-body" id="previewBody"></div>
+      <div class="sheet-actions">
+        <button class="secondary" id="cancelPreview" type="button">Cerrar</button>
+        <button class="primary" id="startFromPreview" type="button">Comenzar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="presentation-stage" id="presentationStage" aria-live="polite">
+    <div class="presentation-count" id="presentationCount"></div>
+    <div class="presentation-slide" id="presentationSlide">
+      <div class="presentation-title-row">
+        <h2 id="presentationTitle"></h2>
+      </div>
+      <div class="presentation-text" id="presentationText"></div>
+    </div>
+    <div class="presentation-controls" id="presentationControls">
+      <button id="presentationPrev" type="button">Anterior</button>
+      <button id="presentationExit" type="button">Salir</button>
+      <button id="presentationNext" type="button">Siguiente</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const STORAGE_KEY = "cantos-iglesia-v1";
+    const CONFIG_KEY = "cantos-iglesia-config-v1";
+    const THEME_KEY = "cantos-iglesia-theme-v1";
+    const PRESENTATION_KEY = "cantos-iglesia-presentacion-v1";
+    const ADMIN_ACCESS_CODE = "admin123";
+    const USER_ACCESS_CODE = "usuario";
+    const SUPABASE_PROJECT_URL = "https://fvnbkviaymiysqquzlhd.supabase.co"; // Copia aqui tu Project URL de Supabase.
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_f3UsPhop8WLHV-JFvBdJXQ_FDHuLJAT"; // Copia aqui tu Publishable Key de Supabase.
+    const SUPABASE_MAIN_ID = "main";
+    const state = {
+      songs: [],
+      selectedId: null,
+      editingId: null,
+      query: "",
+      presentationMode: false,
+      isAdmin: false,
+      adminRole: "",
+      authUser: null,
+      config: { title: "Cantos de Iglesia", subtitle: "", image: "", transparentImage: false },
+      pendingImage: "",
+      presentation: { songIds: [], overrides: {} },
+      presentationSlides: [],
+      presentationIndex: 0,
+      controlsTimer: null,
+      touchStartX: null,
+      touchStartY: null,
+      lastNavAt: 0
+    };
+
+    const el = {
+      themeColor: document.querySelector("#themeColor"),
+      app: document.querySelector("#app"),
+      appTitle: document.querySelector("#appTitle"),
+      homeSubtitle: document.querySelector("#homeSubtitle"),
+      brandImage: document.querySelector("#brandImage"),
+      list: document.querySelector("#songList"),
+      detail: document.querySelector("#songDetail"),
+      search: document.querySelector("#search"),
+      searchBack: document.querySelector("#searchBack"),
+      openPresentation: document.querySelector("#openPresentation"),
+      presentationView: document.querySelector("#presentationView"),
+      closePresentationView: document.querySelector("#closePresentationView"),
+      presentationPanelMount: document.querySelector("#presentationPanelMount"),
+      newSong: document.querySelector("#newSong"),
+      adminReturn: document.querySelector("#adminReturn"),
+      adminLogout: document.querySelector("#adminLogout"),
+      mobileAdminReturn: document.querySelector("#mobileAdminReturn"),
+      mobileAdminLogout: document.querySelector("#mobileAdminLogout"),
+      themeToggle: document.querySelector("#themeToggle"),
+      settingsButton: document.querySelector("#settingsButton"),
+      presentationPanel: document.querySelector("#presentationPanel"),
+      presentationList: document.querySelector("#presentationList"),
+      previewPresentation: document.querySelector("#previewPresentation"),
+      startPresentation: document.querySelector("#startPresentation"),
+      clearPresentation: document.querySelector("#clearPresentation"),
+      modal: document.querySelector("#modal"),
+      modalTitle: document.querySelector("#modalTitle"),
+      closeModal: document.querySelector("#closeModal"),
+      cancelEdit: document.querySelector("#cancelEdit"),
+      form: document.querySelector("#songForm"),
+      numberInput: document.querySelector("#numberInput"),
+      titleInput: document.querySelector("#titleInput"),
+      lyricsInput: document.querySelector("#lyricsInput"),
+      settingsModal: document.querySelector("#settingsModal"),
+      settingsForm: document.querySelector("#settingsForm"),
+      closeSettings: document.querySelector("#closeSettings"),
+      cancelSettings: document.querySelector("#cancelSettings"),
+      homeTitleInput: document.querySelector("#homeTitleInput"),
+      homeSubtitleInput: document.querySelector("#homeSubtitleInput"),
+      homeImageInput: document.querySelector("#homeImageInput"),
+      homeImagePreview: document.querySelector("#homeImagePreview"),
+      removeHomeImage: document.querySelector("#removeHomeImage"),
+      authModal: document.querySelector("#authModal"),
+      authForm: document.querySelector("#authForm"),
+      closeAuth: document.querySelector("#closeAuth"),
+      cancelAuth: document.querySelector("#cancelAuth"),
+      authEmail: document.querySelector("#authEmail"),
+      authPassword: document.querySelector("#authPassword"),
+      previewModal: document.querySelector("#previewModal"),
+      previewBody: document.querySelector("#previewBody"),
+      closePreview: document.querySelector("#closePreview"),
+      cancelPreview: document.querySelector("#cancelPreview"),
+      startFromPreview: document.querySelector("#startFromPreview"),
+      presentationStage: document.querySelector("#presentationStage"),
+      presentationCount: document.querySelector("#presentationCount"),
+      presentationTitle: document.querySelector("#presentationTitle"),
+      presentationText: document.querySelector("#presentationText"),
+      presentationControls: document.querySelector("#presentationControls"),
+      presentationPrev: document.querySelector("#presentationPrev"),
+      presentationNext: document.querySelector("#presentationNext"),
+      presentationExit: document.querySelector("#presentationExit"),
+      presentationFullscreen: document.querySelector("#presentationFullscreen"),
+      toast: document.querySelector("#toast")
+    };
+    el.presentationPanelMount.append(el.presentationPanel);
+
+    const db = {
+      client: null,
+      channel: null,
+      enabled: false,
+      savingSongs: false,
+      savingConfig: false
+    };
+
+    function defaultConfig() {
+      return { title: "Cantos de Iglesia", subtitle: "", image: "", transparentImage: false };
+    }
+
+    function isSupabaseConfigured() {
+      return SUPABASE_PROJECT_URL.startsWith("https://") && SUPABASE_PUBLISHABLE_KEY.length > 20;
+    }
+
+    function initSupabase() {
+      db.enabled = isSupabaseConfigured() && window.supabase?.createClient;
+      if (!db.enabled) return;
+      db.client = window.supabase.createClient(SUPABASE_PROJECT_URL, SUPABASE_PUBLISHABLE_KEY);
+    }
+
+    function hasAdminAccess(role) {
+      return role === "admin" || role === "superadmin";
+    }
+
+    async function loadCurrentProfile() {
+      if (!db.client) return null;
+      const { data: { user } } = await db.client.auth.getUser();
+      if (!user) return null;
+      const { data, error } = await db.client
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .maybeSingle();
+      if (error || !hasAdminAccess(data?.role)) return null;
+      return { user, role: data.role };
+    }
+
+    async function restoreAuthSession() {
+      const profile = await loadCurrentProfile();
+      state.isAdmin = false;
+      state.selectedId = null;
+      if (!profile) {
+        state.adminRole = "";
+        state.authUser = null;
+        return;
+      }
+      state.adminRole = profile.role;
+      state.authUser = profile.user;
+    }
+
+    async function enterAuthenticatedAdmin(profile) {
+      state.isAdmin = true;
+      state.adminRole = profile.role;
+      state.authUser = profile.user;
+      state.selectedId = null;
+      closeAuthModal();
+      await saveSongsToSupabase();
+      await saveConfigToSupabase();
+      await loadSongs();
+      showToast(profile.role === "superadmin" ? "Acceso superadministrador" : "Acceso administrativo");
+      render();
+    }
+
+    function localConfig() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(CONFIG_KEY) || "{}");
+        return {
+          ...defaultConfig(),
+          title: saved.title || "Cantos de Iglesia",
+          subtitle: saved.subtitle || "",
+          image: saved.image || "",
+          transparentImage: Boolean(saved.transparentImage)
+        };
+      } catch {
+        return defaultConfig();
+      }
+    }
+
+    function cacheConfig() {
+      localStorage.setItem(CONFIG_KEY, JSON.stringify(state.config));
+    }
+
+    function songFromRow(row) {
+      return {
+        id: row.id,
+        number: row.number ?? 0,
+        title: row.title || "",
+        lyrics: row.lyrics || ""
+      };
+    }
+
+    function songToRow(song) {
+      return {
+        id: song.id,
+        number: Number(song.number) || 0,
+        title: song.title || "",
+        lyrics: song.lyrics || "",
+        updated_at: new Date().toISOString()
+      };
+    }
+
+    function configFromRow(row) {
+      return {
+        ...defaultConfig(),
+        title: row?.title || "Cantos de Iglesia",
+        subtitle: row?.subtitle || "",
+        image: row?.image || "",
+        transparentImage: Boolean(row?.transparent_image)
+      };
+    }
+
+    function configToRow() {
+      return {
+        id: SUPABASE_MAIN_ID,
+        title: state.config.title || "Cantos de Iglesia",
+        subtitle: state.config.subtitle || "",
+        image: state.config.image || "",
+        transparent_image: Boolean(state.config.transparentImage),
+        updated_at: new Date().toISOString()
+      };
+    }
+
+    async function loadConfig() {
+      state.config = localConfig();
+
+      if (db.client) {
+        try {
+          const { data, error } = await db.client
+            .from("app_config")
+            .select("*")
+            .eq("id", SUPABASE_MAIN_ID)
+            .maybeSingle();
+          if (error) throw error;
+          if (data) {
+            const local = state.config;
+            const remote = configFromRow(data);
+            const remoteEmpty = remote.title === "Cantos de Iglesia" && !remote.subtitle && !remote.image;
+            const localHasData = local.title !== "Cantos de Iglesia" || Boolean(local.subtitle || local.image);
+            state.config = remoteEmpty && localHasData ? local : remote;
+            if (remoteEmpty && localHasData && state.isAdmin) await saveConfigToSupabase();
+          } else {
+            if (state.isAdmin) await saveConfigToSupabase();
+          }
+        } catch {
+          showToast("No se pudo cargar la configuracion de Supabase");
+        }
+      }
+
+      cacheConfig();
+      migrateStoredImageTransparency();
+    }
+
+    async function migrateStoredImageTransparency() {
+      if (!state.config.image || state.config.transparentImage) return;
+      try {
+        state.config.image = await prepareTransparentPngFromSource(state.config.image);
+        state.config.transparentImage = true;
+        saveConfig(false);
+        render();
+      } catch {
+        state.config.transparentImage = true;
+        saveConfig(false);
+      }
+    }
+
+    function loadTheme() {
+      const savedTheme = localStorage.getItem(THEME_KEY) || "light";
+      applyTheme(savedTheme === "dark" ? "dark" : "light", false);
+    }
+
+    function applyTheme(theme, save = true) {
+      const isDark = theme === "dark";
+      document.body.classList.toggle("dark", isDark);
+      el.themeToggle.textContent = isDark ? "☀" : "☾";
+      el.themeToggle.title = isDark ? "Modo claro" : "Modo oscuro";
+      el.themeToggle.setAttribute("aria-label", isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+      el.themeColor.setAttribute("content", isDark ? "#11100e" : "#f8f2e8");
+      if (save) localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
+    }
+
+    function toggleTheme() {
+      applyTheme(document.body.classList.contains("dark") ? "light" : "dark");
+    }
+
+    function localSongs() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+      } catch {
+        return [];
+      }
+    }
+
+    async function loadSongs() {
+      state.songs = localSongs();
+
+      if (db.client) {
+        try {
+          const { data, error } = await db.client
+            .from("songs")
+            .select("id, number, title, lyrics")
+            .order("number", { ascending: true })
+            .order("title", { ascending: true });
+          if (error) throw error;
+          if (Array.isArray(data) && data.length > 0) {
+            state.songs = data.map(songFromRow);
+          } else if (state.songs.length > 0 && state.isAdmin) {
+            await saveSongsToSupabase();
+          }
+        } catch {
+          showToast("No se pudieron cargar los cantos de Supabase");
+        }
+      }
+
+      if (state.songs.length === 0) {
+        state.songs = [{
+          id: crypto.randomUUID(),
+          number: 0,
+          title: "Sublime gracia",
+          lyrics: "Sublime gracia del Señor\nQue a un pecador salvó\nFui ciego mas hoy miro yo\nPerdido y Él me halló"
+        }];
+        saveSongs(false);
+      }
+
+      state.songs = state.songs.map((song, index) => ({
+        ...song,
+        number: song.number ?? index
+      }));
+      sortSongs();
+      saveSongs(false);
+      state.selectedId = null;
+    }
+
+    function saveSongs(showMessage = true) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.songs));
+      if (db.client && state.isAdmin) saveSongsToSupabase();
+      if (showMessage) showToast("Guardado");
+    }
+
+    async function saveSongsToSupabase() {
+      if (!db.client || !state.isAdmin || db.savingSongs) return;
+      db.savingSongs = true;
+      try {
+        const rows = state.songs.map(songToRow);
+        if (rows.length > 0) {
+          const { error } = await db.client.from("songs").upsert(rows, { onConflict: "id" });
+          if (error) throw error;
+        }
+      } catch {
+        showToast("No se pudieron guardar los cantos en Supabase");
+      } finally {
+        db.savingSongs = false;
+      }
+    }
+
+    async function deleteSongFromSupabase(id) {
+      if (!db.client || state.adminRole !== "superadmin") return;
+      try {
+        const { error } = await db.client.from("songs").delete().eq("id", id);
+        if (error) throw error;
+      } catch {
+        showToast("No se pudo borrar el canto en Supabase");
+      }
+    }
+
+    function localPresentation() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(PRESENTATION_KEY) || "{}");
+        return {
+          songIds: Array.isArray(saved.songIds) ? saved.songIds : [],
+          overrides: saved.overrides || {}
+        };
+      } catch {
+        return { songIds: [], overrides: {} };
+      }
+    }
+
+    function loadPresentation() {
+      state.presentation = localPresentation();
+      localStorage.setItem(PRESENTATION_KEY, JSON.stringify(state.presentation));
+    }
+
+    function savePresentation(showMessage = false) {
+      localStorage.setItem(PRESENTATION_KEY, JSON.stringify(state.presentation));
+      if (showMessage) showToast("Presentación guardada");
+    }
+
+    function saveConfig(showMessage = true) {
+      try {
+        cacheConfig();
+        if (db.client && state.isAdmin) saveConfigToSupabase();
+        if (showMessage) showToast("Inicio actualizado");
+      } catch {
+        showToast("La imagen es muy grande");
+      }
+    }
+    async function saveConfigToSupabase() {
+      if (!db.client || !state.isAdmin || db.savingConfig) return;
+      db.savingConfig = true;
+      try {
+        const { error } = await db.client.from("app_config").upsert(configToRow(), { onConflict: "id" });
+        if (error) throw error;
+      } catch {
+        showToast("No se pudo guardar la configuracion en Supabase");
+      } finally {
+        db.savingConfig = false;
+      }
+    }
+
+    function subscribeToSupabaseChanges() {
+      if (!db.client || db.channel) return;
+      db.channel = db.client
+        .channel("cantos-iglesia-sync")
+        .on("postgres_changes", { event: "*", schema: "public", table: "songs" }, payload => {
+          if (db.savingSongs) return;
+          const id = payload.old?.id || payload.new?.id;
+          if (!id) return;
+          if (payload.eventType === "DELETE") {
+            state.songs = state.songs.filter(song => song.id !== id);
+            if (state.selectedId === id) state.selectedId = null;
+            state.presentation.songIds = state.presentation.songIds.filter(songId => songId !== id);
+          } else {
+            const incoming = songFromRow(payload.new);
+            const exists = state.songs.some(song => song.id === incoming.id);
+            state.songs = exists
+              ? state.songs.map(song => song.id === incoming.id ? incoming : song)
+              : [...state.songs, incoming];
+          }
+          sortSongs();
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state.songs));
+          localStorage.setItem(PRESENTATION_KEY, JSON.stringify(state.presentation));
+          render();
+        })
+        .on("postgres_changes", { event: "*", schema: "public", table: "app_config" }, payload => {
+          if (db.savingConfig || payload.new?.id !== SUPABASE_MAIN_ID) return;
+          state.config = configFromRow(payload.new);
+          cacheConfig();
+          render();
+        })
+        .subscribe();
+    }
+
+    async function initializeApp() {
+      loadTheme();
+      initSupabase();
+      await restoreAuthSession();
+      await loadConfig();
+      await loadSongs();
+      loadPresentation();
+      subscribeToSupabaseChanges();
+      render();
+    }
+
+    function normalize(text) {
+      return String(text || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function filteredSongs() {
+      const query = normalize(state.query);
+      if (!query) return state.songs;
+      return state.songs.filter(song =>
+        String(song.number ?? "").includes(query) ||
+        normalize(song.title).includes(query) ||
+        normalize(song.lyrics).includes(query)
+      );
+    }
+
+    function isPhoneViewport() {
+      return window.matchMedia("(max-width: 767px)").matches;
+    }
+
+    function closeMobilePresentationAccess() {
+      if (!isPhoneViewport()) return false;
+      let changed = false;
+      if (state.presentationMode) {
+        state.presentationMode = false;
+        changed = true;
+      }
+      if (el.presentationStage.classList.contains("open")) {
+        exitPresentationMode();
+        changed = true;
+      }
+      return changed;
+    }
+
+    function render() {
+      const songs = filteredSongs();
+      renderConfig();
+      el.newSong.style.display = state.isAdmin ? "grid" : "none";
+      el.settingsButton.style.display = state.isAdmin ? "inline-flex" : "none";
+      el.themeToggle.style.display = !state.isAdmin && !state.selectedId && !state.presentationMode ? "inline-flex" : "none";
+      el.openPresentation.style.display = !state.isAdmin && !state.selectedId && !state.presentationMode && !isPhoneViewport() ? "inline-flex" : "none";
+
+      if (!songs.find(song => song.id === state.selectedId)) {
+        state.selectedId = null;
+      }
+
+      el.app.classList.toggle("user-home", !state.isAdmin && !state.selectedId);
+      el.app.classList.toggle("user-reading", !state.isAdmin && Boolean(state.selectedId));
+      el.app.classList.toggle("admin-mode", state.isAdmin);
+      el.app.classList.toggle("admin-detail", state.isAdmin && Boolean(state.selectedId));
+      el.app.classList.toggle("presentation-mode", state.presentationMode);
+      el.searchBack.textContent = state.isAdmin ? "Volver a la lista" : "Volver";
+
+      el.list.innerHTML = "";
+      if (songs.length === 0) {
+        el.list.innerHTML = "<div class='empty'><div><strong>No encontré cantos</strong>Prueba con otra búsqueda o agrega uno nuevo.</div></div>";
+      } else {
+        const fragment = document.createDocumentFragment();
+        songs.forEach(song => {
+          const row = document.createElement("div");
+          row.className = `song-row${song.id === state.selectedId ? " active" : ""}`;
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = `song song-open${song.id === state.selectedId ? " active" : ""}`;
+          button.innerHTML = "<div class='song-title'></div><div class='song-preview'></div>";
+          button.querySelector(".song-title").innerHTML = "<span class='song-number'></span><span class='song-name'></span>";
+          button.querySelector(".song-number").textContent = song.number ?? "";
+          button.querySelector(".song-name").textContent = song.title;
+          button.querySelector(".song-preview").textContent = song.lyrics.replace(/\s+/g, " ").trim();
+          button.addEventListener("click", () => {
+            state.selectedId = song.id;
+            render();
+          });
+          if (state.isAdmin || isPhoneViewport()) {
+            row.append(button);
+          } else {
+            const presentButton = document.createElement("button");
+            presentButton.type = "button";
+            presentButton.className = "song-present";
+            const inPresentation = state.presentation.songIds.includes(song.id);
+            presentButton.textContent = inPresentation ? "Quitar" : "Agregar";
+            presentButton.dataset.mobileLabel = inPresentation ? "?" : "+";
+            presentButton.title = inPresentation ? "Quitar de presentacion" : "Agregar a presentacion";
+            presentButton.setAttribute("aria-label", inPresentation ? "Quitar de presentacion" : "Agregar a presentacion");
+            presentButton.addEventListener("click", event => {
+              event.stopPropagation();
+              event.preventDefault();
+              togglePresentationSong(song.id);
+            });
+            row.append(button, presentButton);
+          }
+          fragment.append(row);
+        });
+        el.list.append(fragment);
+      }
+
+      renderPresentationPanel();
+      renderDetail();
+    }
+
+    function renderConfig() {
+      el.appTitle.textContent = state.config.title || "Cantos de Iglesia";
+      el.homeSubtitle.textContent = state.config.subtitle || "";
+      document.title = state.config.title || "Cantos de Iglesia";
+
+      if (state.config.image) {
+        el.brandImage.src = state.config.image;
+        el.brandImage.hidden = false;
+      } else {
+        el.brandImage.removeAttribute("src");
+        el.brandImage.hidden = true;
+      }
+    }
+
+    function presentationSongs() {
+      return state.presentation.songIds
+        .map(id => state.songs.find(song => song.id === id))
+        .filter(Boolean);
+    }
+
+    function togglePresentationSong(songId) {
+      const exists = state.presentation.songIds.includes(songId);
+      state.presentation.songIds = exists
+        ? state.presentation.songIds.filter(id => id !== songId)
+        : [...state.presentation.songIds, songId];
+      savePresentation(true);
+      render();
+    }
+
+    function openPresentationView() {
+      if (isPhoneViewport()) {
+        state.presentationMode = false;
+        showToast("Presentacion disponible en tablet o computadora");
+        render();
+        return;
+      }
+      state.presentationMode = true;
+      state.selectedId = null;
+      render();
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
+
+    function closePresentationView() {
+      state.presentationMode = false;
+      render();
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
+
+    function movePresentationSong(index, direction) {
+      const nextIndex = index + direction;
+      if (nextIndex < 0 || nextIndex >= state.presentation.songIds.length) return;
+      const ids = [...state.presentation.songIds];
+      [ids[index], ids[nextIndex]] = [ids[nextIndex], ids[index]];
+      state.presentation.songIds = ids;
+      savePresentation();
+      renderPresentationPanel();
+    }
+
+    function removePresentationSong(songId) {
+      state.presentation.songIds = state.presentation.songIds.filter(id => id !== songId);
+      savePresentation();
+      render();
+    }
+
+    function clearPresentationList() {
+      if (state.presentation.songIds.length === 0) return;
+      if (!confirm("¿Vaciar la lista de presentación?")) return;
+      state.presentation.songIds = [];
+      savePresentation();
+      render();
+    }
+
+    function renderPresentationSongPicker() {
+    }
+
+    function renderPresentationPanel() {
+      const songs = presentationSongs();
+      el.presentationList.innerHTML = "";
+      el.previewPresentation.disabled = songs.length === 0;
+      el.startPresentation.disabled = songs.length === 0;
+      el.clearPresentation.disabled = songs.length === 0;
+
+      if (songs.length === 0) {
+        el.presentationList.innerHTML = "<div class='empty'><div><strong>No hay cantos seleccionados.</strong>Agrega cantos desde la pantalla principal.</div></div>";
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+      songs.forEach((song, index) => {
+        const item = document.createElement("div");
+        item.className = "presentation-item";
+        item.innerHTML = `
+          <div class="presentation-item-title"></div>
+          <div class="mini-actions">
+            <button type="button" data-action="up">Subir</button>
+            <button type="button" data-action="down">Bajar</button>
+            <button type="button" data-action="remove">Quitar</button>
+          </div>
+        `;
+        item.querySelector(".presentation-item-title").textContent = `${song.number ?? ""} ${song.title}`;
+        item.querySelector("[data-action='up']").disabled = index === 0;
+        item.querySelector("[data-action='down']").disabled = index === songs.length - 1;
+        item.querySelector("[data-action='up']").addEventListener("click", () => movePresentationSong(index, -1));
+        item.querySelector("[data-action='down']").addEventListener("click", () => movePresentationSong(index, 1));
+        item.querySelector("[data-action='remove']").addEventListener("click", () => removePresentationSong(song.id));
+        fragment.append(item);
+      });
+      el.presentationList.append(fragment);
+    }
+
+    function renderDetail() {
+      const song = state.songs.find(item => item.id === state.selectedId);
+      el.detail.innerHTML = "";
+
+      if (!song) {
+        if (state.isAdmin) {
+          el.detail.innerHTML = state.songs.length === 0
+            ? "<div class='empty'><div><strong>Tu cancionero está listo</strong>Toca + para agregar tu primer canto.</div></div>"
+            : "<div class='empty'><div><strong>Selecciona un canto para verlo o editarlo</strong></div></div>";
+        } else {
+          el.detail.innerHTML = "<div class='empty'><div><strong>Selecciona un canto para leerlo</strong></div></div>";
+        }
+        return;
+      }
+
+      const article = document.createElement("article");
+      if (!state.isAdmin) article.className = "reader";
+      article.innerHTML = `
+        <div class="detail-head">
+          <div>
+            <div class="detail-number"></div>
+            <h2></h2>
+          </div>
+          <div class="actions" id="adminActions">
+            <button class="secondary" type="button" id="editSelected">Editar</button>
+            <button class="danger" type="button" id="deleteSelected">Borrar</button>
+          </div>
+        </div>
+        <div class="lyrics"></div>
+      `;
+      article.querySelector(".detail-number").textContent = song.number ?? "";
+      article.querySelector("h2").textContent = song.title;
+      article.querySelector(".lyrics").textContent = song.lyrics;
+      if (state.isAdmin) {
+        article.querySelector("#editSelected").addEventListener("click", () => openEditor(song));
+        const deleteButton = article.querySelector("#deleteSelected");
+        if (state.adminRole === "superadmin") {
+          deleteButton.addEventListener("click", () => deleteSong(song.id));
+        } else {
+          deleteButton.remove();
+        }
+      } else {
+        article.querySelector("#adminActions").remove();
+      }
+      el.detail.append(article);
+    }
+
+    function parseSongSections(song) {
+      const override = state.presentation.overrides[song.id];
+      if (Array.isArray(override) && override.length) return override;
+
+      return String(song.lyrics || "")
+        .split(/\n\s*\n+/)
+        .map(block => block.trim())
+        .filter(Boolean)
+        .map((block, index) => {
+          const lines = block.split(/\n/);
+          const first = (lines[0] || "").trim();
+          const isChorus = /^(coro|estribillo)\s*:?\s*$/i.test(first);
+          const text = isChorus ? lines.slice(1).join("\n").trim() : block;
+          return {
+            id: `${song.id}-${index}-${Date.now()}`,
+            type: isChorus ? "chorus" : "verse",
+            text: text || block
+          };
+        });
+    }
+
+    function saveSongSectionsOverride(songId, sections) {
+      state.presentation.overrides[songId] = sections.map((section, index) => ({
+        id: section.id || `${songId}-manual-${index}`,
+        type: section.type === "chorus" ? "chorus" : "verse",
+        text: section.text
+      }));
+      savePresentation();
+    }
+
+    function generatedSectionsForSong(song) {
+      const sections = parseSongSections(song);
+      const choruses = [];
+      const verses = [];
+      const seenChoruses = new Set();
+
+      sections.forEach(section => {
+        const key = normalize(section.text).replace(/\s+/g, " ");
+        if (section.type === "chorus") {
+          if (!seenChoruses.has(key)) {
+            seenChoruses.add(key);
+            choruses.push(section);
+          }
+        } else {
+          verses.push(section);
+        }
+      });
+
+      if (choruses.length === 0) return sections;
+      if (verses.length === 0) return choruses;
+
+      const chorus = choruses[0];
+      return verses.flatMap(verse => [verse, chorus]);
+    }
+
+    function splitSectionForProjection(text) {
+      const originalLines = String(text || "")
+        .split(/\n/)
+        .map(line => line.trimEnd());
+      const nonEmptyLines = originalLines.filter(line => line.trim()).length;
+      const viewportWidth = Math.max(window.innerWidth || 1024, 320);
+      const viewportHeight = Math.max(window.innerHeight || 768, 480);
+      const minFontSize = Math.max(Math.min(viewportWidth * 0.03, 34), 26);
+      const reservedHeight = Math.min(260, Math.max(180, viewportHeight * 0.24));
+      const usableHeight = Math.max(220, viewportHeight - reservedHeight);
+      const linesAtMinimumSize = Math.max(6, Math.floor(usableHeight / (minFontSize * 1.12)));
+
+      if (nonEmptyLines <= linesAtMinimumSize) {
+        return [originalLines.join("\n")];
+      }
+
+      const chunks = [];
+      const maxLinesPerChunk = Math.max(4, linesAtMinimumSize - 1);
+      for (let index = 0; index < originalLines.length; index += maxLinesPerChunk) {
+        chunks.push(originalLines.slice(index, index + maxLinesPerChunk));
+      }
+
+      if (chunks.length > 1 && chunks[chunks.length - 1].filter(line => line.trim()).length === 1) {
+        const previous = chunks[chunks.length - 2];
+        if (previous.filter(line => line.trim()).length > 2) {
+          chunks[chunks.length - 1].unshift(previous.pop());
+        }
+      }
+
+      return chunks.map(chunk => chunk.join("\n")).filter(Boolean);
+    }
+
+    function buildSlidesForSong(song) {
+      const baseSections = generatedSectionsForSong(song);
+      const slides = [];
+      baseSections.forEach(section => {
+        splitSectionForProjection(section.text).forEach(text => {
+          slides.push({
+            songId: song.id,
+            title: song.title,
+            type: section.type,
+            text
+          });
+        });
+      });
+      return slides.map((slide, index) => ({
+        ...slide,
+        indexInSong: index + 1,
+        totalInSong: slides.length
+      }));
+    }
+
+    function buildPresentationSlides() {
+      return presentationSongs().flatMap(song => buildSlidesForSong(song));
+    }
+
+    function sectionLabel(section) {
+      return section.type === "chorus" ? "Coro" : "Estrofa";
+    }
+
+    function previewGeneratedScreens(song) {
+      return buildSlidesForSong(song);
+    }
+
+    function openPreview() {
+      if (presentationSongs().length === 0) {
+        showToast("Agrega cantos a la presentacion");
+        return;
+      }
+      renderPreview();
+      el.previewModal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closePreviewModal() {
+      el.previewModal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    function movePreviewSection(songId, index, direction) {
+      const song = state.songs.find(item => item.id === songId);
+      if (!song) return;
+      const sections = parseSongSections(song).map(section => ({ ...section }));
+      const nextIndex = index + direction;
+      if (nextIndex < 0 || nextIndex >= sections.length) return;
+      [sections[index], sections[nextIndex]] = [sections[nextIndex], sections[index]];
+      saveSongSectionsOverride(songId, sections);
+      renderPreview();
+    }
+
+    function changePreviewSectionType(songId, index, type) {
+      const song = state.songs.find(item => item.id === songId);
+      if (!song) return;
+      const sections = parseSongSections(song).map(section => ({ ...section }));
+      if (!sections[index]) return;
+      sections[index].type = type === "chorus" ? "chorus" : "verse";
+      saveSongSectionsOverride(songId, sections);
+      renderPreview();
+    }
+
+    function resetPreviewSections(songId) {
+      delete state.presentation.overrides[songId];
+      savePresentation();
+      renderPreview();
+    }
+
+    function renderPreview() {
+      const songs = presentationSongs();
+      el.previewBody.innerHTML = "";
+
+      if (songs.length === 0) {
+        el.previewBody.innerHTML = "<div class='empty'><div><strong>No hay cantos seleccionados</strong></div></div>";
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+      songs.forEach(song => {
+        const songBox = document.createElement("section");
+        songBox.className = "preview-song";
+
+        const slides = previewGeneratedScreens(song);
+        const sections = parseSongSections(song);
+        const title = document.createElement("h3");
+        title.textContent = `${song.number ?? ""} ${song.title} - ${slides.length} pantalla${slides.length === 1 ? "" : "s"}`;
+        songBox.append(title);
+
+        sections.forEach((section, index) => {
+          const sectionRow = document.createElement("div");
+          sectionRow.className = "preview-section";
+          sectionRow.innerHTML = `
+            <select aria-label="Tipo de seccion">
+              <option value="verse">Estrofa</option>
+              <option value="chorus">Coro</option>
+            </select>
+            <div></div>
+            <div class="mini-actions">
+              <button type="button" data-action="up">Subir</button>
+              <button type="button" data-action="down">Bajar</button>
+            </div>
+          `;
+          const select = sectionRow.querySelector("select");
+          select.value = section.type === "chorus" ? "chorus" : "verse";
+          select.addEventListener("change", event => changePreviewSectionType(song.id, index, event.target.value));
+          sectionRow.querySelector("div:nth-child(2)").textContent = section.text;
+          sectionRow.querySelector("[data-action='up']").disabled = index === 0;
+          sectionRow.querySelector("[data-action='down']").disabled = index === sections.length - 1;
+          sectionRow.querySelector("[data-action='up']").addEventListener("click", () => movePreviewSection(song.id, index, -1));
+          sectionRow.querySelector("[data-action='down']").addEventListener("click", () => movePreviewSection(song.id, index, 1));
+          songBox.append(sectionRow);
+        });
+
+        const resetRow = document.createElement("div");
+        resetRow.className = "mini-actions";
+        resetRow.innerHTML = `<button type="button">Restaurar deteccion automatica</button>`;
+        resetRow.querySelector("button").addEventListener("click", () => resetPreviewSections(song.id));
+        songBox.append(resetRow);
+
+        slides.forEach(slide => {
+          const screen = document.createElement("div");
+          screen.className = "preview-screen";
+          screen.innerHTML = `
+            <span class="preview-screen-count"></span>
+            <div></div>
+          `;
+          screen.querySelector(".preview-screen-count").textContent = `${slide.indexInSong}/${slide.totalInSong}`;
+          screen.querySelector("div").textContent = `${sectionLabel(slide)} - ${slide.text}`;
+          songBox.append(screen);
+        });
+
+        fragment.append(songBox);
+      });
+
+      el.previewBody.append(fragment);
+    }
+
+    function canNavigatePresentation() {
+      const now = Date.now();
+      if (now - state.lastNavAt < 180) return false;
+      state.lastNavAt = now;
+      return true;
+    }
+
+    function startPresentationMode() {
+      if (isPhoneViewport()) {
+        showToast("Presentacion disponible en tablet o computadora");
+        return;
+      }
+      state.presentationSlides = buildPresentationSlides();
+      if (state.presentationSlides.length === 0) {
+        showToast("Agrega cantos a la presentacion");
+        return;
+      }
+      state.presentationIndex = 0;
+      closePreviewModal();
+      el.presentationStage.classList.add("open");
+      document.body.style.overflow = "hidden";
+      renderPresentationSlide();
+      showPresentationControls();
+      requestPresentationFullscreen();
+    }
+
+    function renderPresentationSlide() {
+      const slide = state.presentationSlides[state.presentationIndex];
+      if (!slide) return;
+      el.presentationTitle.textContent = slide.title;
+      el.presentationText.textContent = slide.text;
+      el.presentationCount.textContent = `${slide.indexInSong}/${slide.totalInSong}`;
+      el.presentationPrev.disabled = state.presentationIndex === 0;
+      el.presentationNext.disabled = state.presentationIndex === state.presentationSlides.length - 1;
+      requestAnimationFrame(adjustPresentationTextSize);
+    }
+
+    function nextPresentationSlide() {
+      if (!canNavigatePresentation()) return;
+      if (state.presentationIndex < state.presentationSlides.length - 1) {
+        state.presentationIndex += 1;
+        renderPresentationSlide();
+      }
+      showPresentationControls();
+    }
+
+    function previousPresentationSlide() {
+      if (!canNavigatePresentation()) return;
+      if (state.presentationIndex > 0) {
+        state.presentationIndex -= 1;
+        renderPresentationSlide();
+      }
+      showPresentationControls();
+    }
+
+    function exitPresentationMode() {
+      const closePresentation = () => {
+        el.presentationStage.classList.remove("open", "hide-controls");
+        clearTimeout(state.controlsTimer);
+        document.body.style.overflow = "";
+      };
+
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {}).finally(closePresentation);
+      } else {
+        closePresentation();
+      }
+    }
+
+    async function requestPresentationFullscreen() {
+      if (document.fullscreenElement || !el.presentationStage.requestFullscreen) {
+        updatePresentationFullscreenButton();
+        return;
+      }
+
+      try {
+        await el.presentationStage.requestFullscreen();
+      } catch {
+        showToast("Pantalla completa no disponible");
+        showPresentationControls();
+      }
+      updatePresentationFullscreenButton();
+    }
+
+    function updatePresentationFullscreenButton() {
+      if (!el.presentationFullscreen) return;
+      el.presentationFullscreen.textContent = document.fullscreenElement
+        ? "Salir de pantalla completa"
+        : "Entrar en pantalla completa";
+    }
+
+    async function togglePresentationFullscreen() {
+      if (!document.fullscreenElement) {
+        await requestPresentationFullscreen();
+      } else {
+        await document.exitFullscreen?.();
+      }
+      updatePresentationFullscreenButton();
+      showPresentationControls();
+    }
+
+    function adjustPresentationTextSize() {
+      if (!el.presentationStage.classList.contains("open")) return;
+
+      const viewport = el.presentationStage.getBoundingClientRect();
+      const maxSize = Math.min(viewport.width * 0.048, viewport.height * 0.105, 64);
+      const minSize = Math.max(Math.min(viewport.width * 0.03, 34), 26);
+      let size = Math.max(minSize, maxSize);
+
+      el.presentationText.style.whiteSpace = "pre";
+      el.presentationText.style.overflowWrap = "normal";
+      el.presentationText.style.wordBreak = "normal";
+      el.presentationText.style.setProperty("--presentation-font-size", `${size}px`);
+
+      while (
+        size > minSize &&
+        (el.presentationText.scrollHeight > el.presentationText.clientHeight + 2 ||
+          el.presentationText.scrollWidth > el.presentationText.clientWidth + 2)
+      ) {
+        size -= 2;
+        el.presentationText.style.setProperty("--presentation-font-size", `${size}px`);
+      }
+
+      if (
+        el.presentationText.scrollWidth > el.presentationText.clientWidth + 2 ||
+        el.presentationText.scrollHeight > el.presentationText.clientHeight + 2
+      ) {
+        el.presentationText.style.whiteSpace = "pre-wrap";
+        el.presentationText.style.overflowWrap = "normal";
+        el.presentationText.style.wordBreak = "normal";
+      }
+    }
+
+    function showPresentationControls() {
+      if (!el.presentationStage.classList.contains("open")) return;
+      el.presentationStage.classList.remove("hide-controls");
+      clearTimeout(state.controlsTimer);
+      state.controlsTimer = setTimeout(() => {
+        el.presentationStage.classList.add("hide-controls");
+      }, 3200);
+    }
+
+    function handlePresentationTap(event) {
+      if (!el.presentationStage.classList.contains("open")) return;
+      if (event.target.closest(".presentation-controls")) return;
+      const rect = el.presentationStage.getBoundingClientRect();
+      if (event.clientX - rect.left > rect.width / 2) {
+        nextPresentationSlide();
+      } else {
+        previousPresentationSlide();
+      }
+    }
+
+    function handlePresentationTouchStart(event) {
+      const touch = event.changedTouches[0];
+      state.touchStartX = touch.clientX;
+      state.touchStartY = touch.clientY;
+      showPresentationControls();
+    }
+
+    function handlePresentationTouchEnd(event) {
+      if (state.touchStartX === null || state.touchStartY === null) return;
+      const touch = event.changedTouches[0];
+      const deltaX = touch.clientX - state.touchStartX;
+      const deltaY = touch.clientY - state.touchStartY;
+      state.touchStartX = null;
+      state.touchStartY = null;
+      if (Math.abs(deltaX) < 45 || Math.abs(deltaX) < Math.abs(deltaY)) return;
+      if (deltaX < 0) nextPresentationSlide();
+      else previousPresentationSlide();
+    }
+
+    function openEditor(song = null) {
+      if (!state.isAdmin) return;
+      state.editingId = song?.id || null;
+      el.modalTitle.textContent = song ? "Editar canto" : "Nuevo canto";
+      el.numberInput.value = song?.number ?? nextSongNumber();
+      el.titleInput.value = song?.title || "";
+      el.lyricsInput.value = song?.lyrics || "";
+      el.modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      setTimeout(() => el.titleInput.focus(), 60);
+    }
+
+    function closeEditor() {
+      el.modal.classList.remove("open");
+      document.body.style.overflow = "";
+      el.form.reset();
+      state.editingId = null;
+    }
+
+    function openSettings() {
+      if (!state.isAdmin) return;
+      state.pendingImage = state.config.image || "";
+      el.homeTitleInput.value = state.config.title || "Cantos de Iglesia";
+      el.homeSubtitleInput.value = state.config.subtitle || "";
+      el.homeImageInput.value = "";
+      updateImagePreview();
+      el.settingsModal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      setTimeout(() => el.homeTitleInput.focus(), 60);
+    }
+
+    function closeSettingsModal() {
+      el.settingsModal.classList.remove("open");
+      document.body.style.overflow = "";
+      el.settingsForm.reset();
+      state.pendingImage = "";
+    }
+
+    function openAuthModal() {
+      if (!db.client) {
+        showToast("Supabase no esta configurado");
+        return;
+      }
+      el.authModal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      setTimeout(() => el.authEmail.focus(), 60);
+    }
+
+    function closeAuthModal() {
+      el.authModal.classList.remove("open");
+      document.body.style.overflow = "";
+      el.authForm.reset();
+    }
+
+    async function submitAuth(event) {
+      event.preventDefault();
+      if (!db.client) return;
+      const email = el.authEmail.value.trim();
+      const password = el.authPassword.value;
+      if (!email || !password) return;
+
+      const { error } = await db.client.auth.signInWithPassword({ email, password });
+      if (error) {
+        showToast("Correo o contrasena incorrectos");
+        return;
+      }
+
+      const profile = await loadCurrentProfile();
+      if (!profile) {
+        await db.client.auth.signOut();
+        showToast("Esta cuenta no tiene permiso de administrador");
+        return;
+      }
+
+      await enterAuthenticatedAdmin(profile);
+    }
+
+    function updateImagePreview() {
+      if (state.pendingImage) {
+        el.homeImagePreview.src = state.pendingImage;
+        el.homeImagePreview.hidden = false;
+        el.removeHomeImage.style.display = "inline-flex";
+      } else {
+        el.homeImagePreview.removeAttribute("src");
+        el.homeImagePreview.hidden = true;
+        el.removeHomeImage.style.display = "none";
+      }
+    }
+
+    async function handleImageChoice(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      try {
+        state.pendingImage = await prepareTransparentPng(file);
+        updateImagePreview();
+      } catch {
+        showToast("No pude cargar esa imagen");
+      }
+    }
+
+    function prepareTransparentPng(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = reject;
+        reader.onload = () => {
+          prepareTransparentPngFromSource(reader.result).then(resolve).catch(reject);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function prepareTransparentPngFromSource(source) {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onerror = reject;
+        image.onload = () => {
+          const maxSide = 1200;
+          const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.max(1, Math.round(image.width * scale));
+          canvas.height = Math.max(1, Math.round(image.height * scale));
+          const context = canvas.getContext("2d");
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+          removeLightEdgeBackground(context, canvas.width, canvas.height);
+          resolve(canvas.toDataURL("image/png"));
+        };
+        image.src = source;
+      });
+    }
+
+    function removeLightEdgeBackground(context, width, height) {
+      const imageData = context.getImageData(0, 0, width, height);
+      const data = imageData.data;
+      const seen = new Uint8Array(width * height);
+      const queue = [];
+
+      function isLightBackground(index) {
+        const offset = index * 4;
+        const red = data[offset];
+        const green = data[offset + 1];
+        const blue = data[offset + 2];
+        const alpha = data[offset + 3];
+        const spread = Math.max(red, green, blue) - Math.min(red, green, blue);
+        return alpha > 0 && red > 238 && green > 238 && blue > 238 && spread < 22;
+      }
+
+      function add(index) {
+        if (index < 0 || index >= seen.length || seen[index] || !isLightBackground(index)) return;
+        seen[index] = 1;
+        queue.push(index);
+      }
+
+      for (let x = 0; x < width; x += 1) {
+        add(x);
+        add((height - 1) * width + x);
+      }
+      for (let y = 0; y < height; y += 1) {
+        add(y * width);
+        add(y * width + width - 1);
+      }
+
+      while (queue.length) {
+        const index = queue.shift();
+        const x = index % width;
+        const y = Math.floor(index / width);
+        if (x > 0) add(index - 1);
+        if (x < width - 1) add(index + 1);
+        if (y > 0) add(index - width);
+        if (y < height - 1) add(index + width);
+      }
+
+      for (let index = 0; index < seen.length; index += 1) {
+        if (seen[index]) data[index * 4 + 3] = 0;
+      }
+      context.putImageData(imageData, 0, 0);
+    }
+
+    function autoCorrectSpanishText(text) {
+      const corrections = [
+        ["senor", "Señor"],
+        ["senora", "señora"],
+        ["jesus", "Jesús"],
+        ["dios", "Dios"],
+        ["cristo", "Cristo"],
+        ["espiritu", "Espíritu"],
+        ["santisimo", "santísimo"],
+        ["corazon", "corazón"],
+        ["cancion", "canción"],
+        ["oracion", "oración"],
+        ["salvacion", "salvación"],
+        ["bendicion", "bendición"],
+        ["perdon", "perdón"],
+        ["aleluya", "aleluya"],
+        ["amen", "amén"],
+        ["tambien", "también"],
+        ["aqui", "aquí"],
+        ["alli", "allí"],
+        ["mas", "más"],
+        ["grasias", "gracias"],
+        ["nesecito", "necesito"],
+        ["resivir", "recibir"],
+        ["recivir", "recibir"],
+        ["adorasion", "adoración"],
+        ["adoracion", "adoración"]
+      ];
+
+      return corrections.reduce((current, [wrong, right]) => {
+        const pattern = new RegExp(`\\b${wrong}\\b`, "gi");
+        return current.replace(pattern, right);
+      }, text);
+    }
+
+    function autoCorrectEditorText() {
+      el.titleInput.value = autoCorrectSpanishText(el.titleInput.value);
+      el.lyricsInput.value = autoCorrectSpanishText(el.lyricsInput.value);
+    }
+
+    function submitSettings(event) {
+      event.preventDefault();
+      if (!state.isAdmin) return;
+
+      const title = el.homeTitleInput.value.trim();
+      if (!title) return;
+
+      state.config = {
+        title,
+        subtitle: el.homeSubtitleInput.value.trim(),
+        image: state.pendingImage || "",
+        transparentImage: Boolean(state.pendingImage)
+      };
+
+      saveConfig();
+      closeSettingsModal();
+      render();
+    }
+
+    function submitSong(event) {
+      event.preventDefault();
+      if (!state.isAdmin) return;
+      autoCorrectEditorText();
+      const number = el.numberInput.value === "" ? nextSongNumber() : Number(el.numberInput.value);
+      const title = el.titleInput.value.trim();
+      const lyrics = el.lyricsInput.value.trim();
+      if (!title || !lyrics) return;
+
+      if (state.editingId) {
+        state.songs = state.songs.map(song =>
+          song.id === state.editingId ? { ...song, number, title, lyrics } : song
+        );
+        state.selectedId = state.editingId;
+      } else {
+        const song = { id: crypto.randomUUID(), number, title, lyrics };
+        state.songs = [song, ...state.songs];
+        state.selectedId = song.id;
+      }
+
+      sortSongs();
+      saveSongs();
+      closeEditor();
+      render();
+    }
+
+    function deleteSong(id) {
+      if (!state.isAdmin) return;
+      if (state.adminRole !== "superadmin") {
+        showToast("Solo el superadministrador puede borrar cantos");
+        return;
+      }
+      const song = state.songs.find(item => item.id === id);
+      if (!song || !confirm(`¿Borrar "${song.title}"?`)) return;
+      state.songs = state.songs.filter(item => item.id !== id);
+      state.selectedId = state.songs[0]?.id || null;
+      saveSongs();
+      deleteSongFromSupabase(id);
+      render();
+    }
+
+    function nextSongNumber() {
+      if (state.songs.length === 0) return 0;
+      const numbers = state.songs.map(song => Number(song.number) || 0);
+      return Math.max(...numbers) + 1;
+    }
+
+    function sortSongs() {
+      state.songs.sort((a, b) => {
+        const numberA = Number(a.number) || 0;
+        const numberB = Number(b.number) || 0;
+        if (numberA !== numberB) return numberA - numberB;
+        return a.title.localeCompare(b.title, "es");
+      });
+    }
+
+    function returnToUserMode(showMessage = true) {
+      state.isAdmin = false;
+      state.selectedId = null;
+      closeEditor();
+      closeSettingsModal();
+      closeAuthModal();
+      if (showMessage) showToast("Modo usuario: solo lectura");
+      render();
+    }
+
+    async function signOutAdmin() {
+      if (db.client) await db.client.auth.signOut();
+      state.adminRole = "";
+      state.authUser = null;
+      returnToUserMode(false);
+      showToast("Sesión cerrada");
+    }
+
+    async function enterUserMode() {
+      returnToUserMode(true);
+    }
+
+    async function enterAdminMode() {
+      if (state.authUser && hasAdminAccess(state.adminRole)) {
+        await enterAuthenticatedAdmin({ user: state.authUser, role: state.adminRole });
+        return;
+      }
+      const profile = await loadCurrentProfile();
+      if (profile) {
+        await enterAuthenticatedAdmin(profile);
+        return;
+      }
+      openAuthModal();
+    }
+
+    function showToast(message) {
+      el.toast.textContent = message;
+      el.toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => el.toast.classList.remove("show"), 1400);
+    }
+
+    el.newSong.addEventListener("click", () => openEditor());
+    el.adminReturn.addEventListener("click", () => enterUserMode());
+    el.adminLogout.addEventListener("click", () => signOutAdmin());
+    el.mobileAdminReturn.addEventListener("click", () => enterUserMode());
+    el.mobileAdminLogout.addEventListener("click", () => signOutAdmin());
+    el.themeToggle.addEventListener("click", toggleTheme);
+    el.settingsButton.addEventListener("click", openSettings);
+    el.openPresentation.addEventListener("click", openPresentationView);
+    el.closePresentationView.addEventListener("click", closePresentationView);
+    el.previewPresentation.addEventListener("click", openPreview);
+    el.startPresentation.addEventListener("click", startPresentationMode);
+    el.clearPresentation.addEventListener("click", clearPresentationList);
+    el.closeModal.addEventListener("click", closeEditor);
+    el.cancelEdit.addEventListener("click", closeEditor);
+    el.form.addEventListener("submit", submitSong);
+    el.titleInput.addEventListener("blur", autoCorrectEditorText);
+    el.lyricsInput.addEventListener("blur", autoCorrectEditorText);
+    el.closeSettings.addEventListener("click", closeSettingsModal);
+    el.cancelSettings.addEventListener("click", closeSettingsModal);
+    el.settingsForm.addEventListener("submit", submitSettings);
+    el.homeImageInput.addEventListener("change", handleImageChoice);
+    el.closeAuth.addEventListener("click", closeAuthModal);
+    el.cancelAuth.addEventListener("click", closeAuthModal);
+    el.authForm.addEventListener("submit", submitAuth);
+    el.closePreview.addEventListener("click", closePreviewModal);
+    el.cancelPreview.addEventListener("click", closePreviewModal);
+    el.startFromPreview.addEventListener("click", startPresentationMode);
+    el.presentationPrev.addEventListener("click", previousPresentationSlide);
+    el.presentationNext.addEventListener("click", nextPresentationSlide);
+    el.presentationExit.addEventListener("click", exitPresentationMode);
+    if (el.presentationFullscreen) el.presentationFullscreen.addEventListener("click", togglePresentationFullscreen);
+    el.presentationStage.addEventListener("click", handlePresentationTap);
+    el.presentationStage.addEventListener("mousemove", showPresentationControls);
+    el.presentationStage.addEventListener("touchstart", handlePresentationTouchStart, { passive: true });
+    el.presentationStage.addEventListener("touchend", handlePresentationTouchEnd, { passive: true });
+    el.removeHomeImage.addEventListener("click", () => {
+      state.pendingImage = "";
+      el.homeImageInput.value = "";
+      updateImagePreview();
+    });
+    el.search.addEventListener("input", event => {
+      const value = event.target.value.trim();
+      const code = normalize(value);
+
+      if (!state.isAdmin && code === ADMIN_ACCESS_CODE) {
+        event.target.value = "";
+        state.query = "";
+        enterAdminMode();
+        return;
+      }
+
+      if (state.isAdmin && code === USER_ACCESS_CODE) {
+        event.target.value = "";
+        state.query = "";
+        enterUserMode();
+        return;
+      }
+
+      state.query = event.target.value;
+      if (!state.isAdmin) state.selectedId = null;
+      render();
+    });
+    el.searchBack.addEventListener("click", () => {
+      state.selectedId = null;
+      render();
+    });
+    el.modal.addEventListener("click", event => {
+      if (event.target === el.modal) closeEditor();
+    });
+    el.settingsModal.addEventListener("click", event => {
+      if (event.target === el.settingsModal) closeSettingsModal();
+    });
+    el.authModal.addEventListener("click", event => {
+      if (event.target === el.authModal) closeAuthModal();
+    });
+    el.previewModal.addEventListener("click", event => {
+      if (event.target === el.previewModal) closePreviewModal();
+    });
+    window.addEventListener("keydown", event => {
+      const presenting = el.presentationStage.classList.contains("open");
+      if (presenting) {
+        showPresentationControls();
+        if (event.key === "ArrowRight" || event.key === " ") {
+          event.preventDefault();
+          nextPresentationSlide();
+        }
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          previousPresentationSlide();
+        }
+        if (event.key === "Escape") {
+          event.preventDefault();
+          if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+          else exitPresentationMode();
+        }
+        return;
+      }
+      if (event.key === "Escape" && el.previewModal.classList.contains("open")) closePreviewModal();
+      if (event.key === "Escape" && el.modal.classList.contains("open")) closeEditor();
+      if (event.key === "Escape" && el.settingsModal.classList.contains("open")) closeSettingsModal();
+      if (event.key === "Escape" && el.authModal.classList.contains("open")) closeAuthModal();
+    });
+    let lastPhoneViewport = isPhoneViewport();
+    window.addEventListener("resize", () => requestAnimationFrame(() => {
+      const phoneViewport = isPhoneViewport();
+      if (phoneViewport !== lastPhoneViewport) {
+        lastPhoneViewport = phoneViewport;
+        closeMobilePresentationAccess();
+        render();
+      }
+      adjustPresentationTextSize();
+    }));
+    document.addEventListener("fullscreenchange", () => {
+      updatePresentationFullscreenButton();
+      requestAnimationFrame(adjustPresentationTextSize);
+    });
+
+    initializeApp();
+  </script>
+</body>
+</html>
+
