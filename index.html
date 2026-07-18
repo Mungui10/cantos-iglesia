@@ -1,12 +1,16 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" id="themeColor" content="#f8f2e8">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Cantos">
-  <title>Cantos de Iglesia</title>
+  <meta name="apple-mobile-web-app-title" content="Himnario">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/himnario-icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/himnario-icon-512.png">
+  <link rel="apple-touch-icon" href="icons/himnario-icon-192.png">
+  <title>Himnario</title>
   <style>
     :root {
       --bg: #f8f2e8;
@@ -1817,7 +1821,7 @@
         <div class="brand">
           <img class="brand-image" id="brandImage" alt="" hidden>
           <div class="brand-text">
-            <h1 id="appTitle">Cantos de Iglesia</h1>
+            <h1 id="appTitle">Himnario</h1>
             <div class="home-subtitle" id="homeSubtitle"></div>
           </div>
         </div>
@@ -2114,10 +2118,11 @@
       adminStatus: "",
       adminDisplayName: "",
       adminIsOwner: false,
+      adminCanDeleteSongs: false,
       authUser: null,
       inviteToken: "",
       inviteSubmitMode: "signin",
-      config: { title: "Cantos de Iglesia", subtitle: "", image: "", transparentImage: false },
+      config: { title: "Himnario", subtitle: "", image: "", transparentImage: false },
       pendingImage: "",
       presentation: { songIds: [], overrides: {} },
       presentationSlides: [],
@@ -2248,7 +2253,7 @@
     };
 
     function defaultConfig() {
-      return { title: "Cantos de Iglesia", subtitle: "", image: "", transparentImage: false };
+      return { title: "Himnario", subtitle: "", image: "", transparentImage: false };
     }
 
     function isSupabaseConfigured() {
@@ -2277,6 +2282,14 @@
       return isSuperadmin() || isOwner();
     }
 
+    function canManageHomeConfig() {
+      return hasAdminPanelAccess();
+    }
+
+    function canDeleteSongs() {
+      return isOwner() || isSuperadmin() || (state.adminCanDeleteSongs === true && state.adminStatus === "active");
+    }
+
     function adminDisplayName(profile) {
       const alias = String(profile?.alias || "").trim();
       return alias || "Administrador";
@@ -2293,11 +2306,13 @@
       state.adminStatus = profile?.status || "";
       state.adminDisplayName = displayName;
       state.adminIsOwner = Boolean(profile?.is_owner);
+      state.adminCanDeleteSongs = Boolean(profile?.can_delete_songs);
       state.authUser = profile ? {
         id: profile.id,
         alias: state.adminAlias,
         displayName,
         is_owner: state.adminIsOwner,
+        can_delete_songs: state.adminCanDeleteSongs,
         role: profile.role,
         status: profile.status
       } : null;
@@ -2309,6 +2324,7 @@
       state.adminStatus = "";
       state.adminDisplayName = "";
       state.adminIsOwner = false;
+      state.adminCanDeleteSongs = false;
       state.authUser = null;
     }
 
@@ -2318,7 +2334,7 @@
       if (!user) return null;
       const { data, error } = await db.client
         .from("profiles")
-        .select("role, alias, status, is_owner")
+        .select("role, alias, status, is_owner, can_delete_songs")
         .eq("id", user.id)
         .maybeSingle();
       if (error || !data || !hasAdminAccess(data.role, data.status || "active")) return null;
@@ -2327,6 +2343,7 @@
         role: data.role,
         alias: String(data.alias || "").trim(),
         is_owner: Boolean(data.is_owner),
+        can_delete_songs: Boolean(data.can_delete_songs),
         status: data.status || "active"
       };
     }
@@ -2367,7 +2384,7 @@
         const saved = JSON.parse(localStorage.getItem(CONFIG_KEY) || "{}");
         return {
           ...defaultConfig(),
-          title: saved.title || "Cantos de Iglesia",
+          title: saved.title || "Himnario",
           subtitle: saved.subtitle || "",
           image: saved.image || "",
           transparentImage: Boolean(saved.transparentImage)
@@ -2402,7 +2419,7 @@
     function configFromRow(row) {
       return {
         ...defaultConfig(),
-        title: row?.title || "Cantos de Iglesia",
+        title: row?.title || "Himnario",
         subtitle: row?.subtitle || "",
         image: row?.image || "",
         transparentImage: Boolean(row?.transparent_image)
@@ -2412,7 +2429,7 @@
     function configToRow() {
       return {
         id: SUPABASE_MAIN_ID,
-        title: state.config.title || "Cantos de Iglesia",
+        title: state.config.title || "Himnario",
         subtitle: state.config.subtitle || "",
         image: state.config.image || "",
         transparent_image: Boolean(state.config.transparentImage),
@@ -2434,8 +2451,8 @@
           if (data) {
             const local = state.config;
             const remote = configFromRow(data);
-            const remoteEmpty = remote.title === "Cantos de Iglesia" && !remote.subtitle && !remote.image;
-            const localHasData = local.title !== "Cantos de Iglesia" || Boolean(local.subtitle || local.image);
+            const remoteEmpty = remote.title === "Himnario" && !remote.subtitle && !remote.image;
+            const localHasData = local.title !== "Himnario" || Boolean(local.subtitle || local.image);
             state.config = remoteEmpty && localHasData ? local : remote;
             if (remoteEmpty && localHasData && state.isAdmin) await saveConfigToSupabase();
           } else {
@@ -2574,7 +2591,7 @@
     }
 
     async function deleteSongFromSupabase(id) {
-      if (!db.client || !state.isAdmin) return true;
+      if (!db.client || !canDeleteSongs()) return false;
       try {
         const { error } = await db.client.from("songs").delete().eq("id", id);
         if (error) throw error;
@@ -2608,16 +2625,17 @@
     }
 
     function saveConfig(showMessage = true) {
+      if (state.isAdmin && !canManageHomeConfig()) return;
       try {
         cacheConfig();
-        if (db.client && state.isAdmin) saveConfigToSupabase();
+        if (db.client && canManageHomeConfig()) saveConfigToSupabase();
         if (showMessage) showToast("Inicio actualizado");
       } catch {
         showToast("La imagen es muy grande");
       }
     }
     async function saveConfigToSupabase() {
-      if (!db.client || !state.isAdmin || db.savingConfig) return;
+      if (!db.client || !canManageHomeConfig() || db.savingConfig) return;
       db.savingConfig = true;
       try {
         const { error } = await db.client.from("app_config").upsert(configToRow(), { onConflict: "id" });
@@ -2713,7 +2731,7 @@
       const songs = filteredSongs();
       renderConfig();
       el.newSong.style.display = state.isAdmin ? "grid" : "none";
-      el.settingsButton.style.display = state.isAdmin ? "inline-flex" : "none";
+      el.settingsButton.style.display = canManageHomeConfig() ? "inline-flex" : "none";
       const adminLabel = state.adminDisplayName && state.adminDisplayName !== "Administrador" ? `Administrador: ${state.adminDisplayName}` : "Administrador";
       el.adminProfileLabel.textContent = adminLabel;
       el.mobileAdminProfileLabel.textContent = adminLabel;
@@ -2780,9 +2798,9 @@
     }
 
     function renderConfig() {
-      el.appTitle.textContent = state.config.title || "Cantos de Iglesia";
+      el.appTitle.textContent = state.config.title || "Himnario";
       el.homeSubtitle.textContent = state.config.subtitle || "";
-      document.title = state.config.title || "Cantos de Iglesia";
+      document.title = "Himnario";
 
       if (state.config.image) {
         el.brandImage.src = state.config.image;
@@ -2924,7 +2942,12 @@
       article.querySelector(".lyrics").textContent = song.lyrics;
       if (state.isAdmin) {
         article.querySelector("#editSelected").addEventListener("click", () => openEditor(song));
-        article.querySelector("#deleteSelected").addEventListener("click", () => deleteSong(song.id));
+        const deleteButton = article.querySelector("#deleteSelected");
+        if (canDeleteSongs()) {
+          deleteButton.addEventListener("click", () => deleteSong(song.id));
+        } else {
+          deleteButton.remove();
+        }
       } else {
         article.querySelector("#adminActions").remove();
       }
@@ -3353,9 +3376,9 @@
     }
 
     function openSettings() {
-      if (!state.isAdmin) return;
+      if (!canManageHomeConfig()) return;
       state.pendingImage = state.config.image || "";
-      el.homeTitleInput.value = state.config.title || "Cantos de Iglesia";
+      el.homeTitleInput.value = state.config.title || "Himnario";
       el.homeSubtitleInput.value = state.config.subtitle || "";
       el.homeImageInput.value = "";
       updateImagePreview();
@@ -3558,7 +3581,7 @@
 
     function submitSettings(event) {
       event.preventDefault();
-      if (!state.isAdmin) return;
+      if (!canManageHomeConfig()) return;
 
       const title = el.homeTitleInput.value.trim();
       if (!title) return;
@@ -3609,7 +3632,10 @@
     }
 
     async function deleteSong(id) {
-      if (!state.isAdmin) return;
+      if (!canDeleteSongs()) {
+        showToast("No tienes permiso para borrar cantos");
+        return;
+      }
       const song = state.songs.find(item => item.id === id);
       if (!song || !confirm(`¿Borrar "${song.title}"?`)) return;
       const deleted = await deleteSongFromSupabase(id);
@@ -4005,7 +4031,7 @@
       el.adminAliasList.innerHTML = "<div class='empty'><div><strong>Cargando alias...</strong></div></div>";
       const { data, error } = await db.client
         .from("profiles")
-        .select("id, alias, role, status, is_owner, created_at")
+        .select("id, alias, role, status, is_owner, can_delete_songs, created_at")
         .order("created_at", { ascending: true });
       if (error) {
         el.adminUsersList.innerHTML = "<div class='empty'><div><strong>No se pudo cargar la lista.</strong></div></div>";
@@ -4027,10 +4053,28 @@
       profiles.forEach(profile => {
         const card = document.createElement("article");
         card.className = `admin-card ${profile.status === "inactive" ? "inactive" : ""}`;
-        card.innerHTML = "<h3></h3><small class='admin-meta'></small>";
-        card.querySelector("h3").textContent = profile.is_owner ? `${adminDisplayName(profile)} · Propietario` : adminDisplayName(profile);
-        card.querySelector(".admin-meta").textContent = `${profile.role === "superadmin" ? "Superadministrador" : "Administrador"} · ${profile.status === "active" ? "Activo" : "Inactivo"} · Creado ${formatDate(profile.created_at)}`;
+        card.innerHTML = `
+          <h3></h3>
+          <small class="admin-meta"></small>
+          <div class="admin-inline-form" data-role="delete-permission">
+            <label><input data-field="can-delete" type="checkbox"> Permitir borrar cantos</label>
+            <button class="secondary" type="button" data-action="save-delete-permission">Guardar permiso</button>
+          </div>
+        `;
         const isOwnerRow = profile.is_owner === true;
+        const isPrivilegedRow = isOwnerRow || profile.role === "superadmin";
+        const deletePermissionText = isPrivilegedRow
+          ? "Puede borrar por rol"
+          : profile.can_delete_songs ? "Puede borrar cantos" : "Sin permiso para borrar";
+        card.querySelector("h3").textContent = profile.is_owner ? `${adminDisplayName(profile)} · Propietario` : adminDisplayName(profile);
+        card.querySelector(".admin-meta").textContent = `${profile.role === "superadmin" ? "Superadministrador" : "Administrador"} · ${profile.status === "active" ? "Activo" : "Inactivo"} · ${deletePermissionText} · Creado ${formatDate(profile.created_at)}`;
+        const deletePermissionForm = card.querySelector("[data-role='delete-permission']");
+        if (isPrivilegedRow) {
+          deletePermissionForm.remove();
+        } else {
+          card.querySelector("[data-field='can-delete']").checked = Boolean(profile.can_delete_songs);
+          card.querySelector("[data-action='save-delete-permission']").addEventListener("click", () => saveDeleteSongPermission(profile.id, card));
+        }
         const isCurrentOwner = isOwnerRow && profile.id === state.authUser?.id;
         const isLastSelf = profile.id === state.authUser?.id && profile.role === "superadmin" && profile.status === "active" && activeSuperadmins <= 1 && !isCurrentOwner;
         if (isOwnerRow) {
@@ -4094,6 +4138,26 @@
         if (profile) storeAdminProfile(profile);
       }
       showToast("Administrador actualizado");
+      await loadAdminProfiles();
+      render();
+    }
+
+    async function saveDeleteSongPermission(id, card) {
+      if (!hasAdminPanelAccess()) return;
+      const can_delete_songs = card.querySelector("[data-field='can-delete']").checked;
+      const { error } = await db.client
+        .from("profiles")
+        .update({ can_delete_songs, updated_at: new Date().toISOString() })
+        .eq("id", id);
+      if (error) {
+        showToast("No se pudo actualizar el permiso");
+        return;
+      }
+      if (id === state.authUser?.id) {
+        const profile = await loadCurrentProfile();
+        if (profile) storeAdminProfile(profile);
+      }
+      showToast("Permiso actualizado");
       await loadAdminProfiles();
       render();
     }
@@ -4455,6 +4519,12 @@
       updatePresentationFullscreenButton();
       requestAnimationFrame(adjustPresentationTextSize);
     });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("service-worker.js").catch(() => {});
+      });
+    }
 
     initializeApp();
   </script>
