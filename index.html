@@ -13,19 +13,21 @@
   <title>Himnario</title>
   <style>
     :root {
-      --bg: #f8f2e8;
+      --bg: #F5F5DC;
       --panel: #fffaf2;
+      --panel-bg: #fffaf2;
       --text: #24201a;
-      --muted: #71695d;
-      --line: #ddcfbb;
+      --muted: #4f473e;
+      --line: #b4a58f;
+      --line-strong: #8f8372;
       --accent: #0f766e;
       --accent-dark: #0a5d57;
       --primary-text: #ffffff;
       --danger: #a43a2d;
       --danger-bg: #fff5f2;
       --danger-line: #e9c7bf;
-      --header-bg: rgba(248, 242, 232, .94);
-      --search-bg: rgba(248, 242, 232, .9);
+      --header-bg: #F5F5DC;
+      --search-bg: #F5F5DC;
       --input-bg: #ffffff;
       --button-bg: #ffffff;
       --sheet-actions-bg: rgba(255, 255, 255, .45);
@@ -40,9 +42,11 @@
     body.dark {
       --bg: #11100e;
       --panel: #1d1b18;
+      --panel-bg: #1d1b18;
       --text: #f7f1e8;
       --muted: #c9bfae;
       --line: #403a33;
+      --line-strong: #5a5248;
       --accent: #2dd4bf;
       --accent-dark: #5eead4;
       --primary-text: #061311;
@@ -59,6 +63,10 @@
       --toast-bg: #f7f1e8;
       --toast-text: #11100e;
       color-scheme: dark;
+    }
+
+    body.dark header {
+      backdrop-filter: blur(14px);
     }
 
     * { box-sizing: border-box; }
@@ -141,7 +149,6 @@
       padding: calc(clamp(10px, 2.8vw, 18px) + env(safe-area-inset-top)) clamp(12px, 4vw, 28px) clamp(10px, 2.8vw, 16px);
       background: var(--header-bg);
       border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(14px);
     }
 
     .topbar {
@@ -203,13 +210,21 @@
 
     .admin-return {
       min-height: 40px;
-      border: 0;
+      border: 1px solid var(--accent);
       border-radius: 8px;
       padding: 0 14px;
       background: var(--accent);
-      color: var(--primary-text);
+      color: #ffffff;
       font-weight: 800;
       cursor: pointer;
+    }
+
+    .admin-return:hover,
+    .admin-return:focus-visible,
+    .admin-return:active {
+      background: var(--accent-dark);
+      border-color: var(--accent-dark);
+      color: #ffffff;
     }
 
     .admin-logout {
@@ -231,11 +246,11 @@
       display: none;
       min-height: 36px;
       align-items: center;
-      border: 1px solid var(--line);
+      border: 1px solid #8f8372;
       border-radius: 999px;
       padding: 0 12px;
       background: var(--button-bg);
-      color: var(--muted);
+      color: #24201a;
       font-size: .86rem;
       font-weight: 750;
       white-space: nowrap;
@@ -296,7 +311,7 @@
     .mode-pill.active {
       border-color: var(--accent);
       background: var(--accent);
-      color: var(--primary-text);
+      color: #ffffff;
     }
 
     .add {
@@ -306,7 +321,9 @@
       display: grid;
       place-items: center;
       background: var(--accent);
-      color: var(--primary-text);
+      color: #ffffff;
+      border: 1px solid var(--accent);
+      opacity: 1;
       font-size: 1.8rem;
       line-height: 1;
       font-weight: 700;
@@ -373,7 +390,6 @@
       background: var(--input-bg);
       color: var(--text);
       outline: none;
-      box-shadow: 0 1px 0 rgba(0, 0, 0, .03);
     }
 
     .search, .field {
@@ -401,7 +417,7 @@
 
     .search:focus, .field:focus, textarea:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(15, 118, 110, .16);
+      box-shadow: 0 0 0 2px var(--accent);
     }
 
     main {
@@ -438,6 +454,7 @@
 
     .song-title {
       font-weight: 800;
+      color: var(--text);
       overflow-wrap: anywhere;
     }
 
@@ -450,8 +467,9 @@
       margin-right: 7px;
       padding: 0 7px;
       border-radius: 8px;
-      background: rgba(15, 118, 110, .11);
-      color: var(--accent-dark);
+      background: var(--panel);
+      color: #24201a;
+      border: 1px solid #8f8372;
       font-size: .82rem;
       font-weight: 850;
       vertical-align: 1px;
@@ -554,8 +572,9 @@
       margin-bottom: 9px;
       padding: 0 10px;
       border-radius: 8px;
-      background: rgba(15, 118, 110, .11);
-      color: var(--accent-dark);
+      background: var(--panel);
+      color: #24201a;
+      border: 1px solid var(--line);
       font-weight: 850;
     }
 
@@ -576,9 +595,11 @@
       font-weight: 750;
     }
 
-    .primary { background: var(--accent); color: var(--primary-text); }
-    .primary:active, .add:active { background: var(--accent-dark); }
-    .secondary { background: var(--button-bg); color: var(--accent-dark); border: 1px solid var(--line); }
+    .primary { background: var(--accent); color: var(--primary-text); border: 1px solid var(--accent); opacity: 1; }
+    .primary:hover, .primary:focus-visible,
+    .primary:active, .add:active { background: var(--accent-dark); border-color: var(--accent-dark); opacity: 1; }
+    .secondary { background: var(--button-bg); color: var(--accent-dark); border: 1px solid var(--line-strong); opacity: 1; }
+    .secondary:hover, .secondary:focus-visible, .secondary:active { background: var(--panel); border-color: var(--line-strong); opacity: 1; }
     .danger { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-line); }
 
     .lyrics {
@@ -872,9 +893,9 @@
       min-height: 44px;
       border-radius: 8px;
       padding: 0 10px;
-      border: 1px solid var(--line);
+      border: 1px solid #6f665b;
       background: var(--button-bg);
-      color: var(--accent-dark);
+      color: #24201a;
       font-weight: 750;
     }
 
@@ -904,6 +925,63 @@
 
     .song-row.active .song-open {
       border-bottom-color: transparent;
+    }
+
+    body:not(.dark) #songList .song-row {
+      background: transparent;
+      border-bottom: 1px solid var(--line);
+      box-shadow: none;
+      filter: none;
+      opacity: 1;
+    }
+
+    body:not(.dark) #songList .song-row.active {
+      background: var(--panel);
+      border-bottom-color: var(--line-strong);
+      box-shadow: inset 4px 0 0 var(--accent);
+    }
+
+    body:not(.dark) #songList .song-open,
+    body:not(.dark) #songList .song-row .song-open {
+      background: transparent;
+      background-image: none;
+      border: 0;
+      box-shadow: none;
+      filter: none;
+      opacity: 1;
+    }
+
+    body:not(.dark) #songList .song-present {
+      background: var(--panel);
+      background-image: none;
+      border: 1px solid var(--line-strong);
+      box-shadow: none;
+      color: #24201a;
+      filter: none;
+      opacity: 1;
+    }
+
+    body:not(.dark) #songList .song-present:hover,
+    body:not(.dark) #songList .song-present:focus,
+    body:not(.dark) #songList .song-present:focus-visible,
+    body:not(.dark) #songList .song-present:active {
+      background: var(--bg);
+      background-image: none;
+      border-color: var(--line-strong);
+      box-shadow: none;
+      filter: none;
+      opacity: 1;
+    }
+
+    body:not(.dark) #songList .song-row::before,
+    body:not(.dark) #songList .song-row::after,
+    body:not(.dark) #songList .song-open::before,
+    body:not(.dark) #songList .song-open::after,
+    body:not(.dark) #songList .song-present::before {
+      background: none;
+      box-shadow: none;
+      filter: none;
+      opacity: 1;
     }
 
     .preview-screen {
@@ -1010,12 +1088,16 @@
       align-items: center;
       opacity: 1;
       transition: opacity .2s ease;
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      background: var(--bg);
     }
 
     .presentation-stage.hide-controls .presentation-controls {
       opacity: 0;
       pointer-events: none;
+    }
+
+    body.dark .presentation-controls {
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
     }
 
     .presentation-controls button {
@@ -1547,16 +1629,124 @@
       line-height: 1.28;
     }
 
+    body:not(.dark) .brand-image,
+    body:not(.dark) .brand-image img,
+    body:not(.dark) .home-image,
+    body:not(.dark) .image-preview img,
+    body.dark .brand-image,
+    body.dark .brand-image img,
+    body.dark .home-image,
+    body.dark .image-preview img {
+      opacity: 1;
+      filter: none;
+      mix-blend-mode: normal;
+    }
+
+    body:not(.dark) .song-title,
+    body:not(.dark) .song-name,
+    body:not(.dark) #songList .song-open,
+    body:not(.dark) .search,
+    body:not(.dark) .field,
+    body:not(.dark) textarea {
+      color: #24201a;
+    }
+
+    body:not(.dark) .search::placeholder {
+      color: #4f4639;
+      opacity: 1;
+    }
+
+    body:not(.dark) .song-number,
+    body:not(.dark) .detail-number {
+      background: #fffaf2;
+      color: #24201a;
+      border: 1px solid #8f8372;
+    }
+
+    body.dark .song-number,
+    body.dark .detail-number {
+      background: #fffaf2;
+      color: #24201a;
+      border: 1px solid #5a5248;
+    }
+
+    body.dark .song-title,
+    body.dark .song-name,
+    body.dark #songList .song-open {
+      color: #f7f1e8;
+    }
+
+    body:not(.dark) #songList .song-present {
+      background: #ffffff;
+      color: #24201a;
+      border-color: #6f665b;
+      box-shadow: none;
+      opacity: 1;
+      filter: none;
+      mix-blend-mode: normal;
+    }
+
+    body:not(.dark) #songList .song-present:hover,
+    body:not(.dark) #songList .song-present:focus-visible,
+    body:not(.dark) #songList .song-present:active {
+      background: #f8f2e8;
+      color: #24201a;
+      border-color: #6f665b;
+      box-shadow: none;
+    }
+
+    body.dark #songList .song-row,
+    body.dark #songList .song-open {
+      border-color: #5a5248;
+    }
+
+    body.dark #songList .song-present {
+      background: var(--button-bg);
+      color: #f7f1e8;
+      border-color: #5a5248;
+    }
+
+    body:not(.dark) #adminPanelModal .admin-card,
+    body:not(.dark) #adminPanelModal form.admin-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      color: var(--text);
+      opacity: 1;
+      filter: none;
+      mix-blend-mode: normal;
+      box-shadow: none;
+    }
+
+    body:not(.dark) #adminPanelModal .admin-card.resolved,
+    body:not(.dark) #adminPanelModal .admin-card.inactive {
+      opacity: 1;
+      background: var(--panel);
+      border-color: var(--line);
+    }
+
+    body:not(.dark) #adminPanelModal .admin-card small {
+      color: var(--muted);
+      opacity: 1;
+    }
+
     .superadmin-button {
       display: none;
       min-height: 38px;
-      border: 1px solid var(--line);
+      border: 1px solid var(--accent);
       border-radius: 8px;
       padding: 0 12px;
-      background: var(--button-bg);
+      background: var(--accent);
       color: var(--primary-text);
       font-weight: 800;
       cursor: pointer;
+    }
+
+    .superadmin-button:hover,
+    .superadmin-button:focus-visible,
+    .superadmin-button:active {
+      background: var(--accent-dark);
+      border-color: var(--accent-dark);
+      color: #ffffff;
     }
 
     .app.admin-mode.superadmin-mode:not(.presentation-mode) .superadmin-button {
@@ -1567,14 +1757,14 @@
 
     .header-actions .superadmin-button,
     .mobile-admin-panel .superadmin-button {
-      color: var(--text);
+      color: #ffffff;
     }
 
     body.dark .header-actions .superadmin-button,
     body.dark .mobile-admin-panel .superadmin-button {
-      background: #1a1815;
-      color: var(--text);
-      border-color: #5a5248;
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
     }
 
     .admin-grid {
@@ -1593,7 +1783,9 @@
 
     .admin-card.resolved,
     .admin-card.inactive {
-      opacity: .68;
+      opacity: 1;
+      background: var(--panel-bg);
+      border-color: var(--line);
     }
 
     .admin-card h3,
@@ -1620,7 +1812,7 @@
       flex: 0 0 auto;
       margin: 0;
       padding: 12px 16px;
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid var(--line-strong);
     }
 
     #adminPanelModal .sheet {
@@ -1660,16 +1852,22 @@
       border-color: #5a5248;
     }
 
+    body.dark #adminPanelModal .admin-tabs button:hover,
+    body.dark #adminPanelModal .admin-tabs button:focus-visible {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, .14);
+    }
+
     #adminPanelModal .admin-tabs button:hover,
     #adminPanelModal .admin-tabs button:focus-visible {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(15, 118, 110, .14);
+      box-shadow: 0 0 0 2px var(--accent);
     }
 
     #adminPanelModal .admin-tabs button.active {
       background: var(--accent);
       color: var(--primary-text);
-      border-color: transparent;
+      border-color: var(--accent);
     }
 
     body.dark #adminPanelModal .admin-tabs button.active {

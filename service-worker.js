@@ -1,4 +1,4 @@
-const CACHE_VERSION = "himnario-pwa-v1";
+const CACHE_VERSION = "himnario-pwa-v2";
 
 self.addEventListener("install", () => {
   self.skipWaiting();
