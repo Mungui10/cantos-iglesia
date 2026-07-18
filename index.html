@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -221,6 +221,25 @@
 
     .mobile-admin-panel {
       display: none;
+    }
+
+    .admin-profile-label {
+      display: none;
+      min-height: 36px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 12px;
+      background: var(--button-bg);
+      color: var(--muted);
+      font-size: .86rem;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .app.admin-mode:not(.presentation-mode) .admin-profile-label {
+      display: inline-flex;
+      justify-content: center;
     }
 
     .app.admin-mode:not(.presentation-mode) .admin-return,
@@ -1112,6 +1131,36 @@
         content: attr(data-mobile-label);
         font-size: 1.45rem;
       }
+
+      #authModal {
+        z-index: 90;
+      }
+
+      #authModal .sheet {
+        height: auto;
+        max-height: calc(100dvh - 16px - env(safe-area-inset-bottom));
+      }
+
+      #authModal #authForm {
+        align-content: start;
+        grid-auto-rows: max-content;
+        gap: 12px;
+        padding: 14px 16px;
+      }
+
+      #authModal #authEmail,
+      #authModal #authPassword {
+        display: block;
+        width: 100%;
+        height: 50px;
+        min-height: 46px;
+        max-height: 52px;
+        padding: 0 14px;
+        font-size: 1rem;
+        line-height: 1.2;
+        border-radius: 8px;
+        resize: none;
+      }
     }
 
     @media (max-width: 767px) {
@@ -1121,13 +1170,18 @@
       }
 
       .header-actions .admin-return,
-      .header-actions .admin-logout {
+      .header-actions .admin-logout,
+      .header-actions .superadmin-button {
         display: none !important;
       }
 
       .app.admin-mode .header-actions {
         right: max(6px, env(safe-area-inset-right));
         gap: 6px;
+      }
+
+      .header-actions .admin-profile-label {
+        display: none !important;
       }
 
       .app.admin-mode:not(.presentation-mode) .mobile-admin-panel {
@@ -1145,6 +1199,13 @@
         display: flex;
         width: 100%;
         justify-content: center;
+      }
+
+      .mobile-admin-panel .admin-profile-label {
+        display: flex;
+        width: 100%;
+        min-height: 34px;
+        border-radius: 8px;
       }
 
       .mobile-admin-panel .admin-return,
@@ -1482,7 +1543,222 @@
       line-height: 1.28;
     }
 
+    .superadmin-button {
+      display: none;
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 12px;
+      background: var(--button-bg);
+      color: var(--primary-text);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .app.admin-mode.superadmin-mode:not(.presentation-mode) .superadmin-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-actions .superadmin-button,
+    .mobile-admin-panel .superadmin-button {
+      color: var(--text);
+    }
+
+    body.dark .header-actions .superadmin-button,
+    body.dark .mobile-admin-panel .superadmin-button {
+      background: #1a1815;
+      color: var(--text);
+      border-color: #5a5248;
+    }
+
+    .admin-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .admin-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-bg);
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .admin-card.resolved,
+    .admin-card.inactive {
+      opacity: .68;
+    }
+
+    .admin-card h3,
+    .admin-card p {
+      margin: 0;
+    }
+
+    .admin-card small {
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .admin-inline-form {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      align-items: end;
+    }
+
+    #adminPanelModal .admin-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex: 0 0 auto;
+      margin: 0;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    #adminPanelModal .sheet {
+      display: flex;
+      flex-direction: column;
+      max-height: min(820px, calc(100dvh - 32px));
+      overflow: hidden;
+    }
+
+    #adminPanelModal .sheet-head {
+      flex: 0 0 auto;
+    }
+
+    #adminPanelModal .admin-tab-panel {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding: 16px;
+    }
+
+    #adminPanelModal .admin-tabs button {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 12px;
+      background: var(--button-bg);
+      color: var(--text);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    body.dark #adminPanelModal .admin-tabs button {
+      background: #1a1815;
+      color: var(--text);
+      border-color: #5a5248;
+    }
+
+    #adminPanelModal .admin-tabs button:hover,
+    #adminPanelModal .admin-tabs button:focus-visible {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, .14);
+    }
+
+    #adminPanelModal .admin-tabs button.active {
+      background: var(--accent);
+      color: var(--primary-text);
+      border-color: transparent;
+    }
+
+    body.dark #adminPanelModal .admin-tabs button.active {
+      background: var(--accent);
+      color: var(--primary-text);
+      border-color: transparent;
+    }
+
+    .admin-tab-panel[hidden],
+    .invite-link-box[hidden] {
+      display: none !important;
+    }
+
+    .invite-link-box {
+      display: grid;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--button-bg);
+      overflow-wrap: anywhere;
+    }
+
+    .admin-note {
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.45;
+    }
+
     @media (max-width: 767px) {
+      #adminPanelModal {
+        align-items: center;
+        justify-content: center;
+        padding: calc(8px + env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+      }
+
+      #adminPanelModal .sheet {
+        width: calc(100vw - 16px);
+        max-width: calc(100vw - 16px);
+        height: auto;
+        max-height: calc(100dvh - 16px);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      #adminPanelModal .sheet-head {
+        flex: 0 0 auto;
+        padding: 12px 14px;
+      }
+
+      #adminPanelModal .admin-tabs {
+        flex: 0 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        max-width: 100%;
+        margin: 0;
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--line);
+        overflow-x: auto;
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      #adminPanelModal .admin-tabs button {
+        flex: 0 0 auto;
+        min-height: 44px;
+        max-height: 48px;
+        padding: 0 9px;
+        font-size: .9rem;
+        line-height: 1.1;
+        white-space: nowrap;
+      }
+
+      #adminPanelModal .admin-tab-panel {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        padding: 12px 14px 14px;
+      }
+
+      #adminPanelModal .admin-tab-panel[hidden] {
+        display: none !important;
+      }
+
+      #adminPanelModal .sheet-actions {
+        flex: 0 0 auto;
+      }
+
       .app.admin-mode.admin-detail .list {
         display: none !important;
       }
@@ -1546,6 +1822,8 @@
           </div>
         </div>
         <div class="header-actions">
+          <span class="admin-profile-label" id="adminProfileLabel"></span>
+          <button class="superadmin-button" id="openAdminPanel" type="button">Administradores</button>
           <button class="admin-return" id="adminReturn" type="button">Volver a modo usuario</button>
           <button class="admin-logout" id="adminLogout" type="button">Cerrar sesión</button>
           <button class="settings-button" id="settingsButton" type="button">Inicio</button>
@@ -1560,6 +1838,8 @@
     </div>
 
     <div class="mobile-admin-panel" id="mobileAdminPanel" aria-label="Controles de administrador">
+      <span class="admin-profile-label" id="mobileAdminProfileLabel"></span>
+      <button class="superadmin-button" id="mobileOpenAdminPanel" type="button">Administradores</button>
       <button class="admin-return" id="mobileAdminReturn" type="button">Volver a modo usuario</button>
       <button class="admin-logout" id="mobileAdminLogout" type="button">Cerrar sesión</button>
     </div>
@@ -1670,6 +1950,115 @@
     </div>
   </div>
 
+
+  <div class="modal" id="adminPanelModal" role="dialog" aria-modal="true" aria-labelledby="adminPanelTitle">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2 id="adminPanelTitle">Administradores</h2>
+        <button class="close" id="closeAdminPanel" type="button" aria-label="Cerrar">×</button>
+      </div>
+      <div class="admin-tabs" role="tablist" aria-label="Panel de superadministrador">
+        <button class="active" id="adminTabUsers" type="button" data-admin-tab="users">Administradores</button>
+        <button id="adminTabAlias" type="button" data-admin-tab="alias">Alias</button>
+        <button id="adminTabInvites" type="button" data-admin-tab="invites">Invitaciones</button>
+        <button id="adminTabHistory" type="button" data-admin-tab="history">Historial</button>
+        <button id="adminTabProperty" type="button" data-admin-tab="property">Propiedad</button>
+      </div>
+      <div class="admin-tab-panel" id="adminUsersPanel">
+        <section class="admin-card" id="adminProfilesPanel">
+          <h3>Administradores registrados</h3>
+          <div class="admin-grid" id="adminUsersList"></div>
+        </section>
+      </div>
+      <div class="admin-tab-panel" id="adminAliasPanel" hidden>
+        <section class="admin-card">
+          <h3>Alias de administradores</h3>
+          <div class="admin-grid" id="adminAliasList"></div>
+        </section>
+      </div>
+      <div class="admin-tab-panel" id="adminInvitesPanel" hidden>
+        <form id="inviteForm" class="admin-card">
+          <h3>Nueva invitación</h3>
+          <label>
+            Correo invitado
+            <input class="field" id="inviteEmail" type="email" required autocomplete="off">
+          </label>
+          <label>
+            Rol
+            <select class="field" id="inviteRole">
+              <option value="admin">Administrador</option>
+              <option value="superadmin">Superadministrador</option>
+            </select>
+          </label>
+          <button class="primary" type="submit">Crear invitación</button>
+          <p class="admin-note">No se envía correo automático. Copia el enlace y envíalo manualmente.</p>
+        </form>
+        <div class="invite-link-box" id="inviteLinkBox" hidden>
+          <strong>Enlace de invitación</strong>
+          <span id="inviteLinkText"></span>
+          <button class="secondary" id="copyInviteLink" type="button">Copiar enlace</button>
+        </div>
+        <div class="admin-grid" id="adminInvitesList"></div>
+      </div>
+      <div class="admin-tab-panel" id="adminHistoryPanel" hidden>
+        <div class="admin-grid" id="adminHistoryList"></div>
+      </div>
+      <div class="admin-tab-panel" id="adminPropertyPanel" hidden>
+        <section class="admin-card" id="ownerPanel">
+          <h3>Propiedad de la aplicación</h3>
+          <p class="admin-note" id="ownerStatusText">Cargando propietario...</p>
+          <div class="mini-actions">
+            <button type="button" id="recoverOwnerAdmin">Recuperar control administrativo</button>
+          </div>
+        </section>
+        <section class="admin-card" id="ownerTransferPanel">
+          <h3>Transferencia de propiedad</h3>
+          <form class="admin-card" id="ownerTransferForm">
+            <p class="admin-note">Estás iniciando la transferencia de la propiedad de la aplicación. Si completas el proceso, la otra persona tendrá el control de propietario y tú perderás esa condición.</p>
+            <label>
+              Transferir a superadministrador activo
+              <select class="field" id="ownerTransferTarget"></select>
+            </label>
+            <label>
+              Escribe TRANSFERIR para iniciar
+              <input class="field" id="ownerTransferConfirmText" type="text" autocomplete="off">
+            </label>
+            <button class="secondary" type="submit">Solicitar transferencia</button>
+          </form>
+          <div class="admin-grid" id="ownerTransferList"></div>
+        </section>
+      </div>
+      <div class="sheet-actions">
+        <button class="secondary" id="refreshAdminPanel" type="button">Actualizar</button>
+        <button class="primary" id="doneAdminPanel" type="button">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="inviteAcceptModal" role="dialog" aria-modal="true" aria-labelledby="inviteAcceptTitle">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2 id="inviteAcceptTitle">Aceptar invitación</h2>
+        <button class="close" id="closeInviteAccept" type="button" aria-label="Cerrar">×</button>
+      </div>
+      <p class="admin-note">Inicia sesión o crea una cuenta usando el mismo correo al que fue enviada la invitación.</p>
+      <form id="inviteAcceptForm">
+        <label>
+          Correo invitado
+          <input class="field" id="inviteAcceptEmail" type="email" required autocomplete="username">
+        </label>
+        <label>
+          Contraseña
+          <input class="field" id="inviteAcceptPassword" type="password" required autocomplete="current-password" minlength="6">
+        </label>
+      </form>
+      <div class="sheet-actions">
+        <button class="secondary" id="inviteCreateAccount" type="submit" form="inviteAcceptForm" data-invite-mode="signup">Crear cuenta y aceptar</button>
+        <button class="primary" id="inviteLogin" type="submit" form="inviteAcceptForm" data-invite-mode="signin">Entrar y aceptar</button>
+      </div>
+    </div>
+  </div>
+
   <div class="modal" id="previewModal" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
     <div class="sheet">
       <div class="sheet-head">
@@ -1707,6 +2096,7 @@
     const CONFIG_KEY = "cantos-iglesia-config-v1";
     const THEME_KEY = "cantos-iglesia-theme-v1";
     const PRESENTATION_KEY = "cantos-iglesia-presentacion-v1";
+    const ADMIN_INACTIVITY_LIMIT_MS = 2 * 60 * 60 * 1000;
     const ADMIN_ACCESS_CODE = "admin123";
     const USER_ACCESS_CODE = "usuario";
     const SUPABASE_PROJECT_URL = "https://fvnbkviaymiysqquzlhd.supabase.co"; // Copia aqui tu Project URL de Supabase.
@@ -1720,13 +2110,21 @@
       presentationMode: false,
       isAdmin: false,
       adminRole: "",
+      adminAlias: "",
+      adminStatus: "",
+      adminDisplayName: "",
+      adminIsOwner: false,
       authUser: null,
+      inviteToken: "",
+      inviteSubmitMode: "signin",
       config: { title: "Cantos de Iglesia", subtitle: "", image: "", transparentImage: false },
       pendingImage: "",
       presentation: { songIds: [], overrides: {} },
       presentationSlides: [],
       presentationIndex: 0,
       controlsTimer: null,
+      adminInactivityTimer: null,
+      adminActivityListening: false,
       touchStartX: null,
       touchStartY: null,
       lastNavAt: 0
@@ -1747,8 +2145,12 @@
       closePresentationView: document.querySelector("#closePresentationView"),
       presentationPanelMount: document.querySelector("#presentationPanelMount"),
       newSong: document.querySelector("#newSong"),
+      openAdminPanel: document.querySelector("#openAdminPanel"),
+      adminProfileLabel: document.querySelector("#adminProfileLabel"),
       adminReturn: document.querySelector("#adminReturn"),
       adminLogout: document.querySelector("#adminLogout"),
+      mobileAdminProfileLabel: document.querySelector("#mobileAdminProfileLabel"),
+      mobileOpenAdminPanel: document.querySelector("#mobileOpenAdminPanel"),
       mobileAdminReturn: document.querySelector("#mobileAdminReturn"),
       mobileAdminLogout: document.querySelector("#mobileAdminLogout"),
       themeToggle: document.querySelector("#themeToggle"),
@@ -1781,6 +2183,44 @@
       cancelAuth: document.querySelector("#cancelAuth"),
       authEmail: document.querySelector("#authEmail"),
       authPassword: document.querySelector("#authPassword"),
+      adminPanelModal: document.querySelector("#adminPanelModal"),
+      closeAdminPanel: document.querySelector("#closeAdminPanel"),
+      doneAdminPanel: document.querySelector("#doneAdminPanel"),
+      refreshAdminPanel: document.querySelector("#refreshAdminPanel"),
+      adminTabUsers: document.querySelector("#adminTabUsers"),
+      adminTabAlias: document.querySelector("#adminTabAlias"),
+      adminTabInvites: document.querySelector("#adminTabInvites"),
+      adminTabHistory: document.querySelector("#adminTabHistory"),
+      adminTabProperty: document.querySelector("#adminTabProperty"),
+      adminUsersPanel: document.querySelector("#adminUsersPanel"),
+      adminAliasPanel: document.querySelector("#adminAliasPanel"),
+      adminInvitesPanel: document.querySelector("#adminInvitesPanel"),
+      adminHistoryPanel: document.querySelector("#adminHistoryPanel"),
+      adminPropertyPanel: document.querySelector("#adminPropertyPanel"),
+      ownerPanel: document.querySelector("#ownerPanel"),
+      ownerStatusText: document.querySelector("#ownerStatusText"),
+      recoverOwnerAdmin: document.querySelector("#recoverOwnerAdmin"),
+      ownerTransferForm: document.querySelector("#ownerTransferForm"),
+      ownerTransferTarget: document.querySelector("#ownerTransferTarget"),
+      ownerTransferConfirmText: document.querySelector("#ownerTransferConfirmText"),
+      ownerTransferList: document.querySelector("#ownerTransferList"),
+      adminUsersList: document.querySelector("#adminUsersList"),
+      adminAliasList: document.querySelector("#adminAliasList"),
+      adminInvitesList: document.querySelector("#adminInvitesList"),
+      adminHistoryList: document.querySelector("#adminHistoryList"),
+      inviteForm: document.querySelector("#inviteForm"),
+      inviteEmail: document.querySelector("#inviteEmail"),
+      inviteRole: document.querySelector("#inviteRole"),
+      inviteLinkBox: document.querySelector("#inviteLinkBox"),
+      inviteLinkText: document.querySelector("#inviteLinkText"),
+      copyInviteLink: document.querySelector("#copyInviteLink"),
+      inviteAcceptModal: document.querySelector("#inviteAcceptModal"),
+      closeInviteAccept: document.querySelector("#closeInviteAccept"),
+      inviteAcceptForm: document.querySelector("#inviteAcceptForm"),
+      inviteAcceptEmail: document.querySelector("#inviteAcceptEmail"),
+      inviteAcceptPassword: document.querySelector("#inviteAcceptPassword"),
+      inviteCreateAccount: document.querySelector("#inviteCreateAccount"),
+      inviteLogin: document.querySelector("#inviteLogin"),
       previewModal: document.querySelector("#previewModal"),
       previewBody: document.querySelector("#previewBody"),
       closePreview: document.querySelector("#closePreview"),
@@ -1821,8 +2261,55 @@
       db.client = window.supabase.createClient(SUPABASE_PROJECT_URL, SUPABASE_PUBLISHABLE_KEY);
     }
 
-    function hasAdminAccess(role) {
-      return role === "admin" || role === "superadmin";
+    function hasAdminAccess(role, status = "active") {
+      return status === "active" && (role === "admin" || role === "superadmin");
+    }
+
+    function isSuperadmin() {
+      return state.adminRole === "superadmin" && state.adminStatus === "active";
+    }
+
+    function isOwner() {
+      return state.adminIsOwner === true && state.adminStatus === "active";
+    }
+
+    function hasAdminPanelAccess() {
+      return isSuperadmin() || isOwner();
+    }
+
+    function adminDisplayName(profile) {
+      const alias = String(profile?.alias || "").trim();
+      return alias || "Administrador";
+    }
+
+    function adminProfileIsReady(profile) {
+      return Boolean(profile?.id && hasAdminAccess(profile.role, profile.status));
+    }
+
+    function storeAdminProfile(profile) {
+      const displayName = adminDisplayName(profile);
+      state.adminRole = profile?.role || "";
+      state.adminAlias = String(profile?.alias || "").trim();
+      state.adminStatus = profile?.status || "";
+      state.adminDisplayName = displayName;
+      state.adminIsOwner = Boolean(profile?.is_owner);
+      state.authUser = profile ? {
+        id: profile.id,
+        alias: state.adminAlias,
+        displayName,
+        is_owner: state.adminIsOwner,
+        role: profile.role,
+        status: profile.status
+      } : null;
+    }
+
+    function clearAdminProfile() {
+      state.adminRole = "";
+      state.adminAlias = "";
+      state.adminStatus = "";
+      state.adminDisplayName = "";
+      state.adminIsOwner = false;
+      state.authUser = null;
     }
 
     async function loadCurrentProfile() {
@@ -1831,11 +2318,17 @@
       if (!user) return null;
       const { data, error } = await db.client
         .from("profiles")
-        .select("role")
+        .select("role, alias, status, is_owner")
         .eq("id", user.id)
         .maybeSingle();
-      if (error || !hasAdminAccess(data?.role)) return null;
-      return { user, role: data.role };
+      if (error || !data || !hasAdminAccess(data.role, data.status || "active")) return null;
+      return {
+        id: user.id,
+        role: data.role,
+        alias: String(data.alias || "").trim(),
+        is_owner: Boolean(data.is_owner),
+        status: data.status || "active"
+      };
     }
 
     async function restoreAuthSession() {
@@ -1843,23 +2336,28 @@
       state.isAdmin = false;
       state.selectedId = null;
       if (!profile) {
-        state.adminRole = "";
-        state.authUser = null;
+        clearAdminProfile();
+        stopAdminInactivityTimer();
         return;
       }
-      state.adminRole = profile.role;
-      state.authUser = profile.user;
+      storeAdminProfile(profile);
+      if (adminProfileIsReady(profile)) startAdminInactivityTimer();
     }
 
     async function enterAuthenticatedAdmin(profile) {
+      if (!adminProfileIsReady(profile)) {
+        showToast("Esta cuenta no tiene permiso administrativo activo.");
+        state.isAdmin = false;
+        render();
+        return;
+      }
       state.isAdmin = true;
-      state.adminRole = profile.role;
-      state.authUser = profile.user;
+      storeAdminProfile(profile);
       state.selectedId = null;
       closeAuthModal();
-      await saveSongsToSupabase();
       await saveConfigToSupabase();
       await loadSongs();
+      startAdminInactivityTimer();
       showToast(profile.role === "superadmin" ? "Acceso superadministrador" : "Acceso administrativo");
       render();
     }
@@ -1892,13 +2390,12 @@
       };
     }
 
-    function songToRow(song) {
+    function songToWritableRow(song) {
       return {
         id: song.id,
         number: Number(song.number) || 0,
         title: song.title || "",
-        lyrics: song.lyrics || "",
-        updated_at: new Date().toISOString()
+        lyrics: song.lyrics || ""
       };
     }
 
@@ -2007,8 +2504,6 @@
           if (error) throw error;
           if (Array.isArray(data) && data.length > 0) {
             state.songs = data.map(songFromRow);
-          } else if (state.songs.length > 0 && state.isAdmin) {
-            await saveSongsToSupabase();
           }
         } catch {
           showToast("No se pudieron cargar los cantos de Supabase");
@@ -2036,33 +2531,57 @@
 
     function saveSongs(showMessage = true) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state.songs));
-      if (db.client && state.isAdmin) saveSongsToSupabase();
       if (showMessage) showToast("Guardado");
     }
 
-    async function saveSongsToSupabase() {
-      if (!db.client || !state.isAdmin || db.savingSongs) return;
+    async function createSongInSupabase(song) {
+      if (!db.client || !state.isAdmin || db.savingSongs) return song;
       db.savingSongs = true;
       try {
-        const rows = state.songs.map(songToRow);
-        if (rows.length > 0) {
-          const { error } = await db.client.from("songs").upsert(rows, { onConflict: "id" });
-          if (error) throw error;
-        }
+        const { data, error } = await db.client
+          .from("songs")
+          .insert(songToWritableRow(song))
+          .select("id, number, title, lyrics")
+          .single();
+        if (error) throw error;
+        return data ? songFromRow(data) : song;
       } catch {
-        showToast("No se pudieron guardar los cantos en Supabase");
+        showToast("No se pudo crear el canto en Supabase");
+        return null;
+      } finally {
+        db.savingSongs = false;
+      }
+    }
+
+    async function updateSongInSupabase(song) {
+      if (!db.client || !state.isAdmin || db.savingSongs) return song;
+      db.savingSongs = true;
+      try {
+        const { data, error } = await db.client
+          .from("songs")
+          .update(songToWritableRow(song))
+          .eq("id", song.id)
+          .select("id, number, title, lyrics")
+          .single();
+        if (error) throw error;
+        return data ? songFromRow(data) : song;
+      } catch {
+        showToast("No se pudo actualizar el canto en Supabase");
+        return null;
       } finally {
         db.savingSongs = false;
       }
     }
 
     async function deleteSongFromSupabase(id) {
-      if (!db.client || state.adminRole !== "superadmin") return;
+      if (!db.client || !state.isAdmin) return true;
       try {
         const { error } = await db.client.from("songs").delete().eq("id", id);
         if (error) throw error;
+        return true;
       } catch {
         showToast("No se pudo borrar el canto en Supabase");
+        return false;
       }
     }
 
@@ -2152,6 +2671,7 @@
       loadPresentation();
       subscribeToSupabaseChanges();
       render();
+      handleInviteLink();
     }
 
     function normalize(text) {
@@ -2194,6 +2714,9 @@
       renderConfig();
       el.newSong.style.display = state.isAdmin ? "grid" : "none";
       el.settingsButton.style.display = state.isAdmin ? "inline-flex" : "none";
+      const adminLabel = state.adminDisplayName && state.adminDisplayName !== "Administrador" ? `Administrador: ${state.adminDisplayName}` : "Administrador";
+      el.adminProfileLabel.textContent = adminLabel;
+      el.mobileAdminProfileLabel.textContent = adminLabel;
       el.themeToggle.style.display = !state.isAdmin && !state.selectedId && !state.presentationMode ? "inline-flex" : "none";
       el.openPresentation.style.display = !state.isAdmin && !state.selectedId && !state.presentationMode && !isPhoneViewport() ? "inline-flex" : "none";
 
@@ -2204,6 +2727,7 @@
       el.app.classList.toggle("user-home", !state.isAdmin && !state.selectedId);
       el.app.classList.toggle("user-reading", !state.isAdmin && Boolean(state.selectedId));
       el.app.classList.toggle("admin-mode", state.isAdmin);
+      el.app.classList.toggle("superadmin-mode", state.isAdmin && hasAdminPanelAccess());
       el.app.classList.toggle("admin-detail", state.isAdmin && Boolean(state.selectedId));
       el.app.classList.toggle("presentation-mode", state.presentationMode);
       el.searchBack.textContent = state.isAdmin ? "Volver a la lista" : "Volver";
@@ -2400,12 +2924,7 @@
       article.querySelector(".lyrics").textContent = song.lyrics;
       if (state.isAdmin) {
         article.querySelector("#editSelected").addEventListener("click", () => openEditor(song));
-        const deleteButton = article.querySelector("#deleteSelected");
-        if (state.adminRole === "superadmin") {
-          deleteButton.addEventListener("click", () => deleteSong(song.id));
-        } else {
-          deleteButton.remove();
-        }
+        article.querySelector("#deleteSelected").addEventListener("click", () => deleteSong(song.id));
       } else {
         article.querySelector("#adminActions").remove();
       }
@@ -2853,6 +3372,10 @@
     }
 
     function openAuthModal() {
+      if (currentInviteToken()) {
+        handleInviteLink();
+        return;
+      }
       if (!db.client) {
         showToast("Supabase no esta configurado");
         return;
@@ -3052,7 +3575,7 @@
       render();
     }
 
-    function submitSong(event) {
+    async function submitSong(event) {
       event.preventDefault();
       if (!state.isAdmin) return;
       autoCorrectEditorText();
@@ -3062,14 +3585,21 @@
       if (!title || !lyrics) return;
 
       if (state.editingId) {
+        const current = state.songs.find(song => song.id === state.editingId);
+        if (!current) return;
+        const updatedSong = { ...current, number, title, lyrics };
+        const savedSong = await updateSongInSupabase(updatedSong);
+        if (!savedSong) return;
         state.songs = state.songs.map(song =>
-          song.id === state.editingId ? { ...song, number, title, lyrics } : song
+          song.id === state.editingId ? savedSong : song
         );
         state.selectedId = state.editingId;
       } else {
         const song = { id: crypto.randomUUID(), number, title, lyrics };
-        state.songs = [song, ...state.songs];
-        state.selectedId = song.id;
+        const savedSong = await createSongInSupabase(song);
+        if (!savedSong) return;
+        state.songs = [savedSong, ...state.songs];
+        state.selectedId = savedSong.id;
       }
 
       sortSongs();
@@ -3078,18 +3608,15 @@
       render();
     }
 
-    function deleteSong(id) {
+    async function deleteSong(id) {
       if (!state.isAdmin) return;
-      if (state.adminRole !== "superadmin") {
-        showToast("Solo el superadministrador puede borrar cantos");
-        return;
-      }
       const song = state.songs.find(item => item.id === id);
       if (!song || !confirm(`¿Borrar "${song.title}"?`)) return;
+      const deleted = await deleteSongFromSupabase(id);
+      if (!deleted) return;
       state.songs = state.songs.filter(item => item.id !== id);
       state.selectedId = state.songs[0]?.id || null;
       saveSongs();
-      deleteSongFromSupabase(id);
       render();
     }
 
@@ -3108,6 +3635,49 @@
       });
     }
 
+    function adminSessionIsActive() {
+      return Boolean(state.authUser && hasAdminAccess(state.adminRole, state.adminStatus));
+    }
+
+    function resetAdminInactivityTimer() {
+      if (!adminSessionIsActive()) return;
+      clearTimeout(state.adminInactivityTimer);
+      state.adminInactivityTimer = setTimeout(() => {
+        expireAdminSession();
+      }, ADMIN_INACTIVITY_LIMIT_MS);
+    }
+
+    function recordAdminActivity() {
+      resetAdminInactivityTimer();
+    }
+
+    function startAdminInactivityTimer() {
+      if (!adminSessionIsActive()) return;
+      if (!state.adminActivityListening) {
+        ["click", "touchstart", "keydown", "mousemove", "scroll", "input", "change"].forEach(type => {
+          window.addEventListener(type, recordAdminActivity, { passive: true });
+        });
+        state.adminActivityListening = true;
+      }
+      resetAdminInactivityTimer();
+    }
+
+    function stopAdminInactivityTimer() {
+      clearTimeout(state.adminInactivityTimer);
+      state.adminInactivityTimer = null;
+      if (state.adminActivityListening) {
+        ["click", "touchstart", "keydown", "mousemove", "scroll", "input", "change"].forEach(type => {
+          window.removeEventListener(type, recordAdminActivity);
+        });
+        state.adminActivityListening = false;
+      }
+    }
+
+    async function expireAdminSession() {
+      if (!adminSessionIsActive()) return;
+      await signOutAdmin({ expired: true });
+    }
+
     function returnToUserMode(showMessage = true) {
       state.isAdmin = false;
       state.selectedId = null;
@@ -3118,12 +3688,14 @@
       render();
     }
 
-    async function signOutAdmin() {
+    async function signOutAdmin(options = {}) {
       if (db.client) await db.client.auth.signOut();
-      state.adminRole = "";
-      state.authUser = null;
+      clearAdminProfile();
+      stopAdminInactivityTimer();
       returnToUserMode(false);
-      showToast("Sesión cerrada");
+      showToast(options.expired
+        ? "Tu sesión de administrador expiró por inactividad. Inicia sesión nuevamente para continuar."
+        : "Sesión cerrada");
     }
 
     async function enterUserMode() {
@@ -3131,16 +3703,609 @@
     }
 
     async function enterAdminMode() {
-      if (state.authUser && hasAdminAccess(state.adminRole)) {
-        await enterAuthenticatedAdmin({ user: state.authUser, role: state.adminRole });
+      if (currentInviteToken()) {
+        handleInviteLink();
+        return;
+      }
+      if (state.authUser && hasAdminAccess(state.adminRole, state.adminStatus)) {
+        await enterAuthenticatedAdmin(state.authUser);
         return;
       }
       const profile = await loadCurrentProfile();
       if (profile) {
+        storeAdminProfile(profile);
+        if (!adminProfileIsReady(profile)) {
+          showToast("Esta cuenta no tiene permiso administrativo activo.");
+          return;
+        }
         await enterAuthenticatedAdmin(profile);
         return;
       }
       openAuthModal();
+    }
+
+
+    function formatDate(value) {
+      if (!value) return "Sin fecha";
+      try {
+        return new Intl.DateTimeFormat("es", {
+          dateStyle: "medium",
+          timeStyle: "short"
+        }).format(new Date(value));
+      } catch {
+        return String(value);
+      }
+    }
+
+    async function copyText(value) {
+      try {
+        await navigator.clipboard.writeText(value);
+        showToast("Enlace copiado");
+      } catch {
+        showToast("No se pudo copiar. Selecciona el enlace manualmente.");
+      }
+    }
+
+    async function invokeAdminFunction(name, body) {
+      if (!db.client) throw new Error("Supabase no esta configurado");
+      const { data, error } = await db.client.functions.invoke(name, { body });
+      if (error) throw error;
+      return data;
+    }
+
+    function sanitizeErrorDetail(value) {
+      return String(value || "")
+        .replace(/Bearer\s+[A-Za-z0-9._~+/-]+=*/gi, "Bearer [oculto]")
+        .replace(/Authorization:\s*[^\n\r]+/gi, "Authorization: [oculto]")
+        .replace(/sb_[A-Za-z0-9._~+/-]+/g, "[clave oculta]")
+        .slice(0, 260);
+    }
+
+    async function extractAdminFunctionErrorDetail(error) {
+      const details = [];
+      if (error?.name) details.push(error.name);
+      if (error?.message) details.push(error.message);
+
+      const context = error?.context;
+      const status = context?.status || error?.status;
+      const statusText = context?.statusText || error?.statusText;
+      if (status) details.push(`HTTP ${status}`);
+      if (statusText) details.push(statusText);
+
+      const response = typeof context?.clone === "function"
+        ? context
+        : context?.response || error?.response;
+      if (response && typeof response.clone === "function") {
+        try {
+          const clone = response.clone();
+          const contentType = clone.headers?.get?.("content-type") || "";
+          if (contentType.includes("application/json")) {
+            const json = await clone.json();
+            details.push(json?.error || json?.message || JSON.stringify(json));
+          } else {
+            details.push(await clone.text());
+          }
+        } catch (readError) {
+          details.push(readError?.message);
+        }
+      }
+
+      return sanitizeErrorDetail([...new Set(details.filter(Boolean))].join(" · "));
+    }
+
+    function setAdminTab(tab) {
+      const panels = { users: el.adminUsersPanel, alias: el.adminAliasPanel, invites: el.adminInvitesPanel, history: el.adminHistoryPanel, property: el.adminPropertyPanel };
+      const buttons = { users: el.adminTabUsers, alias: el.adminTabAlias, invites: el.adminTabInvites, history: el.adminTabHistory, property: el.adminTabProperty };
+      Object.entries(panels).forEach(([key, panel]) => panel.hidden = key !== tab);
+      Object.entries(buttons).forEach(([key, button]) => button.classList.toggle("active", key === tab));
+    }
+
+    async function openAdminPanel() {
+      if (!hasAdminPanelAccess()) {
+        showToast("Solo el propietario o un superadministrador puede abrir este panel");
+        return;
+      }
+      setAdminTab("users");
+      el.adminPanelModal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      await refreshAdminPanelData();
+    }
+
+    function closeAdminPanel() {
+      el.adminPanelModal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    async function refreshAdminPanelData() {
+      if (!hasAdminPanelAccess()) return;
+      await Promise.allSettled([loadAdminProfiles(), loadAdminInvitations(), loadAuditLog(), loadOwnerTransfers()]);
+    }
+
+
+    async function loadOwnerTransfers() {
+      if (!hasAdminPanelAccess()) return;
+      const { data: profiles } = await db.client
+        .from("profiles")
+        .select("id, alias, role, status, is_owner")
+        .order("created_at", { ascending: true });
+      const list = profiles || [];
+      const owner = list.find(profile => profile.is_owner);
+      renderOwnerSummary(owner, list);
+
+      const { data, error } = await db.client
+        .from("owner_transfer_requests")
+        .select("id, current_owner_id, proposed_owner_id, status, created_at, expires_at, accepted_by_candidate_at, accepted_at, cancelled_at, rejected_at")
+        .order("created_at", { ascending: false });
+      if (error) {
+        el.ownerTransferList.innerHTML = "<div class='empty'><div><strong>No se pudieron cargar las transferencias.</strong></div></div>";
+        return;
+      }
+      renderOwnerTransfers(data || [], list);
+    }
+
+    function renderOwnerSummary(owner, profiles) {
+      const ownerName = owner ? adminDisplayName(owner) : "Sin propietario asignado";
+      const ownerRole = owner?.role === "superadmin" ? "Superadministrador" : owner?.role === "admin" ? "Administrador" : "Sin rol";
+      el.ownerStatusText.textContent = owner
+        ? `Propietario actual: ${ownerName}. Estado: ${owner.status}. Rol: ${ownerRole}.`
+        : "Aún no hay propietario asignado. Después de aplicar la migración se debe marcar manualmente la cuenta correcta.";
+      el.recoverOwnerAdmin.style.display = isOwner() && !isSuperadmin() ? "inline-flex" : "none";
+      el.ownerTransferForm.style.display = isOwner() ? "grid" : "none";
+      el.ownerTransferTarget.innerHTML = "";
+      profiles
+        .filter(profile => profile.id !== state.authUser?.id && profile.role === "superadmin" && profile.status === "active")
+        .forEach(profile => {
+          const option = document.createElement("option");
+          option.value = profile.id;
+          option.textContent = adminDisplayName(profile);
+          el.ownerTransferTarget.append(option);
+        });
+    }
+
+    function renderOwnerTransfers(transfers, profiles) {
+      el.ownerTransferList.innerHTML = "";
+      const visible = transfers.filter(item => item.status === "pending" || item.status === "awaiting_owner_confirmation");
+      if (!visible.length) {
+        el.ownerTransferList.innerHTML = "<div class='empty'><div><strong>No hay transferencias pendientes.</strong></div></div>";
+        return;
+      }
+      const fragment = document.createDocumentFragment();
+      visible.forEach(item => {
+        const proposed = profiles.find(profile => profile.id === item.proposed_owner_id);
+        const card = document.createElement("article");
+        card.className = "admin-card";
+        card.innerHTML = `
+          <h3></h3>
+          <small></small>
+          <p class="admin-note" data-role="message"></p>
+          <div class="mini-actions">
+            <button type="button" data-action="accept">Aceptar</button>
+            <button type="button" data-action="reject">Rechazar</button>
+            <button type="button" data-action="confirm">Confirmar transferencia definitiva</button>
+            <button type="button" data-action="cancel">Cancelar transferencia</button>
+          </div>
+        `;
+        card.querySelector("h3").textContent = `Transferencia a ${adminDisplayName(proposed)}`;
+        card.querySelector("small").textContent = `${item.status === "awaiting_owner_confirmation" ? "Esperando confirmación final" : "Pendiente"} · vence ${formatDate(item.expires_at)}`;
+        card.querySelector("[data-role='message']").textContent = item.status === "awaiting_owner_confirmation"
+          ? "El candidato aceptó la transferencia. La propiedad todavía no ha cambiado."
+          : "El candidato aún no ha aceptado. La propiedad todavía no ha cambiado.";
+        const accept = card.querySelector("[data-action='accept']");
+        const reject = card.querySelector("[data-action='reject']");
+        const confirm = card.querySelector("[data-action='confirm']");
+        const cancel = card.querySelector("[data-action='cancel']");
+        accept.style.display = item.status === "pending" && item.proposed_owner_id === state.authUser?.id ? "inline-flex" : "none";
+        reject.style.display = item.proposed_owner_id === state.authUser?.id ? "inline-flex" : "none";
+        confirm.style.display = item.status === "awaiting_owner_confirmation" && isOwner() && item.current_owner_id === state.authUser?.id ? "inline-flex" : "none";
+        cancel.style.display = isOwner() && item.current_owner_id === state.authUser?.id ? "inline-flex" : "none";
+        accept.addEventListener("click", () => acceptOwnerTransfer(item.id));
+        reject.addEventListener("click", () => rejectOwnerTransfer(item.id));
+        confirm.addEventListener("click", () => confirmOwnerTransfer(item.id));
+        cancel.addEventListener("click", () => cancelOwnerTransfer(item.id));
+        fragment.append(card);
+      });
+      el.ownerTransferList.append(fragment);
+    }
+
+    async function recoverOwnerSuperadmin() {
+      if (!isOwner()) return;
+      try {
+        const { data, error } = await db.client.rpc("recover_owner_superadmin", {
+          context: {
+            user_agent: navigator.userAgent || "",
+            platform: navigator.platform || "",
+            date: new Date().toISOString()
+          }
+        });
+        if (error) throw error;
+        const profile = await loadCurrentProfile();
+        if (profile) storeAdminProfile(profile);
+        showToast(data?.already_recovered ? "El control administrativo ya estaba activo" : "Control superadministrador recuperado");
+        await refreshAdminPanelData();
+        render();
+      } catch {
+        showToast("No se pudo recuperar el control administrativo");
+      }
+    }
+
+    async function submitOwnerTransfer(event) {
+      event.preventDefault();
+      if (!isOwner()) return;
+      const proposed_owner_id = el.ownerTransferTarget.value;
+      if (!proposed_owner_id) {
+        showToast("Selecciona un superadministrador activo");
+        return;
+      }
+      if (el.ownerTransferConfirmText.value.trim() !== "TRANSFERIR") {
+        showToast("Debes escribir TRANSFERIR para iniciar");
+        return;
+      }
+      try {
+        const { error } = await db.client.rpc("create_owner_transfer", { proposed_owner_id });
+        if (error) throw error;
+        el.ownerTransferConfirmText.value = "";
+        showToast("Transferencia solicitada");
+        await loadOwnerTransfers();
+      } catch {
+        showToast("No se pudo solicitar la transferencia");
+      }
+    }
+
+    async function confirmOwnerTransfer(request_id) {
+      const ok = confirm("Esta es la confirmación definitiva. Si continúas, la propiedad cambiará a la otra persona. ¿Confirmar transferencia?");
+      if (!ok) return;
+      try {
+        const { error } = await db.client.rpc("confirm_owner_transfer", { request_id });
+        if (error) throw error;
+        const profile = await loadCurrentProfile();
+        if (profile) storeAdminProfile(profile);
+        showToast("Transferencia completada");
+        await refreshAdminPanelData();
+        render();
+      } catch {
+        showToast("No se pudo confirmar la transferencia");
+      }
+    }
+
+    async function rejectOwnerTransfer(request_id) {
+      try {
+        const { error } = await db.client.rpc("reject_owner_transfer", { request_id });
+        if (error) throw error;
+        showToast("Transferencia rechazada");
+        await loadOwnerTransfers();
+      } catch {
+        showToast("No se pudo rechazar la transferencia");
+      }
+    }
+
+    async function cancelOwnerTransfer(request_id) {
+      try {
+        const { error } = await db.client.rpc("cancel_owner_transfer", { request_id });
+        if (error) throw error;
+        showToast("Transferencia cancelada");
+        await loadOwnerTransfers();
+      } catch {
+        showToast("No se pudo cancelar la transferencia");
+      }
+    }
+
+    async function acceptOwnerTransfer(request_id) {
+      try {
+        const { error } = await db.client.rpc("accept_owner_transfer", { request_id });
+        if (error) throw error;
+        showToast("Aceptaste la transferencia. Falta la confirmación final del propietario actual.");
+        await loadOwnerTransfers();
+      } catch {
+        showToast("No se pudo aceptar la transferencia");
+      }
+    }
+
+    async function loadAdminProfiles() {
+      el.adminUsersList.innerHTML = "<div class='empty'><div><strong>Cargando administradores...</strong></div></div>";
+      el.adminAliasList.innerHTML = "<div class='empty'><div><strong>Cargando alias...</strong></div></div>";
+      const { data, error } = await db.client
+        .from("profiles")
+        .select("id, alias, role, status, is_owner, created_at")
+        .order("created_at", { ascending: true });
+      if (error) {
+        el.adminUsersList.innerHTML = "<div class='empty'><div><strong>No se pudo cargar la lista.</strong></div></div>";
+        el.adminAliasList.innerHTML = "<div class='empty'><div><strong>No se pudo cargar la lista.</strong></div></div>";
+        return;
+      }
+      renderAdminProfiles(data || []);
+      renderAdminAliases(data || []);
+    }
+
+    function renderAdminProfiles(profiles) {
+      el.adminUsersList.innerHTML = "";
+      if (!profiles.length) {
+        el.adminUsersList.innerHTML = "<div class='empty'><div><strong>No hay administradores registrados.</strong></div></div>";
+        return;
+      }
+      const activeSuperadmins = profiles.filter(profile => profile.role === "superadmin" && profile.status === "active").length;
+      const fragment = document.createDocumentFragment();
+      profiles.forEach(profile => {
+        const card = document.createElement("article");
+        card.className = `admin-card ${profile.status === "inactive" ? "inactive" : ""}`;
+        card.innerHTML = "<h3></h3><small class='admin-meta'></small>";
+        card.querySelector("h3").textContent = profile.is_owner ? `${adminDisplayName(profile)} · Propietario` : adminDisplayName(profile);
+        card.querySelector(".admin-meta").textContent = `${profile.role === "superadmin" ? "Superadministrador" : "Administrador"} · ${profile.status === "active" ? "Activo" : "Inactivo"} · Creado ${formatDate(profile.created_at)}`;
+        const isOwnerRow = profile.is_owner === true;
+        const isCurrentOwner = isOwnerRow && profile.id === state.authUser?.id;
+        const isLastSelf = profile.id === state.authUser?.id && profile.role === "superadmin" && profile.status === "active" && activeSuperadmins <= 1 && !isCurrentOwner;
+        if (isOwnerRow) {
+          const note = document.createElement("p");
+          note.className = "admin-note";
+          note.textContent = isCurrentOwner
+            ? "Tu cuenta propietaria está protegida."
+            : "La cuenta propietaria está protegida. No puedes desactivarla ni cambiar su rol.";
+          card.append(note);
+        } else if (isLastSelf) {
+          const note = document.createElement("p");
+          note.className = "admin-note";
+          note.textContent = "Este es el último superadministrador activo. No se puede degradar ni desactivar.";
+          card.append(note);
+        }
+        fragment.append(card);
+      });
+      el.adminUsersList.append(fragment);
+    }
+
+    function renderAdminAliases(profiles) {
+      el.adminAliasList.innerHTML = "";
+      if (!profiles.length) {
+        el.adminAliasList.innerHTML = "<div class='empty'><div><strong>No hay administradores registrados.</strong></div></div>";
+        return;
+      }
+      const fragment = document.createDocumentFragment();
+      profiles.forEach(profile => {
+        const card = document.createElement("article");
+        card.className = `admin-card ${profile.status === "inactive" ? "inactive" : ""}`;
+        card.innerHTML = `
+          <h3></h3>
+          <small class="admin-meta"></small>
+          <div class="admin-inline-form">
+            <label>Alias opcional<input class="field" data-field="alias" type="text" maxlength="80"></label>
+            <button class="primary" type="button" data-action="save">Guardar alias</button>
+          </div>
+        `;
+        card.querySelector("h3").textContent = profile.is_owner ? `${adminDisplayName(profile)} · Propietario` : adminDisplayName(profile);
+        card.querySelector(".admin-meta").textContent = `${profile.role === "superadmin" ? "Superadministrador" : "Administrador"} · ${profile.status === "active" ? "Activo" : "Inactivo"}`;
+        card.querySelector("[data-field='alias']").value = profile.alias || "";
+        card.querySelector("[data-action='save']").addEventListener("click", () => saveAdminProfile(profile.id, card));
+        fragment.append(card);
+      });
+      el.adminAliasList.append(fragment);
+    }
+
+    async function saveAdminProfile(id, card) {
+      if (!hasAdminPanelAccess()) return;
+      const alias = card.querySelector("[data-field='alias']").value.trim() || null;
+      const { error } = await db.client
+        .from("profiles")
+        .update({ alias, updated_at: new Date().toISOString() })
+        .eq("id", id);
+      if (error) {
+        showToast("No se pudo actualizar el administrador");
+        return;
+      }
+      if (id === state.authUser?.id) {
+        const profile = await loadCurrentProfile();
+        if (profile) storeAdminProfile(profile);
+      }
+      showToast("Administrador actualizado");
+      await loadAdminProfiles();
+      render();
+    }
+
+    async function loadAdminInvitations() {
+      el.adminInvitesList.innerHTML = "<div class='empty'><div><strong>Cargando invitaciones...</strong></div></div>";
+      const { data, error } = await db.client
+        .from("admin_invitations")
+        .select("id, role, status, expires_at, accepted_at, created_at, cancelled_at")
+        .order("created_at", { ascending: false });
+      if (error) {
+        el.adminInvitesList.innerHTML = "<div class='empty'><div><strong>No se pudieron cargar las invitaciones.</strong></div></div>";
+        return;
+      }
+      renderAdminInvitations(data || []);
+    }
+
+    function renderAdminInvitations(invitations) {
+      el.adminInvitesList.innerHTML = "";
+      if (!invitations.length) {
+        el.adminInvitesList.innerHTML = "<div class='empty'><div><strong>No hay invitaciones.</strong></div></div>";
+        return;
+      }
+      const fragment = document.createDocumentFragment();
+      invitations.forEach(invitation => {
+        const card = document.createElement("article");
+        card.className = `admin-card ${invitation.status !== "pending" ? "resolved" : ""}`;
+        card.innerHTML = `
+          <h3></h3>
+          <small></small>
+          <div class="mini-actions">
+            <button type="button" data-action="resend">Reenviar</button>
+            <button type="button" data-action="cancel">Cancelar</button>
+          </div>
+        `;
+        const invitationTitle = invitation.status === "pending" ? "Invitación pendiente" : "Invitación seleccionada";
+        const createdText = invitation.created_at ? ` · creada ${formatDate(invitation.created_at)}` : "";
+        const expiresText = invitation.expires_at ? ` · vence ${formatDate(invitation.expires_at)}` : "";
+        card.querySelector("h3").textContent = invitationTitle;
+        card.querySelector("small").textContent = `${invitation.role === "superadmin" ? "Superadministrador" : "Administrador"} · ${invitation.status}${createdText}${expiresText}`;
+        const resend = card.querySelector("[data-action='resend']");
+        const cancel = card.querySelector("[data-action='cancel']");
+        resend.disabled = invitation.status === "accepted";
+        cancel.disabled = invitation.status !== "pending";
+        resend.addEventListener("click", () => manageInvitation(invitation.id, "resend"));
+        cancel.addEventListener("click", () => manageInvitation(invitation.id, "cancel"));
+        fragment.append(card);
+      });
+      el.adminInvitesList.append(fragment);
+    }
+
+    async function loadAuditLog() {
+      el.adminHistoryList.innerHTML = "<div class='empty'><div><strong>Cargando historial...</strong></div></div>";
+      const { data, error } = await db.client
+        .from("admin_security_audit_log")
+        .select("id, action, actor_user_id, target_user_id, created_at, before_data, after_data")
+        .order("created_at", { ascending: false })
+        .limit(80);
+      if (error) {
+        el.adminHistoryList.innerHTML = "<div class='empty'><div><strong>No se pudo cargar el historial.</strong></div></div>";
+        return;
+      }
+      const ids = [...new Set((data || []).flatMap(entry => [entry.actor_user_id, entry.target_user_id]).filter(Boolean))];
+      let profileMap = {};
+      if (ids.length) {
+        const { data: profiles } = await db.client
+          .from("profiles")
+          .select("id, alias")
+          .in("id", ids);
+        profileMap = Object.fromEntries((profiles || []).map(profile => [profile.id, adminDisplayName(profile)]));
+      }
+      renderAuditLog(data || [], profileMap);
+    }
+
+    function renderAuditLog(entries, profileMap = {}) {
+      el.adminHistoryList.innerHTML = "";
+      if (!entries.length) {
+        el.adminHistoryList.innerHTML = "<div class='empty'><div><strong>Todavía no hay historial.</strong></div></div>";
+        return;
+      }
+      const fragment = document.createDocumentFragment();
+      entries.forEach(entry => {
+        const card = document.createElement("article");
+        card.className = "admin-card";
+        card.innerHTML = "<h3></h3><small></small><p class='admin-note'></p>";
+        card.querySelector("h3").textContent = entry.action || "Acción administrativa";
+        const actorName = profileMap[entry.actor_user_id] || "Administrador";
+        const targetName = profileMap[entry.target_user_id] || "";
+        card.querySelector("small").textContent = `${actorName} · ${formatDate(entry.created_at)}`;
+        card.querySelector("p").textContent = targetName ? `Cuenta afectada: ${targetName}` : "Registro de seguridad";
+        fragment.append(card);
+      });
+      el.adminHistoryList.append(fragment);
+    }
+
+    async function submitInvitation(event) {
+      event.preventDefault();
+      if (!hasAdminPanelAccess()) return;
+      const invited_email = el.inviteEmail.value.trim();
+      const role = el.inviteRole.value;
+      if (!invited_email) return;
+      try {
+        const data = await invokeAdminFunction("create-admin-invitation", { invited_email, role });
+        showInviteLink(data?.invite_url || "");
+        el.inviteForm.reset();
+        showToast("Invitación creada");
+        await loadAdminInvitations();
+      } catch (error) {
+        console.error("Error al crear invitación:", error);
+        const detail = await extractAdminFunctionErrorDetail(error);
+        showToast(detail ? `No se pudo crear la invitación: ${detail}` : "No se pudo crear la invitación");
+      }
+    }
+
+    async function manageInvitation(id, action) {
+      if (!hasAdminPanelAccess()) return;
+      try {
+        const data = await invokeAdminFunction("manage-admin-invitation", { id, action });
+        if (data?.invite_url) showInviteLink(data.invite_url);
+        showToast(action === "cancel" ? "Invitación cancelada" : "Invitación reenviada");
+        await loadAdminInvitations();
+      } catch {
+        showToast("No se pudo actualizar la invitación");
+      }
+    }
+
+    function showInviteLink(url) {
+      if (!url) return;
+      el.inviteLinkText.textContent = url;
+      el.inviteLinkBox.hidden = false;
+    }
+
+    function openInviteAcceptModal(token) {
+      if (!token || !db.client) return;
+      state.inviteToken = token;
+      closeAuthModal();
+      closeAdminPanel();
+      el.inviteAcceptModal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      setTimeout(() => el.inviteAcceptEmail.focus(), 60);
+    }
+
+    function closeInviteAcceptModal() {
+      el.inviteAcceptModal.classList.remove("open");
+      document.body.style.overflow = "";
+      el.inviteAcceptForm.reset();
+    }
+
+    async function acceptInvitationWithAuth(event) {
+      event.preventDefault();
+      if (!db.client || !state.inviteToken) return;
+      const mode = event.submitter?.dataset?.inviteMode || state.inviteSubmitMode || "signin";
+      const email = el.inviteAcceptEmail.value.trim();
+      const password = el.inviteAcceptPassword.value;
+      if (!email || !password) return;
+      try {
+        if (mode === "signup") {
+          const { data, error } = await db.client.auth.signUp({ email, password });
+          if (error) throw error;
+          if (!data?.session) {
+            const { error: signInError } = await db.client.auth.signInWithPassword({ email, password });
+            if (signInError) {
+              showToast("Cuenta creada. Confirma tu correo y vuelve a abrir el enlace.");
+              return;
+            }
+          }
+        } else {
+          const { error } = await db.client.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+        }
+        await invokeAdminFunction("accept-admin-invitation", { token: state.inviteToken });
+        const profile = await loadCurrentProfile();
+        if (profile) storeAdminProfile(profile);
+        closeInviteAcceptModal();
+        const url = new URL(window.location.href);
+        url.searchParams.delete("invite");
+        window.history.replaceState({}, document.title, url.toString());
+        showToast("Invitación aceptada. Ya puedes entrar al modo administrador.");
+        render();
+      } catch (error) {
+        console.error("Error al aceptar invitación:", error);
+        showToast(`No se pudo aceptar la invitación: ${error?.message || "revisa el correo o pide un enlace nuevo"}`);
+      }
+    }
+
+    function currentInviteToken() {
+      return new URLSearchParams(window.location.search).get("invite");
+    }
+
+    async function handleInviteLink() {
+      const inviteToken = currentInviteToken();
+      if (!inviteToken) return;
+      state.inviteToken = inviteToken;
+      if (db.client) {
+        const { data: { user } } = await db.client.auth.getUser();
+        if (user) {
+          try {
+            await invokeAdminFunction("accept-admin-invitation", { token: inviteToken });
+            const profile = await loadCurrentProfile();
+            if (profile) storeAdminProfile(profile);
+            const url = new URL(window.location.href);
+            url.searchParams.delete("invite");
+            window.history.replaceState({}, document.title, url.toString());
+            showToast("Invitación aceptada. Ya puedes entrar al modo administrador.");
+            render();
+            return;
+          } catch (error) {
+            console.error("No se pudo aceptar la invitación con la sesión actual:", error);
+          }
+        }
+      }
+      openInviteAcceptModal(inviteToken);
     }
 
     function showToast(message) {
@@ -3151,6 +4316,8 @@
     }
 
     el.newSong.addEventListener("click", () => openEditor());
+    el.openAdminPanel.addEventListener("click", openAdminPanel);
+    el.mobileOpenAdminPanel.addEventListener("click", openAdminPanel);
     el.adminReturn.addEventListener("click", () => enterUserMode());
     el.adminLogout.addEventListener("click", () => signOutAdmin());
     el.mobileAdminReturn.addEventListener("click", () => enterUserMode());
@@ -3174,6 +4341,20 @@
     el.closeAuth.addEventListener("click", closeAuthModal);
     el.cancelAuth.addEventListener("click", closeAuthModal);
     el.authForm.addEventListener("submit", submitAuth);
+    el.closeAdminPanel.addEventListener("click", closeAdminPanel);
+    el.doneAdminPanel.addEventListener("click", closeAdminPanel);
+    el.refreshAdminPanel.addEventListener("click", refreshAdminPanelData);
+    [el.adminTabUsers, el.adminTabAlias, el.adminTabInvites, el.adminTabHistory, el.adminTabProperty].forEach(button => {
+      button.addEventListener("click", () => setAdminTab(button.dataset.adminTab));
+    });
+    el.recoverOwnerAdmin.addEventListener("click", recoverOwnerSuperadmin);
+    el.ownerTransferForm.addEventListener("submit", submitOwnerTransfer);
+    el.inviteForm.addEventListener("submit", submitInvitation);
+    el.copyInviteLink.addEventListener("click", () => copyText(el.inviteLinkText.textContent));
+    el.closeInviteAccept.addEventListener("click", closeInviteAcceptModal);
+    el.inviteCreateAccount.addEventListener("click", () => state.inviteSubmitMode = "signup");
+    el.inviteLogin.addEventListener("click", () => state.inviteSubmitMode = "signin");
+    el.inviteAcceptForm.addEventListener("submit", acceptInvitationWithAuth);
     el.closePreview.addEventListener("click", closePreviewModal);
     el.cancelPreview.addEventListener("click", closePreviewModal);
     el.startFromPreview.addEventListener("click", startPresentationMode);
@@ -3225,6 +4406,12 @@
     el.authModal.addEventListener("click", event => {
       if (event.target === el.authModal) closeAuthModal();
     });
+    el.adminPanelModal.addEventListener("click", event => {
+      if (event.target === el.adminPanelModal) closeAdminPanel();
+    });
+    el.inviteAcceptModal.addEventListener("click", event => {
+      if (event.target === el.inviteAcceptModal) closeInviteAcceptModal();
+    });
     el.previewModal.addEventListener("click", event => {
       if (event.target === el.previewModal) closePreviewModal();
     });
@@ -3251,6 +4438,8 @@
       if (event.key === "Escape" && el.modal.classList.contains("open")) closeEditor();
       if (event.key === "Escape" && el.settingsModal.classList.contains("open")) closeSettingsModal();
       if (event.key === "Escape" && el.authModal.classList.contains("open")) closeAuthModal();
+      if (event.key === "Escape" && el.adminPanelModal.classList.contains("open")) closeAdminPanel();
+      if (event.key === "Escape" && el.inviteAcceptModal.classList.contains("open")) closeInviteAcceptModal();
     });
     let lastPhoneViewport = isPhoneViewport();
     window.addEventListener("resize", () => requestAnimationFrame(() => {
