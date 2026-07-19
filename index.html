@@ -610,6 +610,145 @@
       overflow-wrap: anywhere;
     }
 
+    .reading-toolbar,
+    .reading-options-panel {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      body.reading-toolbar-active {
+        height: 100dvh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      body.reading-toolbar-active .app.user-reading,
+      body.reading-toolbar-active .app.admin-mode.admin-detail {
+        flex: 1 1 auto;
+        min-height: 0;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        padding-bottom: 0;
+      }
+
+      body.reading-toolbar-active .app.user-reading main,
+      body.reading-toolbar-active .app.admin-mode.admin-detail main {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: block;
+        overflow: hidden;
+      }
+
+      body.reading-toolbar-active .detail {
+        height: 100%;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 20px;
+      }
+
+      .reading-toolbar {
+        position: relative;
+        z-index: 8;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        width: auto;
+        margin: 0 max(12px, env(safe-area-inset-right)) 0 max(12px, env(safe-area-inset-left));
+        padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+        border: 1px solid var(--line-strong);
+        border-radius: 18px 18px 0 0;
+        background: var(--panel);
+        box-shadow: 0 10px 28px var(--shadow);
+      }
+
+      body.reading-toolbar-active .reading-toolbar {
+        display: flex;
+      }
+
+      .reading-nav-button,
+      .reading-options-toggle,
+      .reading-size-button,
+      .reading-close-button {
+        min-width: 44px;
+        min-height: 44px;
+        border-radius: 14px;
+        border: 1px solid var(--line-strong);
+        background: var(--button-bg);
+        color: var(--text);
+        font-weight: 850;
+        opacity: 1;
+      }
+
+      .reading-nav-button {
+        width: 54px;
+        font-size: 1.55rem;
+        line-height: 1;
+      }
+
+      .reading-options-toggle {
+        flex: 1;
+        max-width: 170px;
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--primary-text);
+        font-size: 1rem;
+      }
+
+      .reading-nav-button:disabled {
+        color: var(--muted);
+        background: var(--panel);
+        border-color: var(--line);
+        opacity: .55;
+      }
+
+      .reading-options-toggle:hover,
+      .reading-options-toggle:focus-visible,
+      .reading-options-toggle:active {
+        background: var(--accent-dark);
+        border-color: var(--accent-dark);
+      }
+
+      .reading-options-panel {
+        position: relative;
+        z-index: 9;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: auto;
+        margin: 0 max(12px, env(safe-area-inset-right)) 8px max(12px, env(safe-area-inset-left));
+        padding: 10px;
+        border: 1px solid var(--line-strong);
+        border-radius: 18px;
+        background: var(--panel);
+        box-shadow: 0 10px 28px var(--shadow);
+      }
+
+      body.reading-toolbar-active.reading-options-open .reading-options-panel {
+        display: flex;
+      }
+
+      .reading-size-value {
+        min-width: 58px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: var(--button-bg);
+        color: var(--text);
+        font-weight: 850;
+      }
+    }
+
     .app.user-reading .detail {
       display: flex;
       justify-content: center;
@@ -2262,6 +2401,19 @@
     </section>
   </div>
 
+  <div class="reading-options-panel" id="readingOptionsPanel" aria-label="Opciones de lectura">
+    <button class="reading-size-button" id="decreaseReadingFont" type="button" aria-label="Reducir tamano de letra">A-</button>
+    <span class="reading-size-value" id="readingFontSizeValue" aria-live="polite">--</span>
+    <button class="reading-size-button" id="increaseReadingFont" type="button" aria-label="Aumentar tamano de letra">A+</button>
+    <button class="reading-close-button" id="closeReadingOptions" type="button" aria-label="Cerrar opciones">X</button>
+  </div>
+
+  <nav class="reading-toolbar" id="readingToolbar" aria-label="Menu de lectura">
+    <button class="reading-nav-button" id="previousSong" type="button" aria-label="Canto anterior">&lsaquo;</button>
+    <button class="reading-options-toggle" id="readingOptionsToggle" type="button" aria-expanded="false">Lectura</button>
+    <button class="reading-nav-button" id="nextSong" type="button" aria-label="Canto siguiente">&rsaquo;</button>
+  </nav>
+
   <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="sheet">
       <div class="sheet-head">
@@ -2487,6 +2639,7 @@
     const CONFIG_KEY = "cantos-iglesia-config-v1";
     const THEME_KEY = "cantos-iglesia-theme-v1";
     const PRESENTATION_KEY = "cantos-iglesia-presentacion-v1";
+    const READING_FONT_SIZE_KEY = "himnario-reading-font-size-v1";
     const ADMIN_INACTIVITY_LIMIT_MS = 2 * 60 * 60 * 1000;
     const ADMIN_ACCESS_CODE = "admin123";
     const USER_ACCESS_CODE = "usuario";
@@ -2517,6 +2670,8 @@
       controlsTimer: null,
       adminInactivityTimer: null,
       adminActivityListening: false,
+      readingOptionsOpen: false,
+      readingFontSize: null,
       touchStartX: null,
       touchStartY: null,
       lastNavAt: 0
@@ -2530,6 +2685,15 @@
       brandImage: document.querySelector("#brandImage"),
       list: document.querySelector("#songList"),
       detail: document.querySelector("#songDetail"),
+      readingToolbar: document.querySelector("#readingToolbar"),
+      readingOptionsPanel: document.querySelector("#readingOptionsPanel"),
+      previousSong: document.querySelector("#previousSong"),
+      nextSong: document.querySelector("#nextSong"),
+      readingOptionsToggle: document.querySelector("#readingOptionsToggle"),
+      decreaseReadingFont: document.querySelector("#decreaseReadingFont"),
+      increaseReadingFont: document.querySelector("#increaseReadingFont"),
+      closeReadingOptions: document.querySelector("#closeReadingOptions"),
+      readingFontSizeValue: document.querySelector("#readingFontSizeValue"),
       search: document.querySelector("#search"),
       searchBack: document.querySelector("#searchBack"),
       openPresentation: document.querySelector("#openPresentation"),
@@ -3069,6 +3233,7 @@
 
     async function initializeApp() {
       loadTheme();
+      state.readingFontSize = loadReadingFontSize();
       initSupabase();
       await restoreAuthSession();
       await loadConfig();
@@ -3143,6 +3308,69 @@
       return changed;
     }
 
+    function clampReadingFontSize(size) {
+      return Math.min(32, Math.max(14, Number(size) || 18));
+    }
+
+    function loadReadingFontSize() {
+      const saved = Number(localStorage.getItem(READING_FONT_SIZE_KEY));
+      return Number.isFinite(saved) && saved >= 14 && saved <= 32 ? saved : null;
+    }
+
+    function saveReadingFontSize(size) {
+      state.readingFontSize = clampReadingFontSize(size);
+      localStorage.setItem(READING_FONT_SIZE_KEY, String(state.readingFontSize));
+    }
+
+    function currentReadingFontSize() {
+      if (state.readingFontSize) return state.readingFontSize;
+      const lyrics = el.detail.querySelector(".lyrics");
+      if (!lyrics) return 18;
+      const computed = Number.parseFloat(window.getComputedStyle(lyrics).fontSize);
+      return Number.isFinite(computed) ? clampReadingFontSize(Math.round(computed)) : 18;
+    }
+
+    function applyReadingFontSize() {
+      const lyrics = el.detail.querySelector(".lyrics");
+      if (!lyrics) return;
+      if (state.readingFontSize) {
+        lyrics.style.fontSize = `${state.readingFontSize}px`;
+      } else {
+        lyrics.style.removeProperty("font-size");
+      }
+    }
+
+    function updateReadingToolbar() {
+      applyReadingFontSize();
+      const showToolbar = Boolean(state.selectedId) && isPhoneViewport() && !state.presentationMode;
+      if (!showToolbar) state.readingOptionsOpen = false;
+      document.body.classList.toggle("reading-toolbar-active", showToolbar);
+      document.body.classList.toggle("reading-options-open", showToolbar && state.readingOptionsOpen);
+      if (!el.readingToolbar) return;
+
+      const currentIndex = state.songs.findIndex(song => song.id === state.selectedId);
+      el.previousSong.disabled = !showToolbar || currentIndex <= 0;
+      el.nextSong.disabled = !showToolbar || currentIndex < 0 || currentIndex >= state.songs.length - 1;
+      el.readingOptionsToggle.setAttribute("aria-expanded", String(showToolbar && state.readingOptionsOpen));
+      el.readingFontSizeValue.textContent = `${currentReadingFontSize()} px`;
+    }
+
+    function navigateReadingSong(direction) {
+      const currentIndex = state.songs.findIndex(song => song.id === state.selectedId);
+      const nextIndex = currentIndex + direction;
+      if (currentIndex < 0 || nextIndex < 0 || nextIndex >= state.songs.length) return;
+      state.selectedId = state.songs[nextIndex].id;
+      state.readingOptionsOpen = false;
+      render();
+      requestAnimationFrame(() => el.detail.scrollTo({ top: 0, left: 0, behavior: "auto" }));
+    }
+
+    function changeReadingFontSize(delta) {
+      saveReadingFontSize(currentReadingFontSize() + delta);
+      applyReadingFontSize();
+      updateReadingToolbar();
+    }
+
     function render() {
       const songs = filteredSongs();
       renderConfig();
@@ -3211,6 +3439,7 @@
 
       renderPresentationPanel();
       renderDetail();
+      updateReadingToolbar();
     }
 
     function renderConfig() {
@@ -4903,7 +5132,20 @@
     });
     el.searchBack.addEventListener("click", () => {
       state.selectedId = null;
+      state.readingOptionsOpen = false;
       render();
+    });
+    el.previousSong.addEventListener("click", () => navigateReadingSong(-1));
+    el.nextSong.addEventListener("click", () => navigateReadingSong(1));
+    el.readingOptionsToggle.addEventListener("click", () => {
+      state.readingOptionsOpen = !state.readingOptionsOpen;
+      updateReadingToolbar();
+    });
+    el.decreaseReadingFont.addEventListener("click", () => changeReadingFontSize(-2));
+    el.increaseReadingFont.addEventListener("click", () => changeReadingFontSize(2));
+    el.closeReadingOptions.addEventListener("click", () => {
+      state.readingOptionsOpen = false;
+      updateReadingToolbar();
     });
     el.modal.addEventListener("click", event => {
       if (event.target === el.modal) closeEditor();
@@ -4942,6 +5184,10 @@
         }
         return;
       }
+      if (event.key === "Escape" && state.readingOptionsOpen) {
+        state.readingOptionsOpen = false;
+        updateReadingToolbar();
+      }
       if (event.key === "Escape" && el.previewModal.classList.contains("open")) closePreviewModal();
       if (event.key === "Escape" && el.modal.classList.contains("open")) closeEditor();
       if (event.key === "Escape" && el.settingsModal.classList.contains("open")) closeSettingsModal();
@@ -4960,6 +5206,7 @@
         render();
       }
       adjustPresentationTextSize();
+      updateReadingToolbar();
     }));
     document.addEventListener("fullscreenchange", () => {
       updatePresentationFullscreenButton();
