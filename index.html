@@ -4731,14 +4731,14 @@
         }
         await invokeAdminFunction("accept-admin-invitation", { token: state.inviteToken });
         const profile = await loadCurrentProfile();
-        if (profile) storeAdminProfile(profile);
         closeInviteAcceptModal();
         const url = new URL(window.location.href);
         url.searchParams.delete("invite");
         url.searchParams.delete("invitation_token");
         window.history.replaceState({}, document.title, url.toString());
-        showToast("Invitación aceptada. Ya puedes entrar al modo administrador.");
-        render();
+        if (profile) await enterAuthenticatedAdmin(profile);
+        else render();
+        showToast("Invitación aceptada. Acceso administrativo activo.");
       } catch (error) {
         console.error("Error al aceptar invitación:", error);
         showToast(`No se pudo aceptar la invitación: ${error?.message || "revisa el correo o pide un enlace nuevo"}`);
@@ -4760,13 +4760,13 @@
           try {
             await invokeAdminFunction("accept-admin-invitation", { token: inviteToken });
             const profile = await loadCurrentProfile();
-            if (profile) storeAdminProfile(profile);
             const url = new URL(window.location.href);
             url.searchParams.delete("invite");
-        url.searchParams.delete("invitation_token");
+            url.searchParams.delete("invitation_token");
             window.history.replaceState({}, document.title, url.toString());
-            showToast("Invitación aceptada. Ya puedes entrar al modo administrador.");
-            render();
+            if (profile) await enterAuthenticatedAdmin(profile);
+            else render();
+            showToast("Invitación aceptada. Acceso administrativo activo.");
             return;
           } catch (error) {
             console.error("No se pudo aceptar la invitación con la sesión actual:", error);
