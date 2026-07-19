@@ -13,7 +13,8 @@
   <title>Himnario</title>
   <style>
     :root {
-      --bg: #F5F5DC;
+      --app-background: #F5FFFA;
+      --bg: var(--app-background);
       --panel: #fffaf2;
       --panel-bg: #fffaf2;
       --text: #24201a;
@@ -26,8 +27,8 @@
       --danger: #a43a2d;
       --danger-bg: #fff5f2;
       --danger-line: #e9c7bf;
-      --header-bg: #F5F5DC;
-      --search-bg: #F5F5DC;
+      --header-bg: var(--app-background);
+      --search-bg: var(--app-background);
       --input-bg: #ffffff;
       --button-bg: #ffffff;
       --sheet-actions-bg: rgba(255, 255, 255, .45);
@@ -2162,6 +2163,38 @@
       .presentation-panel,
       .app.presentation-mode .presentation-view {
         display: none !important;
+        pointer-events: none !important;
+      }
+    }
+
+    @media (min-width: 600px) and (max-width: 1024px) and (orientation: portrait) and (pointer: coarse) {
+      .app:not(.admin-mode) {
+        display: block;
+        width: 100%;
+        min-height: 0;
+      }
+
+      .app:not(.admin-mode) main {
+        display: block;
+        min-height: 0;
+      }
+
+      .theme-toggle {
+        z-index: 120;
+        pointer-events: auto;
+        min-width: 48px;
+        min-height: 48px;
+      }
+
+      .search-area,
+      .list {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .modal .sheet {
+        width: min(720px, calc(100vw - 24px));
+        max-width: calc(100vw - 24px);
       }
     }
   </style>
@@ -3080,12 +3113,19 @@
     }
 
     function syncPhoneOrientationLock() {
-      const orientationApi = screen.orientation;
-      if (!orientationApi) return;
-      if (isPhoneViewport()) {
-        if (orientationApi.lock) orientationApi.lock("portrait-primary").catch(() => {});
-      } else if (orientationApi.unlock) {
-        orientationApi.unlock();
+      try {
+        const orientationApi = typeof screen !== "undefined" ? screen.orientation : null;
+        if (!orientationApi) return;
+        if (isPhoneViewport()) {
+          if (typeof orientationApi.lock === "function") {
+            const result = orientationApi.lock("portrait-primary");
+            if (result && typeof result.catch === "function") result.catch(() => {});
+          }
+        } else if (typeof orientationApi.unlock === "function") {
+          orientationApi.unlock();
+        }
+      } catch {
+        // Some Android/Samsung browsers expose screen.orientation but reject locking outside fullscreen.
       }
     }
 
