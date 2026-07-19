@@ -2155,6 +2155,15 @@
         min-height: 44px;
       }
     }
+
+    @media (min-width: 600px) and (max-width: 1024px) and (orientation: portrait) {
+      .open-presentation,
+      #songList .song-present,
+      .presentation-panel,
+      .app.presentation-mode .presentation-view {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -3055,11 +3064,33 @@
     }
 
     function isPhoneViewport() {
-      return window.matchMedia("(max-width: 767px)").matches;
+      const width = window.innerWidth || 0;
+      const height = window.innerHeight || 0;
+      const shortestSide = Math.min(width, height);
+      const longestSide = Math.max(width, height);
+      return window.matchMedia("(max-width: 767px)").matches || (shortestSide <= 600 && longestSide <= 960);
+    }
+
+    function isTabletPortraitViewport() {
+      return window.matchMedia("(min-width: 600px) and (max-width: 1024px) and (orientation: portrait)").matches;
+    }
+
+    function canUsePresentationViewport() {
+      return !isPhoneViewport() && !isTabletPortraitViewport();
+    }
+
+    function syncPhoneOrientationLock() {
+      const orientationApi = screen.orientation;
+      if (!orientationApi) return;
+      if (isPhoneViewport()) {
+        if (orientationApi.lock) orientationApi.lock("portrait-primary").catch(() => {});
+      } else if (orientationApi.unlock) {
+        orientationApi.unlock();
+      }
     }
 
     function closeMobilePresentationAccess() {
-      if (!isPhoneViewport()) return false;
+      if (canUsePresentationViewport()) return false;
       let changed = false;
       if (state.presentationMode) {
         state.presentationMode = false;
@@ -3081,7 +3112,7 @@
       el.adminProfileLabel.textContent = adminLabel;
       el.mobileAdminProfileLabel.textContent = adminLabel;
       el.themeToggle.style.display = !state.isAdmin && !state.selectedId && !state.presentationMode ? "inline-flex" : "none";
-      el.openPresentation.style.display = !state.isAdmin && !state.selectedId && !state.presentationMode && !isPhoneViewport() ? "inline-flex" : "none";
+      el.openPresentation.style.display = !state.isAdmin && !state.selectedId && !state.presentationMode && canUsePresentationViewport() ? "inline-flex" : "none";
 
       if (!songs.find(song => song.id === state.selectedId)) {
         state.selectedId = null;
@@ -3115,7 +3146,7 @@
             state.selectedId = song.id;
             render();
           });
-          if (state.isAdmin || isPhoneViewport()) {
+          if (state.isAdmin || !canUsePresentationViewport()) {
             row.append(button);
           } else {
             const presentButton = document.createElement("button");
@@ -3172,9 +3203,9 @@
     }
 
     function openPresentationView() {
-      if (isPhoneViewport()) {
+      if (!canUsePresentationViewport()) {
         state.presentationMode = false;
-        showToast("Presentacion disponible en tablet o computadora");
+        showToast("Presentacion disponible en tablet horizontal o computadora");
         render();
         return;
       }
@@ -3537,8 +3568,8 @@
     }
 
     function startPresentationMode() {
-      if (isPhoneViewport()) {
-        showToast("Presentacion disponible en tablet o computadora");
+      if (!canUsePresentationViewport()) {
+        showToast("Presentacion disponible en tablet horizontal o computadora");
         return;
       }
       state.presentationSlides = buildPresentationSlides();
@@ -4878,11 +4909,13 @@
       if (event.key === "Escape" && el.adminPanelModal.classList.contains("open")) closeAdminPanel();
       if (event.key === "Escape" && el.inviteAcceptModal.classList.contains("open")) closeInviteAcceptModal();
     });
-    let lastPhoneViewport = isPhoneViewport();
+    syncPhoneOrientationLock();
+    let lastPresentationViewport = canUsePresentationViewport();
     window.addEventListener("resize", () => requestAnimationFrame(() => {
-      const phoneViewport = isPhoneViewport();
-      if (phoneViewport !== lastPhoneViewport) {
-        lastPhoneViewport = phoneViewport;
+      syncPhoneOrientationLock();
+      const presentationViewport = canUsePresentationViewport();
+      if (presentationViewport !== lastPresentationViewport) {
+        lastPresentationViewport = presentationViewport;
         closeMobilePresentationAccess();
         render();
       }
