@@ -1,5 +1,18 @@
-const CACHE_VERSION = "himnario-pwa-v5";
-const STATIC_ASSETS = ["./apple-touch-icon.png"];
+const CACHE_VERSION = "himnario-pwa-v20260727-103415-icon";
+const STATIC_ASSETS = [
+  "./apple-touch-icon.png",
+  "./icons/himnario-icon-16.png",
+  "./icons/himnario-icon-32.png",
+  "./icons/himnario-icon-48.png",
+  "./icons/himnario-icon-72.png",
+  "./icons/himnario-icon-96.png",
+  "./icons/himnario-icon-128.png",
+  "./icons/himnario-icon-144.png",
+  "./icons/himnario-icon-152.png",
+  "./icons/himnario-icon-192.png",
+  "./icons/himnario-icon-384.png",
+  "./icons/himnario-icon-512.png"
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
