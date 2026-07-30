@@ -1118,7 +1118,8 @@
 
     .app.presentation-mode .presentation-view {
       display: grid;
-      grid-template-rows: auto auto minmax(0, 1fr);
+      grid-template-rows: auto auto auto;
+      align-content: start;
       gap: 12px;
     }
 
@@ -1213,7 +1214,7 @@
       font-weight: 750;
     }
 
-    body.dark .presentation-view .presentation-list .mini-actions button {
+    body.dark .presentation-view .mini-actions button {
       background: #1f2937;
       color: #f8fafc;
       border-color: #9ca3af;
@@ -1229,7 +1230,7 @@
       opacity: 1;
     }
 
-    body.dark .presentation-view .presentation-list .mini-actions button:disabled {
+    body.dark .presentation-view .mini-actions button:disabled {
       background: #111827;
       color: #cbd5e1;
       border-color: #64748b;
@@ -1240,7 +1241,7 @@
     .worship-panel {
       display: grid;
       gap: 16px;
-      margin-top: 18px;
+      margin-top: 0;
       padding: 16px;
       border: 1px solid var(--line-strong);
       border-radius: 12px;
