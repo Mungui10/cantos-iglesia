@@ -1140,18 +1140,13 @@
     }
 
     .presentation-panel {
-      margin: 0 clamp(12px, 4vw, 28px) 18px;
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-    }
-
-    .presentation-panel {
+      display: grid;
+      gap: 16px;
       margin: 0;
-      min-height: 0;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
+      padding: 16px;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      background: var(--surface);
     }
 
     #presentationPanelMount .presentation-panel {
@@ -1165,7 +1160,7 @@
       justify-content: space-between;
       gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 10px;
+      margin-bottom: 0;
     }
 
     .presentation-head h2,
@@ -1179,7 +1174,7 @@
     .preview-body,
     .preview-song {
       display: grid;
-      gap: 8px;
+      gap: 10px;
     }
 
     .presentation-item,
@@ -1189,10 +1184,10 @@
       grid-template-columns: 1fr auto;
       gap: 8px;
       align-items: center;
-      padding: 10px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--bg);
+      padding: 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      background: var(--surface-strong);
     }
 
     .presentation-item-title {
@@ -1239,6 +1234,247 @@
       color: #cbd5e1;
       border-color: #64748b;
       opacity: 1;
+    }
+
+
+    .worship-panel {
+      display: grid;
+      gap: 16px;
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      background: var(--surface);
+    }
+
+    .worship-panel[hidden] {
+      display: none !important;
+    }
+
+    .worship-screen {
+      display: grid;
+      gap: 14px;
+    }
+
+    .worship-screen[hidden] {
+      display: none !important;
+    }
+
+    .worship-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .worship-head h2,
+    .worship-head h3 {
+      margin: 0;
+      color: var(--text);
+    }
+
+    .worship-actions,
+    .worship-editor-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .worship-choice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .worship-choice {
+      min-height: 96px;
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      background: var(--surface-strong);
+      color: var(--text);
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .worship-choice:hover,
+    .worship-choice:focus {
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    .worship-editor {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface-strong);
+      padding: 14px;
+    }
+
+    .worship-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(180px, 1fr));
+      gap: 12px;
+      align-items: start;
+    }
+
+    .worship-form-grid label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .worship-form-grid .wide {
+      grid-column: 1 / -1;
+    }
+
+    .worship-form-grid textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    .worship-preview-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      background: var(--surface);
+      background-size: cover;
+      background-position: center;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .worship-preview-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, var(--worship-overlay, 0));
+      pointer-events: none;
+    }
+
+    .worship-preview-content {
+      position: relative;
+      display: grid;
+      gap: 10px;
+      max-width: 90%;
+    }
+
+    .worship-preview-content strong {
+      font-size: clamp(1.45rem, 3vw, 2.55rem);
+      line-height: 1.08;
+    }
+
+    .worship-preview-content span {
+      white-space: pre-wrap;
+      font-size: clamp(1rem, 2vw, 1.55rem);
+      line-height: 1.25;
+    }
+
+    .worship-preview-card.align-left {
+      justify-content: flex-start;
+      text-align: left;
+    }
+
+    .worship-preview-card.align-right {
+      justify-content: flex-end;
+      text-align: right;
+    }
+
+    .worship-song-picker {
+      display: grid;
+      gap: 12px;
+    }
+
+    .worship-song-preview {
+      min-height: 72px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      padding: 12px;
+      color: var(--text);
+    }
+
+    .worship-song-preview strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .worship-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .worship-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      background: var(--surface-strong);
+    }
+
+    .worship-item-title {
+      font-weight: 850;
+      color: var(--text);
+      overflow-wrap: anywhere;
+    }
+
+    .worship-item-meta {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      overflow-wrap: anywhere;
+    }
+
+    .worship-item-type {
+      display: inline-flex;
+      width: fit-content;
+      margin-bottom: 6px;
+      padding: 3px 8px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      color: var(--text);
+      background: var(--surface);
+      font-size: 0.78rem;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .worship-empty {
+      border: 1px dashed var(--line-strong);
+      border-radius: 10px;
+      background: var(--surface-strong);
+      padding: 18px;
+      color: var(--muted);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .presentation-empty {
+      border: 1px dashed var(--line-strong);
+      border-radius: 10px;
+      background: var(--surface-strong);
+      padding: 18px;
+      color: var(--muted);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    @media (max-width: 767px) {
+      .worship-panel {
+        display: none !important;
+      }
     }
 
     .song-row {
@@ -1356,25 +1592,32 @@
       width: 100vw;
       height: 100vh;
       height: 100dvh;
-      grid-template-rows: minmax(0, 1fr) auto;
       background: var(--bg);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       color: var(--text);
       overflow: hidden;
     }
 
     .presentation-stage.open {
-      display: grid;
+      display: block;
     }
 
     .presentation-slide {
-      width: min(100%, 1680px);
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       min-height: 0;
-      margin: 0 auto;
       display: grid;
       grid-template-rows: auto minmax(0, 1fr);
       gap: clamp(14px, 3vh, 32px);
-      padding: calc(clamp(30px, 5vh, 68px) + env(safe-area-inset-top)) clamp(36px, 7vw, 120px) clamp(18px, 4vh, 44px);
+      padding: calc(clamp(30px, 5vh, 68px) + env(safe-area-inset-top)) clamp(36px, 7vw, 120px) calc(clamp(92px, 14vh, 142px) + env(safe-area-inset-bottom));
       text-align: center;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .presentation-title-row {
@@ -1385,7 +1628,7 @@
 
     .presentation-title-row h2 {
       margin: 0;
-      font-size: clamp(1.05rem, 2.2vw, 2rem);
+      font-size: clamp(2.125rem, 3vw, 2.75rem);
       line-height: 1.12;
       max-width: 100%;
       overflow-wrap: anywhere;
@@ -1393,11 +1636,18 @@
 
     .presentation-count {
       position: absolute;
+      z-index: 2;
       top: clamp(14px, 3vw, 28px);
       right: clamp(16px, 4vw, 42px);
-      color: var(--muted);
-      font-size: clamp(.9rem, 1.8vw, 1.2rem);
-      font-weight: 800;
+      color: #ffffff;
+      font-size: clamp(1.1rem, 2vw, 1.65rem);
+      font-weight: 900;
+      line-height: 1;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, .45);
+      border-radius: 999px;
+      background: rgba(0, 0, 0, .46);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .45);
     }
 
     .song-present-mobile {
@@ -1420,9 +1670,11 @@
     }
 
     .presentation-controls {
-      position: relative;
-      min-height: calc(68px + env(safe-area-inset-bottom));
-      padding: 10px clamp(16px, 4vw, 40px) calc(14px + env(safe-area-inset-bottom));
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 12px clamp(16px, 4vw, 40px) calc(16px + env(safe-area-inset-bottom));
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
@@ -1430,26 +1682,31 @@
       align-items: center;
       opacity: 1;
       transition: opacity .2s ease;
-      background: var(--bg);
-    }
-
-    .presentation-stage.hide-controls .presentation-controls {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    body.dark .presentation-controls {
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      background: transparent;
+      pointer-events: auto;
+      z-index: 3;
     }
 
     .presentation-controls button {
       min-height: 44px;
       border-radius: 8px;
       padding: 0 12px;
-      background: var(--button-bg);
-      color: var(--text);
-      border: 1px solid var(--line);
+      background: rgba(0, 0, 0, .68);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, .55);
       font-weight: 800;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+    }
+
+    .presentation-controls button:hover,
+    .presentation-controls button:focus-visible {
+      background: rgba(0, 0, 0, .82);
+      border-color: rgba(255, 255, 255, .82);
+    }
+
+    .presentation-stage.hide-controls .presentation-controls {
+      opacity: 0;
+      pointer-events: none;
     }
 
     @media (max-width: 720px) {
@@ -1513,7 +1770,7 @@
         grid-template-columns: 1fr;
       }
       .presentation-slide {
-        padding: calc(clamp(28px, 7vw, 52px) + env(safe-area-inset-top)) clamp(24px, 8vw, 58px) clamp(14px, 4vh, 28px);
+        padding: calc(clamp(28px, 7vw, 52px) + env(safe-area-inset-top)) clamp(24px, 8vw, 58px) calc(clamp(88px, 18vh, 130px) + env(safe-area-inset-bottom));
       }
       .presentation-text {
         font-size: var(--presentation-font-size, clamp(1.7rem, 7vw, 3.5rem));
@@ -2692,12 +2949,10 @@
         <div class="presentation-actions">
           <button class="secondary" id="previewPresentation" type="button">Vista previa</button>
           <button class="primary" id="startPresentation" type="button">Comenzar</button>
+          <button class="secondary" id="clearPresentation" type="button">Vaciar lista</button>
         </div>
       </div>
       <div class="presentation-list" id="presentationList"></div>
-      <div class="presentation-actions">
-        <button class="secondary" id="clearPresentation" type="button">Vaciar lista</button>
-      </div>
     </section>
     <section class="presentation-view" id="presentationView" aria-label="Preparar presentaci&oacute;n">
       <div class="presentation-view-head">
@@ -2705,6 +2960,107 @@
         <button class="back-button" id="closePresentationView" type="button">Volver</button>
       </div>
       <div id="presentationPanelMount"></div>
+
+      <section class="worship-panel" id="worshipPanel" aria-label="Presentacion del culto">
+        <div class="worship-screen" id="worshipMain">
+          <div class="worship-head">
+            <h2>Presentacion del culto</h2>
+            <div class="worship-actions">
+              <button class="primary" id="addWorshipScreen" type="button">Anadir pantalla</button>
+              <button class="secondary" id="previewWorship" type="button">Vista previa</button>
+              <button class="primary" id="startWorship" type="button">Presentar</button>
+              <button class="secondary" id="clearWorship" type="button">Vaciar lista</button>
+            </div>
+          </div>
+          <div class="worship-list" id="worshipList"></div>
+        </div>
+
+        <div class="worship-screen" id="worshipTypeChooser" hidden>
+          <div class="worship-head">
+            <h3>Anadir pantalla</h3>
+            <button class="secondary" id="cancelWorshipChoice" type="button">Cancelar</button>
+          </div>
+          <div class="worship-choice-grid">
+            <button class="worship-choice" id="chooseWorshipText" type="button">Texto</button>
+            <button class="worship-choice" id="chooseWorshipSong" type="button">Canto</button>
+          </div>
+        </div>
+
+        <form class="worship-screen worship-editor" id="worshipTextForm" hidden>
+          <div class="worship-head">
+            <h3 id="worshipTextEditorTitle">Pantalla de texto</h3>
+          </div>
+          <div class="worship-form-grid">
+            <label class="wide">
+              Texto principal
+              <input class="field" id="worshipTextTitle" type="text" maxlength="120" autocomplete="off" required>
+            </label>
+            <label class="wide">
+              Texto secundario
+              <textarea class="field" id="worshipTextSubtitle" maxlength="500" placeholder="Opcional"></textarea>
+            </label>
+            <label>
+              Alineacion
+              <select class="field" id="worshipTextAlignment">
+                <option value="center">Centro</option>
+                <option value="left">Izquierda</option>
+                <option value="right">Derecha</option>
+              </select>
+            </label>
+            <label>
+              Fondo
+              <select class="field" id="worshipTextBackgroundMode">
+                <option value="plain">Solo texto</option>
+                <option value="color">Color de fondo</option>
+                <option value="image">Imagen de fondo</option>
+              </select>
+            </label>
+            <label id="worshipTextColorLabel">
+              Color de fondo
+              <input class="field" id="worshipTextBackgroundColor" type="color" value="#11100e">
+            </label>
+            <label id="worshipTextOverlayLabel">
+              Capa oscura
+              <input class="field" id="worshipTextOverlay" type="range" min="0" max="80" step="5" value="45">
+            </label>
+            <label class="wide" id="worshipTextImageLabel">
+              Imagen local de fondo
+              <input class="field image-input" id="worshipTextBackgroundImage" type="file" accept="image/*">
+            </label>
+          </div>
+          <div class="worship-preview-card" id="worshipTextPreview" aria-label="Vista previa de texto">
+            <div class="worship-preview-content">
+              <strong>Texto principal</strong>
+              <span>Texto secundario opcional</span>
+            </div>
+          </div>
+          <div class="worship-editor-actions">
+            <button class="secondary" id="cancelWorshipText" type="button">Cancelar</button>
+            <button class="primary" id="saveWorshipText" type="submit">Guardar pantalla</button>
+          </div>
+        </form>
+
+        <div class="worship-screen worship-editor" id="worshipSongEditor" hidden>
+          <div class="worship-head">
+            <h3 id="worshipSongEditorTitle">Pantalla de canto</h3>
+          </div>
+          <div class="worship-song-picker">
+            <label>
+              Buscar canto
+              <input class="field" id="worshipSongSearch" type="search" placeholder="Numero o titulo" autocomplete="off">
+            </label>
+            <label>
+              Seleccionar canto
+              <select class="field" id="worshipSongSelect"></select>
+            </label>
+            <div class="worship-song-preview" id="worshipSongPreview">Selecciona un canto.</div>
+          </div>
+          <div class="worship-editor-actions">
+            <button class="secondary" id="cancelWorshipSong" type="button">Cancelar</button>
+            <button class="primary" id="addWorshipSong" type="button">Guardar pantalla</button>
+          </div>
+        </div>
+      </section>
     </section>
   </div>
 
@@ -2730,7 +3086,7 @@
       <form id="songForm">
         <label>
           Numero
-          <input class="field" id="numberInput" type="number" min="0" step="1" inputmode="numeric" autocomplete="off">
+          <input class="field" id="numberInput" type="text" inputmode="text" pattern="[0-9]+[A-Za-z]?" autocomplete="off" autocapitalize="characters" maxlength="8" placeholder="61A">
         </label>
         <label>
           Título
@@ -2934,6 +3290,21 @@
     </div>
   </div>
 
+
+  <div class="modal" id="worshipPreviewModal" role="dialog" aria-modal="true" aria-labelledby="worshipPreviewTitle">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2 id="worshipPreviewTitle">Vista previa del culto</h2>
+        <button class="close" id="closeWorshipPreview" type="button" aria-label="Cerrar">?</button>
+      </div>
+      <div class="preview-body" id="worshipPreviewBody"></div>
+      <div class="sheet-actions">
+        <button class="secondary" id="cancelWorshipPreview" type="button">Cerrar</button>
+        <button class="primary" id="startWorshipFromPreview" type="button">Comenzar</button>
+      </div>
+    </div>
+  </div>
+
   <div class="modal" id="previewModal" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
     <div class="sheet">
       <div class="sheet-head">
@@ -2971,6 +3342,7 @@
     const CONFIG_KEY = "cantos-iglesia-config-v1";
     const THEME_KEY = "cantos-iglesia-theme-v1";
     const PRESENTATION_KEY = "cantos-iglesia-presentacion-v1";
+    const WORSHIP_PRESENTATION_KEY = "himnario-presentacion-culto-v1";
     const READING_FONT_SIZE_KEY = "himnario-reading-font-size-v1";
     const ADMIN_INACTIVITY_LIMIT_MS = 2 * 60 * 60 * 1000;
     const ADMIN_ACCESS_CODE = "admin123";
@@ -2998,6 +3370,11 @@
       config: { title: "Himnario", subtitle: "", image: "", transparentImage: false },
       pendingImage: "",
       presentation: { songIds: [], overrides: {} },
+      worshipPresentation: { items: [] },
+      worshipView: "main",
+      editingWorshipTextId: null,
+      editingWorshipSongId: null,
+      pendingWorshipImage: "",
       presentationSlides: [],
       presentationIndex: 0,
       controlsTimer: null,
@@ -3064,6 +3441,37 @@
       themeToggle: document.querySelector("#themeToggle"),
       settingsButton: document.querySelector("#settingsButton"),
       presentationPanel: document.querySelector("#presentationPanel"),
+      worshipPanel: document.querySelector("#worshipPanel"),
+      worshipMain: document.querySelector("#worshipMain"),
+      addWorshipScreen: document.querySelector("#addWorshipScreen"),
+      worshipTypeChooser: document.querySelector("#worshipTypeChooser"),
+      cancelWorshipChoice: document.querySelector("#cancelWorshipChoice"),
+      chooseWorshipText: document.querySelector("#chooseWorshipText"),
+      chooseWorshipSong: document.querySelector("#chooseWorshipSong"),
+      worshipSongEditor: document.querySelector("#worshipSongEditor"),
+      worshipSongSearch: document.querySelector("#worshipSongSearch"),
+      worshipSongSelect: document.querySelector("#worshipSongSelect"),
+      worshipSongPreview: document.querySelector("#worshipSongPreview"),
+      addWorshipSong: document.querySelector("#addWorshipSong"),
+      cancelWorshipSong: document.querySelector("#cancelWorshipSong"),
+      worshipTextForm: document.querySelector("#worshipTextForm"),
+      worshipTextTitle: document.querySelector("#worshipTextTitle"),
+      worshipTextSubtitle: document.querySelector("#worshipTextSubtitle"),
+      worshipTextAlignment: document.querySelector("#worshipTextAlignment"),
+      worshipTextBackgroundMode: document.querySelector("#worshipTextBackgroundMode"),
+      worshipTextBackgroundColor: document.querySelector("#worshipTextBackgroundColor"),
+      worshipTextColorLabel: document.querySelector("#worshipTextColorLabel"),
+      worshipTextOverlay: document.querySelector("#worshipTextOverlay"),
+      worshipTextOverlayLabel: document.querySelector("#worshipTextOverlayLabel"),
+      worshipTextBackgroundImage: document.querySelector("#worshipTextBackgroundImage"),
+      worshipTextImageLabel: document.querySelector("#worshipTextImageLabel"),
+      worshipTextPreview: document.querySelector("#worshipTextPreview"),
+      cancelWorshipText: document.querySelector("#cancelWorshipText"),
+      saveWorshipText: document.querySelector("#saveWorshipText"),
+      worshipList: document.querySelector("#worshipList"),
+      previewWorship: document.querySelector("#previewWorship"),
+      startWorship: document.querySelector("#startWorship"),
+      clearWorship: document.querySelector("#clearWorship"),
       presentationList: document.querySelector("#presentationList"),
       previewPresentation: document.querySelector("#previewPresentation"),
       startPresentation: document.querySelector("#startPresentation"),
@@ -3129,6 +3537,11 @@
       inviteAcceptPassword: document.querySelector("#inviteAcceptPassword"),
       inviteCreateAccount: document.querySelector("#inviteCreateAccount"),
       inviteLogin: document.querySelector("#inviteLogin"),
+      worshipPreviewModal: document.querySelector("#worshipPreviewModal"),
+      worshipPreviewBody: document.querySelector("#worshipPreviewBody"),
+      closeWorshipPreview: document.querySelector("#closeWorshipPreview"),
+      cancelWorshipPreview: document.querySelector("#cancelWorshipPreview"),
+      startWorshipFromPreview: document.querySelector("#startWorshipFromPreview"),
       previewModal: document.querySelector("#previewModal"),
       previewBody: document.querySelector("#previewBody"),
       closePreview: document.querySelector("#closePreview"),
@@ -3137,6 +3550,7 @@
       presentationStage: document.querySelector("#presentationStage"),
       presentationCount: document.querySelector("#presentationCount"),
       presentationTitle: document.querySelector("#presentationTitle"),
+      presentationSlide: document.querySelector("#presentationSlide"),
       presentationText: document.querySelector("#presentationText"),
       presentationControls: document.querySelector("#presentationControls"),
       presentationPrev: document.querySelector("#presentationPrev"),
@@ -3304,7 +3718,7 @@
     function songFromRow(row) {
       return {
         id: row.id,
-        number: row.number ?? 0,
+        number: normalizeSongNumberIdentifier(row.number ?? 0) || "0",
         title: row.title || "",
         lyrics: row.lyrics || ""
       };
@@ -3313,7 +3727,7 @@
     function songToWritableRow(song) {
       return {
         id: song.id,
-        number: Number(song.number) || 0,
+        number: normalizeSongNumberIdentifier(song.number) || "0",
         title: song.title || "",
         lyrics: song.lyrics || ""
       };
@@ -3433,7 +3847,7 @@
       if (state.songs.length === 0) {
         state.songs = [{
           id: crypto.randomUUID(),
-          number: 0,
+          number: "0",
           title: "Sublime gracia",
           lyrics: "Sublime gracia del Señor\nQue a un pecador salvó\nFui ciego mas hoy miro yo\nPerdido y Él me halló"
         }];
@@ -3442,7 +3856,7 @@
 
       state.songs = state.songs.map((song, index) => ({
         ...song,
-        number: song.number ?? index
+        number: normalizeSongNumberIdentifier(song.number ?? index) || String(index)
       }));
       sortSongs();
       saveSongs(false);
@@ -3527,6 +3941,499 @@
       if (showMessage) showToast("Presentación guardada");
     }
 
+
+
+    function normalizeWorshipItem(item) {
+      if (!item || typeof item !== "object") return null;
+      const id = item.id || createWorshipItemId();
+      if (item.type === "song") {
+        return {
+          id,
+          type: "song",
+          songId: item.songId || item.idSong || "",
+          target: item.target || "main"
+        };
+      }
+      if (item.type === "text") {
+        const mode = ["plain", "color", "image"].includes(item.backgroundMode) ? item.backgroundMode : "plain";
+        const alignment = ["left", "center", "right"].includes(item.alignment) ? item.alignment : "center";
+        return {
+          id,
+          type: "text",
+          title: String(item.title || item.text || "").trim(),
+          subtitle: String(item.subtitle || "").trim(),
+          alignment,
+          backgroundMode: mode,
+          backgroundColor: item.backgroundColor || "#11100e",
+          backgroundImage: item.backgroundImage || "",
+          overlay: Math.max(0, Math.min(80, Number(item.overlay ?? 45) || 0)),
+          target: item.target || "main"
+        };
+      }
+      return null;
+    }
+
+    function defaultWorshipPresentation() {
+      return { items: [] };
+    }
+
+    function localWorshipPresentation() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(WORSHIP_PRESENTATION_KEY) || "{}");
+        const items = Array.isArray(saved.items) ? saved.items.map(normalizeWorshipItem).filter(Boolean) : [];
+        return { items };
+      } catch {
+        return defaultWorshipPresentation();
+      }
+    }
+
+    function loadWorshipPresentation() {
+      state.worshipPresentation = localWorshipPresentation();
+      localStorage.setItem(WORSHIP_PRESENTATION_KEY, JSON.stringify(state.worshipPresentation));
+    }
+
+    function saveWorshipPresentation(showMessage = false) {
+      localStorage.setItem(WORSHIP_PRESENTATION_KEY, JSON.stringify(state.worshipPresentation));
+      if (showMessage) showToast("Presentacion del culto guardada");
+    }
+
+    function canUseWorshipPresentationViewport() {
+      return canUsePresentationViewport();
+    }
+
+    function createWorshipItemId() {
+      return `culto-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    }
+
+    function selectedWorshipSongOptions() {
+      return [...state.songs].sort(compareSongsByNumber);
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function worshipItems() {
+      return state.worshipPresentation.items || [];
+    }
+
+    function showWorshipMain() {
+      state.worshipView = "main";
+      state.editingWorshipTextId = null;
+      state.editingWorshipSongId = null;
+      state.pendingWorshipImage = "";
+      renderWorshipPresentationPanel();
+    }
+
+    function showWorshipView(view) {
+      if (!canUseWorshipPresentationViewport()) return;
+      state.worshipView = view;
+      renderWorshipPresentationPanel();
+    }
+
+    function openWorshipTypeChooser() {
+      if (!canUseWorshipPresentationViewport()) {
+        showToast("Presentacion del culto disponible en tablet o computadora");
+        return;
+      }
+      state.editingWorshipTextId = null;
+      state.editingWorshipSongId = null;
+      showWorshipView("choose");
+    }
+
+    function resetWorshipTextFields() {
+      el.worshipTextForm.reset();
+      el.worshipTextAlignment.value = "center";
+      el.worshipTextBackgroundMode.value = "plain";
+      el.worshipTextBackgroundColor.value = "#11100e";
+      el.worshipTextOverlay.value = "45";
+      state.pendingWorshipImage = "";
+      updateWorshipTextPreview();
+    }
+
+    function openWorshipTextEditor(itemId = null) {
+      if (!canUseWorshipPresentationViewport()) return;
+      const item = itemId ? worshipItems().find(entry => entry.id === itemId && entry.type === "text") : null;
+      state.editingWorshipTextId = item?.id || null;
+      state.editingWorshipSongId = null;
+      resetWorshipTextFields();
+      if (item) {
+        el.worshipTextTitle.value = item.title || "";
+        el.worshipTextSubtitle.value = item.subtitle || "";
+        el.worshipTextAlignment.value = item.alignment || "center";
+        el.worshipTextBackgroundMode.value = item.backgroundMode || "plain";
+        el.worshipTextBackgroundColor.value = item.backgroundColor || "#11100e";
+        el.worshipTextOverlay.value = String(item.overlay ?? 45);
+        state.pendingWorshipImage = item.backgroundImage || "";
+      }
+      showWorshipView("text");
+      updateWorshipTextPreview();
+      setTimeout(() => el.worshipTextTitle?.focus(), 40);
+    }
+
+    function renderWorshipSongSelect() {
+      if (!el.worshipSongSelect) return;
+      const rawQuery = (el.worshipSongSearch?.value || "").trim();
+      const query = rawQuery.toLowerCase();
+      const numberQuery = normalizeSongNumberIdentifier(rawQuery);
+      const songs = selectedWorshipSongOptions().filter(song => {
+        if (!query) return true;
+        return normalizeSongNumberIdentifier(song.number).includes(numberQuery) || String(song.title || "").toLowerCase().includes(query);
+      });
+      el.worshipSongSelect.innerHTML = songs.length
+        ? songs.map(song => `<option value="${song.id}">${song.number ?? ""} ${escapeHtml(song.title)}</option>`).join("")
+        : `<option value="">No hay cantos disponibles</option>`;
+      const editing = state.editingWorshipSongId ? worshipItems().find(item => item.id === state.editingWorshipSongId) : null;
+      if (editing?.songId && songs.some(song => song.id === editing.songId)) el.worshipSongSelect.value = editing.songId;
+      el.addWorshipSong.disabled = songs.length === 0;
+      updateWorshipSongPreview();
+    }
+
+    function updateWorshipSongPreview() {
+      if (!el.worshipSongPreview || !el.worshipSongSelect) return;
+      const song = state.songs.find(item => item.id === el.worshipSongSelect.value);
+      if (!song) {
+        el.worshipSongPreview.textContent = "Selecciona un canto.";
+        return;
+      }
+      el.worshipSongPreview.innerHTML = `<strong></strong><span></span>`;
+      el.worshipSongPreview.querySelector("strong").textContent = `${song.number ?? ""} ${song.title || "Canto"}`.trim();
+      el.worshipSongPreview.querySelector("span").textContent = "Se agregara al orden del culto con sus diapositivas actuales.";
+    }
+
+    function openWorshipSongEditor(itemId = null) {
+      if (!canUseWorshipPresentationViewport()) return;
+      const item = itemId ? worshipItems().find(entry => entry.id === itemId && entry.type === "song") : null;
+      state.editingWorshipSongId = item?.id || null;
+      state.editingWorshipTextId = null;
+      if (el.worshipSongSearch) el.worshipSongSearch.value = "";
+      showWorshipView("song");
+      renderWorshipSongSelect();
+      if (item?.songId) {
+        el.worshipSongSelect.value = item.songId;
+        updateWorshipSongPreview();
+      }
+      setTimeout(() => el.worshipSongSearch?.focus(), 40);
+    }
+
+    function addWorshipSong() {
+      if (!canUseWorshipPresentationViewport()) {
+        showToast("Presentacion del culto disponible en tablet o computadora");
+        return;
+      }
+      const songId = el.worshipSongSelect.value;
+      const song = state.songs.find(item => item.id === songId);
+      if (!song) {
+        showToast("Selecciona un canto");
+        return;
+      }
+      const item = { id: state.editingWorshipSongId || createWorshipItemId(), type: "song", songId, target: "main" };
+      state.worshipPresentation.items = state.editingWorshipSongId
+        ? worshipItems().map(existing => existing.id === state.editingWorshipSongId ? item : existing)
+        : [...worshipItems(), item];
+      saveWorshipPresentation(true);
+      showWorshipMain();
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result || ""));
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function handleWorshipBackgroundImageChoice(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      try {
+        state.pendingWorshipImage = await readFileAsDataUrl(file);
+        el.worshipTextBackgroundMode.value = "image";
+        updateWorshipTextPreview();
+      } catch {
+        showToast("No se pudo cargar la imagen del texto");
+      }
+    }
+
+    function updateWorshipTextPreview() {
+      if (!el.worshipTextPreview) return;
+      const title = el.worshipTextTitle.value.trim() || "Texto principal";
+      const subtitle = el.worshipTextSubtitle.value.trim() || "Texto secundario opcional";
+      const mode = el.worshipTextBackgroundMode.value;
+      const color = el.worshipTextBackgroundColor.value || "#11100e";
+      const overlay = Math.max(0, Math.min(80, Number(el.worshipTextOverlay.value) || 0));
+      const alignment = el.worshipTextAlignment.value || "center";
+      const card = el.worshipTextPreview;
+      card.classList.remove("align-left", "align-center", "align-right");
+      card.classList.add(`align-${alignment}`);
+      card.style.setProperty("--worship-overlay", mode === "image" ? String(overlay / 100) : "0");
+      card.style.backgroundColor = mode === "color" ? color : "";
+      card.style.backgroundImage = mode === "image" && state.pendingWorshipImage ? `url("${state.pendingWorshipImage}")` : "";
+      card.style.color = mode === "plain" ? "" : "#ffffff";
+      el.worshipTextColorLabel.hidden = mode !== "color";
+      el.worshipTextOverlayLabel.hidden = mode !== "image";
+      el.worshipTextImageLabel.hidden = mode !== "image";
+      card.querySelector("strong").textContent = title;
+      card.querySelector("span").textContent = subtitle;
+    }
+
+    function submitWorshipText(event) {
+      event.preventDefault();
+      if (!canUseWorshipPresentationViewport()) {
+        showToast("Presentacion del culto disponible en tablet o computadora");
+        return;
+      }
+      const title = el.worshipTextTitle.value.trim();
+      if (!title) {
+        showToast("Escribe el texto principal");
+        el.worshipTextTitle.focus();
+        return;
+      }
+      const mode = el.worshipTextBackgroundMode.value;
+      const item = {
+        id: state.editingWorshipTextId || createWorshipItemId(),
+        type: "text",
+        title,
+        subtitle: el.worshipTextSubtitle.value.trim(),
+        alignment: el.worshipTextAlignment.value || "center",
+        backgroundMode: mode,
+        backgroundColor: mode === "color" ? (el.worshipTextBackgroundColor.value || "#11100e") : "",
+        backgroundImage: mode === "image" ? state.pendingWorshipImage : "",
+        overlay: Math.max(0, Math.min(80, Number(el.worshipTextOverlay.value) || 0)),
+        target: "main"
+      };
+      state.worshipPresentation.items = state.editingWorshipTextId
+        ? worshipItems().map(existing => existing.id === state.editingWorshipTextId ? item : existing)
+        : [...worshipItems(), item];
+      saveWorshipPresentation(true);
+      showWorshipMain();
+    }
+
+    function moveWorshipItem(index, direction) {
+      const nextIndex = index + direction;
+      const items = [...worshipItems()];
+      if (nextIndex < 0 || nextIndex >= items.length) return;
+      [items[index], items[nextIndex]] = [items[nextIndex], items[index]];
+      state.worshipPresentation.items = items;
+      saveWorshipPresentation();
+      renderWorshipPresentationPanel();
+    }
+
+    function duplicateWorshipItem(itemId) {
+      const items = [...worshipItems()];
+      const index = items.findIndex(item => item.id === itemId);
+      if (index < 0) return;
+      const clone = { ...items[index], id: createWorshipItemId() };
+      items.splice(index + 1, 0, clone);
+      state.worshipPresentation.items = items;
+      saveWorshipPresentation(true);
+      renderWorshipPresentationPanel();
+    }
+
+    function removeWorshipItem(itemId) {
+      const item = worshipItems().find(entry => entry.id === itemId);
+      if (!item) return;
+      if (!confirm("Eliminar esta pantalla de la presentacion del culto?")) return;
+      state.worshipPresentation.items = worshipItems().filter(entry => entry.id !== itemId);
+      saveWorshipPresentation();
+      renderWorshipPresentationPanel();
+    }
+
+    function clearWorshipPresentationList() {
+      if (worshipItems().length === 0) return;
+      if (!confirm("Vaciar la lista de Presentacion del culto?")) return;
+      state.worshipPresentation.items = [];
+      saveWorshipPresentation();
+      showWorshipMain();
+    }
+
+    function worshipItemSummary(item) {
+      if (item.type === "song") {
+        const song = state.songs.find(entry => entry.id === item.songId);
+        return song ? `${song.number ?? ""} ${song.title || "Canto"}`.trim() : "Canto no encontrado";
+      }
+      const parts = [item.title || "Texto", item.subtitle || ""].filter(Boolean);
+      return parts.join(" - ");
+    }
+
+    function renderWorshipPresentationPanel() {
+      if (!el.worshipPanel) return;
+      const enabled = canUseWorshipPresentationViewport();
+      el.worshipPanel.hidden = !enabled;
+      if (!enabled) {
+        state.worshipView = "main";
+        return;
+      }
+      const view = state.worshipView || "main";
+      el.worshipMain.hidden = view !== "main";
+      el.worshipTypeChooser.hidden = view !== "choose";
+      el.worshipTextForm.hidden = view !== "text";
+      el.worshipSongEditor.hidden = view !== "song";
+      const items = worshipItems();
+      el.previewWorship.disabled = items.length === 0;
+      el.startWorship.disabled = items.length === 0;
+      el.clearWorship.disabled = items.length === 0;
+      if (view === "song") renderWorshipSongSelect();
+      if (view === "text") updateWorshipTextPreview();
+      el.worshipList.innerHTML = "";
+      if (items.length === 0) {
+        el.worshipList.innerHTML = `<div class="worship-empty">Todavia no has anadido pantallas a esta presentacion.</div>`;
+        return;
+      }
+      const fragment = document.createDocumentFragment();
+      items.forEach((item, index) => {
+        const row = document.createElement("div");
+        row.className = "worship-item";
+        row.innerHTML = `
+          <div>
+            <span class="worship-item-type"></span>
+            <div class="worship-item-title"></div>
+            <div class="worship-item-meta"></div>
+          </div>
+          <div class="mini-actions">
+            <button type="button" data-action="edit">Editar</button>
+            <button type="button" data-action="duplicate">Duplicar</button>
+            <button type="button" data-action="remove">Eliminar</button>
+            <button type="button" data-action="up">Subir</button>
+            <button type="button" data-action="down">Bajar</button>
+          </div>
+        `;
+        row.querySelector(".worship-item-type").textContent = item.type === "song" ? "Canto" : "Texto";
+        row.querySelector(".worship-item-title").textContent = worshipItemSummary(item);
+        row.querySelector(".worship-item-meta").textContent = `Pantalla ${index + 1} de ${items.length}`;
+        row.querySelector("[data-action='up']").disabled = index === 0;
+        row.querySelector("[data-action='down']").disabled = index === items.length - 1;
+        row.querySelector("[data-action='edit']").addEventListener("click", () => item.type === "text" ? openWorshipTextEditor(item.id) : openWorshipSongEditor(item.id));
+        row.querySelector("[data-action='duplicate']").addEventListener("click", () => duplicateWorshipItem(item.id));
+        row.querySelector("[data-action='remove']").addEventListener("click", () => removeWorshipItem(item.id));
+        row.querySelector("[data-action='up']").addEventListener("click", () => moveWorshipItem(index, -1));
+        row.querySelector("[data-action='down']").addEventListener("click", () => moveWorshipItem(index, 1));
+        fragment.append(row);
+      });
+      el.worshipList.append(fragment);
+    }
+
+    function buildWorshipSlidesForText(item) {
+      return [{
+        title: item.title || "Texto",
+        text: item.subtitle || item.title || "",
+        indexInSong: 1,
+        totalInSong: 1,
+        worshipText: true,
+        alignment: item.alignment || "center",
+        backgroundMode: item.backgroundMode || "plain",
+        backgroundColor: item.backgroundColor || "",
+        backgroundImage: item.backgroundImage || "",
+        overlay: item.overlay ?? 45
+      }];
+    }
+
+    function buildWorshipPresentationSlides() {
+      return worshipItems().flatMap(item => {
+        if (item.type === "song") {
+          const song = state.songs.find(entry => entry.id === item.songId);
+          return song ? buildSlidesForSong(song) : [];
+        }
+        if (item.type === "text") return buildWorshipSlidesForText(item);
+        return [];
+      });
+    }
+
+    function applyPresentationSlideStyle(slide) {
+      el.presentationSlide.style.backgroundImage = "";
+      el.presentationSlide.style.backgroundColor = "";
+      el.presentationSlide.style.color = "";
+      el.presentationSlide.style.backgroundSize = "";
+      el.presentationSlide.style.backgroundPosition = "";
+      el.presentationSlide.style.backgroundRepeat = "";
+      el.presentationStage.style.backgroundImage = "";
+      el.presentationStage.style.backgroundColor = "";
+      el.presentationStage.style.backgroundSize = "";
+      el.presentationStage.style.backgroundPosition = "";
+      el.presentationStage.style.backgroundRepeat = "";
+      el.presentationText.style.textAlign = "";
+      el.presentationText.style.justifyContent = "";
+      if (!slide?.worshipText) return;
+      const alignment = slide.alignment || "center";
+      el.presentationText.style.textAlign = alignment;
+      el.presentationText.style.justifyContent = alignment === "left" ? "flex-start" : alignment === "right" ? "flex-end" : "center";
+      if (slide.backgroundMode === "color" && slide.backgroundColor) {
+        el.presentationSlide.style.backgroundColor = slide.backgroundColor;
+        el.presentationStage.style.backgroundColor = slide.backgroundColor;
+        el.presentationSlide.style.color = "#ffffff";
+      }
+      if (slide.backgroundMode === "image" && slide.backgroundImage) {
+        const opacity = Math.max(0, Math.min(80, Number(slide.overlay) || 0)) / 100;
+        const imageBackground = `linear-gradient(rgba(0,0,0,${opacity}), rgba(0,0,0,${opacity})), url("${slide.backgroundImage}")`;
+        el.presentationSlide.style.backgroundImage = imageBackground;
+        el.presentationSlide.style.backgroundSize = "cover";
+        el.presentationSlide.style.backgroundPosition = "center";
+        el.presentationSlide.style.backgroundRepeat = "no-repeat";
+        el.presentationStage.style.backgroundImage = imageBackground;
+        el.presentationStage.style.backgroundSize = "cover";
+        el.presentationStage.style.backgroundPosition = "center";
+        el.presentationStage.style.backgroundRepeat = "no-repeat";
+        el.presentationSlide.style.color = "#ffffff";
+      }
+    }
+
+    function openWorshipPreview() {
+      if (!canUseWorshipPresentationViewport()) {
+        showToast("Presentacion del culto disponible en tablet o computadora");
+        return;
+      }
+      const slides = buildWorshipPresentationSlides();
+      if (slides.length === 0) {
+        showToast("Agrega pantallas a la presentacion del culto");
+        return;
+      }
+      el.worshipPreviewBody.innerHTML = "";
+      const fragment = document.createDocumentFragment();
+      slides.forEach((slide, index) => {
+        const screen = document.createElement("div");
+        screen.className = "preview-screen";
+        screen.innerHTML = `<span class="preview-screen-count"></span><div></div>`;
+        screen.querySelector(".preview-screen-count").textContent = `${index + 1}/${slides.length}`;
+        screen.querySelector("div").textContent = `${slide.title} - ${slide.text}`;
+        fragment.append(screen);
+      });
+      el.worshipPreviewBody.append(fragment);
+      el.worshipPreviewModal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeWorshipPreviewModal() {
+      el.worshipPreviewModal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    function startWorshipPresentationMode() {
+      if (!canUseWorshipPresentationViewport()) {
+        showToast("Presentacion del culto disponible en tablet o computadora");
+        return;
+      }
+      state.presentationSlides = buildWorshipPresentationSlides();
+      if (state.presentationSlides.length === 0) {
+        showToast("Agrega pantallas a la presentacion del culto");
+        return;
+      }
+      state.presentationMode = true;
+      state.presentationIndex = 0;
+      closeWorshipPreviewModal();
+      closePreviewModal();
+      el.presentationStage.classList.add("open");
+      document.body.style.overflow = "hidden";
+      renderPresentationSlide();
+      showPresentationControls();
+      requestPresentationFullscreen();
+    }
+
     function saveConfig(showMessage = true) {
       if (state.isAdmin && !canManageHomeConfig()) return;
       try {
@@ -3591,6 +4498,7 @@
       await loadConfig();
       await loadSongs();
       loadPresentation();
+      loadWorshipPresentation();
       subscribeToSupabaseChanges();
       render();
       handleInviteLink();
@@ -3604,10 +4512,12 @@
     }
 
     function filteredSongs() {
-      const query = normalize(state.query);
+      const rawQuery = String(state.query || "").trim();
+      const query = normalize(rawQuery);
+      const numberQuery = normalizeSongNumberIdentifier(rawQuery);
       if (!query) return state.songs;
       return state.songs.filter(song =>
-        String(song.number ?? "").includes(query) ||
+        normalizeSongNumberIdentifier(song.number).includes(numberQuery) ||
         normalize(song.title).includes(query) ||
         normalize(song.lyrics).includes(query)
       );
@@ -3806,6 +4716,7 @@
       }
 
       renderPresentationPanel();
+      renderWorshipPresentationPanel();
       renderDetail();
       updateReadingToolbar();
     }
@@ -3893,7 +4804,7 @@
       el.clearPresentation.disabled = songs.length === 0;
 
       if (songs.length === 0) {
-        el.presentationList.innerHTML = "<div class='empty'><div><strong>No hay cantos seleccionados.</strong>Agrega cantos desde la pantalla principal.</div></div>";
+        el.presentationList.innerHTML = "<div class='presentation-empty'><strong>No hay cantos seleccionados.</strong><br>Agrega cantos desde la pantalla principal.</div>";
         return;
       }
 
@@ -4226,8 +5137,14 @@
     function renderPresentationSlide() {
       const slide = state.presentationSlides[state.presentationIndex];
       if (!slide) return;
-      el.presentationTitle.textContent = slide.title;
+      const title = String(slide.title || "").trim();
+      const text = String(slide.text || "").trim();
+      const duplicateTextTitle = Boolean(slide.worshipText && title && title === text);
+      const titleRow = el.presentationTitle.closest(".presentation-title-row");
+      if (titleRow) titleRow.hidden = duplicateTextTitle;
+      el.presentationTitle.textContent = duplicateTextTitle ? "" : slide.title;
       el.presentationText.textContent = slide.text;
+      applyPresentationSlideStyle(slide);
       el.presentationCount.textContent = `${slide.indexInSong}/${slide.totalInSong}`;
       el.presentationPrev.disabled = state.presentationIndex === 0;
       el.presentationNext.disabled = state.presentationIndex === state.presentationSlides.length - 1;
@@ -4615,7 +5532,12 @@
       event.preventDefault();
       if (!state.isAdmin) return;
       autoCorrectEditorText();
-      const number = el.numberInput.value === "" ? nextSongNumber() : Number(el.numberInput.value);
+      const number = normalizeSongNumberIdentifier(el.numberInput.value || nextSongNumber());
+      if (!isValidSongNumberIdentifier(number)) {
+        showToast("Usa un numero o numero con una letra, por ejemplo 61A");
+        el.numberInput.focus();
+        return;
+      }
       const title = el.titleInput.value.trim();
       const lyrics = el.lyricsInput.value.trim();
       if (!title || !lyrics) return;
@@ -4659,19 +5581,54 @@
       render();
     }
 
+    function normalizeSongNumberIdentifier(value) {
+      return String(value ?? "")
+        .trim()
+        .replace(/\s+/g, "")
+        .toUpperCase();
+    }
+
+    function isValidSongNumberIdentifier(value) {
+      return /^[0-9]+[A-Z]?$/.test(normalizeSongNumberIdentifier(value));
+    }
+
+    function songNumberSortParts(value) {
+      const normalized = normalizeSongNumberIdentifier(value);
+      const match = normalized.match(/^([0-9]+)([A-Z]?)$/);
+      if (!match) return { base: Number.MAX_SAFE_INTEGER, suffix: normalized };
+      return {
+        base: Number(match[1]),
+        suffix: match[2] || ""
+      };
+    }
+
+    function compareSongNumbers(a, b) {
+      const first = songNumberSortParts(a);
+      const second = songNumberSortParts(b);
+      if (first.base !== second.base) return first.base - second.base;
+      if (first.suffix === second.suffix) return 0;
+      if (!first.suffix) return -1;
+      if (!second.suffix) return 1;
+      return first.suffix.localeCompare(second.suffix, "es");
+    }
+
+    function compareSongsByNumber(a, b) {
+      const byNumber = compareSongNumbers(a.number, b.number);
+      if (byNumber !== 0) return byNumber;
+      return String(a.title || "").localeCompare(String(b.title || ""), "es");
+    }
+
     function nextSongNumber() {
-      if (state.songs.length === 0) return 0;
-      const numbers = state.songs.map(song => Number(song.number) || 0);
-      return Math.max(...numbers) + 1;
+      if (state.songs.length === 0) return "0";
+      const bases = state.songs
+        .map(song => songNumberSortParts(song.number).base)
+        .filter(Number.isFinite);
+      const maxNumber = bases.length ? Math.max(...bases) : 0;
+      return String(maxNumber + 1);
     }
 
     function sortSongs() {
-      state.songs.sort((a, b) => {
-        const numberA = Number(a.number) || 0;
-        const numberB = Number(b.number) || 0;
-        if (numberA !== numberB) return numberA - numberB;
-        return a.title.localeCompare(b.title, "es");
-      });
+      state.songs.sort(compareSongsByNumber);
     }
 
     function adminSessionIsActive() {
@@ -5623,6 +6580,24 @@
     el.previewPresentation.addEventListener("click", openPreview);
     el.startPresentation.addEventListener("click", startPresentationMode);
     el.clearPresentation.addEventListener("click", clearPresentationList);
+    el.addWorshipScreen?.addEventListener("click", openWorshipTypeChooser);
+    el.cancelWorshipChoice?.addEventListener("click", showWorshipMain);
+    el.chooseWorshipText?.addEventListener("click", () => openWorshipTextEditor());
+    el.chooseWorshipSong?.addEventListener("click", () => openWorshipSongEditor());
+    el.cancelWorshipText?.addEventListener("click", showWorshipMain);
+    el.cancelWorshipSong?.addEventListener("click", showWorshipMain);
+    el.worshipTextForm?.addEventListener("submit", submitWorshipText);
+    [el.worshipTextTitle, el.worshipTextSubtitle, el.worshipTextAlignment, el.worshipTextBackgroundMode, el.worshipTextBackgroundColor, el.worshipTextOverlay].forEach(input => {
+      input?.addEventListener("input", updateWorshipTextPreview);
+      input?.addEventListener("change", updateWorshipTextPreview);
+    });
+    el.worshipTextBackgroundImage?.addEventListener("change", handleWorshipBackgroundImageChoice);
+    el.worshipSongSearch?.addEventListener("input", renderWorshipSongSelect);
+    el.worshipSongSelect?.addEventListener("change", updateWorshipSongPreview);
+    el.addWorshipSong?.addEventListener("click", addWorshipSong);
+    el.previewWorship?.addEventListener("click", openWorshipPreview);
+    el.startWorship?.addEventListener("click", startWorshipPresentationMode);
+    el.clearWorship?.addEventListener("click", clearWorshipPresentationList);
     el.closeModal.addEventListener("click", closeEditor);
     el.cancelEdit.addEventListener("click", closeEditor);
     el.form.addEventListener("submit", submitSong);
@@ -5738,6 +6713,9 @@
     el.previewModal.addEventListener("click", event => {
       if (event.target === el.previewModal) closePreviewModal();
     });
+    el.worshipPreviewModal.addEventListener("click", event => {
+      if (event.target === el.worshipPreviewModal) closeWorshipPreviewModal();
+    });
     window.addEventListener("click", event => {
       if (state.adminMenuOpen && el.adminMenu && !el.adminMenu.contains(event.target)) {
         closeAdminMenu();
@@ -5768,6 +6746,7 @@
         updateReadingToolbar();
       }
       if (event.key === "Escape" && el.previewModal.classList.contains("open")) closePreviewModal();
+      if (event.key === "Escape" && el.worshipPreviewModal.classList.contains("open")) closeWorshipPreviewModal();
       if (event.key === "Escape" && el.modal.classList.contains("open")) closeEditor();
       if (event.key === "Escape" && el.settingsModal.classList.contains("open")) closeSettingsModal();
       if (event.key === "Escape" && el.authModal.classList.contains("open")) closeAuthModal();
@@ -5803,4 +6782,3 @@
   </script>
 </body>
 </html>
-
