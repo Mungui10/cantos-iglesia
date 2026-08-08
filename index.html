@@ -1150,10 +1150,6 @@
       background: var(--surface);
     }
 
-    #presentationPanelMount .presentation-panel {
-      margin: 0;
-    }
-
     .presentation-head,
     .presentation-actions {
       display: flex;
@@ -1240,9 +1236,9 @@
 
     .worship-panel {
       display: grid;
-      gap: 16px;
+      gap: 10px;
       margin-top: 0;
-      padding: 16px;
+      padding: 10px;
       border: 1px solid var(--line-strong);
       border-radius: 12px;
       background: var(--surface);
@@ -1254,7 +1250,7 @@
 
     .worship-screen {
       display: grid;
-      gap: 14px;
+      gap: 8px;
     }
 
     .worship-screen[hidden] {
@@ -1265,7 +1261,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
@@ -1280,18 +1276,19 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .worship-choice-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(180px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(2, minmax(130px, 1fr));
+      gap: 8px;
     }
 
     .worship-choice {
-      min-height: 96px;
+      min-height: 48px;
+      padding: 8px 12px;
       border: 1px solid var(--line-strong);
       border-radius: 10px;
       background: var(--surface-strong);
@@ -1326,6 +1323,61 @@
       gap: 6px;
       color: var(--muted);
       font-weight: 700;
+    }
+
+    .worship-image-field {
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .worship-image-source-actions,
+    .worship-image-category-tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .worship-external-field {
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .worship-external-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .worship-external-name {
+      color: var(--text);
+      font-weight: 750;
+      overflow-wrap: anywhere;
+    }
+
+    .worship-external-help {
+      margin: 0;
+      color: var(--muted);
+      font-size: .88rem;
+      font-weight: 600;
+    }
+
+    .worship-app-library {
+      display: grid;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+    }
+
+    .worship-app-library[hidden] {
+      display: none !important;
     }
 
     .worship-form-grid .wide {
@@ -1409,6 +1461,48 @@
       margin-bottom: 4px;
     }
 
+    .worship-image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+      gap: 10px;
+    }
+
+    .worship-image-choice {
+      position: relative;
+      min-height: 86px;
+      overflow: hidden;
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .worship-image-choice img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .worship-image-choice.selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+
+    .worship-image-choice.selected::after {
+      content: "Seleccionada";
+      position: absolute;
+      right: 6px;
+      bottom: 6px;
+      padding: 4px 7px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, .72);
+      color: #ffffff;
+      font-size: .72rem;
+      font-weight: 850;
+    }
+
     .worship-list {
       display: grid;
       gap: 10px;
@@ -1423,6 +1517,26 @@
       border: 1px solid var(--line-strong);
       border-radius: 10px;
       background: var(--surface-strong);
+    }
+
+    .worship-item-main {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+    }
+
+    .worship-item-main.no-thumb {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .worship-item-thumb {
+      width: 86px;
+      aspect-ratio: 16 / 9;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      object-fit: cover;
+      background: var(--surface);
     }
 
     .worship-item-title {
@@ -1456,9 +1570,10 @@
       border: 1px dashed var(--line-strong);
       border-radius: 10px;
       background: var(--surface-strong);
-      padding: 18px;
+      padding: 8px 10px;
       color: var(--muted);
       text-align: center;
+      font-size: 0.92rem;
       font-weight: 700;
     }
 
@@ -1466,7 +1581,7 @@
       border: 1px dashed var(--line-strong);
       border-radius: 10px;
       background: var(--surface-strong);
-      padding: 18px;
+      padding: 10px 12px;
       color: var(--muted);
       text-align: center;
       font-weight: 700;
@@ -1668,6 +1783,20 @@
       overflow-wrap: normal;
       word-break: normal;
       overflow: hidden;
+    }
+
+    .presentation-text-link {
+      display: inline-block;
+      width: fit-content;
+      max-width: 100%;
+      white-space: inherit;
+    }
+
+    .presentation-text-link.external-link {
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-thickness: .08em;
+      text-underline-offset: .16em;
     }
 
     .presentation-controls {
@@ -2286,7 +2415,8 @@
 
     .app.presentation-mode .presentation-view {
       display: grid !important;
-      grid-template-rows: auto minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      align-content: start;
       gap: 12px;
     }
 
@@ -2944,28 +3074,15 @@
       <section class="detail" id="songDetail" aria-live="polite"></section>
     </main>
 
-    <section class="presentation-panel" id="presentationPanel" aria-label="Presentación">
-      <div class="presentation-head">
-        <h2>Presentación</h2>
-        <div class="presentation-actions">
-          <button class="secondary" id="previewPresentation" type="button">Vista previa</button>
-          <button class="primary" id="startPresentation" type="button">Comenzar</button>
-          <button class="secondary" id="clearPresentation" type="button">Vaciar lista</button>
-        </div>
-      </div>
-      <div class="presentation-list" id="presentationList"></div>
-    </section>
     <section class="presentation-view" id="presentationView" aria-label="Preparar presentaci&oacute;n">
       <div class="presentation-view-head">
         <h2>Presentaci&oacute;n</h2>
         <button class="back-button" id="closePresentationView" type="button">Volver</button>
       </div>
-      <div id="presentationPanelMount"></div>
 
-      <section class="worship-panel" id="worshipPanel" aria-label="Presentacion del culto">
+      <section class="worship-panel" id="worshipPanel" aria-label="Presentacion">
         <div class="worship-screen" id="worshipMain">
           <div class="worship-head">
-            <h2>Presentacion del culto</h2>
             <div class="worship-actions">
               <button class="primary" id="addWorshipScreen" type="button">Anadir pantalla</button>
               <button class="secondary" id="previewWorship" type="button">Vista previa</button>
@@ -2994,7 +3111,7 @@
           <div class="worship-form-grid">
             <label class="wide">
               Texto principal
-              <input class="field" id="worshipTextTitle" type="text" maxlength="120" autocomplete="off" required>
+              <input class="field" id="worshipTextTitle" type="text" maxlength="120" autocomplete="off">
             </label>
             <label class="wide">
               Texto secundario
@@ -3024,10 +3141,33 @@
               Capa oscura
               <input class="field" id="worshipTextOverlay" type="range" min="0" max="80" step="5" value="45">
             </label>
-            <label class="wide" id="worshipTextImageLabel">
-              Imagen local de fondo
-              <input class="field image-input" id="worshipTextBackgroundImage" type="file" accept="image/*">
-            </label>
+            <div class="wide worship-image-field" id="worshipTextImageLabel">
+              <span>Imagen de fondo</span>
+              <div class="worship-image-source-actions">
+                <button class="secondary" id="chooseWorshipDeviceImage" type="button">Desde el dispositivo</button>
+                <button class="secondary" id="chooseWorshipAppImage" type="button">Desde la aplicaci&oacute;n</button>
+                <button class="secondary" id="clearWorshipTextImage" type="button">Quitar imagen</button>
+              </div>
+              <input class="field image-input" id="worshipTextBackgroundImage" type="file" accept="image/*" hidden>
+              <div class="worship-app-library" id="worshipAppImageLibrary" hidden>
+                <div class="worship-image-category-tabs" id="worshipImageCategoryTabs"></div>
+                <div class="worship-image-grid" id="worshipAppImageGrid"></div>
+                <div class="worship-editor-actions">
+                  <button class="secondary" id="closeWorshipAppImageLibrary" type="button">Volver</button>
+                </div>
+              </div>
+            </div>
+            <div class="wide worship-external-field">
+              <span>V&iacute;nculo externo (opcional)</span>
+              <div class="worship-external-actions">
+                <button class="secondary" id="chooseWorshipExternalFile" type="button">Elegir archivo</button>
+                <button class="secondary" id="clearWorshipExternalFile" type="button" hidden>Quitar v&iacute;nculo</button>
+              </div>
+              <input class="field" id="worshipExternalFile" type="file" accept=".ppt,.pptx,.pps,.ppsx,.pdf,.doc,.docx,.xls,.xlsx,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf" hidden>
+              <span class="worship-external-name" id="worshipExternalFileName">Sin archivo asociado</span>
+              <p class="worship-external-help">Al hacer clic en el texto durante la presentaci&oacute;n, se intentar&aacute; abrir este archivo.</p>
+              <p class="worship-external-help" id="worshipExternalFileWarning" hidden>Por seguridad del navegador, puede ser necesario seleccionar nuevamente el archivo al volver a abrir la app.</p>
+            </div>
           </div>
           <div class="worship-preview-card" id="worshipTextPreview" aria-label="Vista previa de texto">
             <div class="worship-preview-content">
@@ -3061,6 +3201,7 @@
             <button class="primary" id="addWorshipSong" type="button">Guardar pantalla</button>
           </div>
         </div>
+
       </section>
     </section>
   </div>
@@ -3326,7 +3467,7 @@
       <div class="presentation-title-row">
         <h2 id="presentationTitle"></h2>
       </div>
-      <div class="presentation-text" id="presentationText"></div>
+      <div class="presentation-text" id="presentationText"><span class="presentation-text-link" id="presentationTextLink"></span></div>
     </div>
     <div class="presentation-controls" id="presentationControls">
       <button id="presentationPrev" type="button">Anterior</button>
@@ -3345,12 +3486,45 @@
     const PRESENTATION_KEY = "cantos-iglesia-presentacion-v1";
     const WORSHIP_PRESENTATION_KEY = "himnario-presentacion-culto-v1";
     const READING_FONT_SIZE_KEY = "himnario-reading-font-size-v1";
+    const WORSHIP_FILE_SESSION_ID = `worship-file-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
     const ADMIN_INACTIVITY_LIMIT_MS = 2 * 60 * 60 * 1000;
     const ADMIN_ACCESS_CODE = "admin123";
     const USER_ACCESS_CODE = "usuario";
     const SUPABASE_PROJECT_URL = "https://fvnbkviaymiysqquzlhd.supabase.co"; // Copia aqui tu Project URL de Supabase.
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_f3UsPhop8WLHV-JFvBdJXQ_FDHuLJAT"; // Copia aqui tu Publishable Key de Supabase.
     const SUPABASE_MAIN_ID = "main";
+    const WORSHIP_IMAGE_CATEGORIES = {
+      "santa-cena": {
+        label: "Santa Cena",
+        images: [
+          "presentation-backgrounds/santa-cena-1.png",
+          "presentation-backgrounds/santa-cena-2.png",
+          "presentation-backgrounds/santa-cena-3.png",
+          "presentation-backgrounds/santa-cena-4.png",
+          "presentation-backgrounds/santa-cena-5.png"
+        ]
+      },
+      sermon: {
+        label: "Serm\u00f3n",
+        images: [
+          "presentation-backgrounds/sermon-1.png",
+          "presentation-backgrounds/sermon-2.png",
+          "presentation-backgrounds/sermon-3.png",
+          "presentation-backgrounds/sermon-4.png",
+          "presentation-backgrounds/sermon-5.png"
+        ]
+      },
+      ofrenda: {
+        label: "Ofrenda",
+        images: [
+          "presentation-backgrounds/ofrenda-1.png",
+          "presentation-backgrounds/ofrenda-2.png",
+          "presentation-backgrounds/ofrenda-3.png",
+          "presentation-backgrounds/ofrenda-4.png",
+          "presentation-backgrounds/ofrenda-5.png"
+        ]
+      }
+    };
     const state = {
       songs: [],
       selectedId: null,
@@ -3375,7 +3549,11 @@
       worshipView: "main",
       editingWorshipTextId: null,
       editingWorshipSongId: null,
+      selectedWorshipImagePath: "",
+      worshipImageLibraryCategory: "santa-cena",
       pendingWorshipImage: "",
+      pendingWorshipImageSource: "",
+      pendingWorshipExternalResource: null,
       presentationSlides: [],
       presentationIndex: 0,
       controlsTimer: null,
@@ -3411,7 +3589,6 @@
       openPresentation: document.querySelector("#openPresentation"),
       presentationView: document.querySelector("#presentationView"),
       closePresentationView: document.querySelector("#closePresentationView"),
-      presentationPanelMount: document.querySelector("#presentationPanelMount"),
       newSong: document.querySelector("#newSong"),
       openAdminPanel: document.querySelector("#openAdminPanel"),
       adminMenu: document.querySelector("#adminMenu"),
@@ -3441,7 +3618,6 @@
       mobileAdminLogout: document.querySelector("#mobileAdminLogout"),
       themeToggle: document.querySelector("#themeToggle"),
       settingsButton: document.querySelector("#settingsButton"),
-      presentationPanel: document.querySelector("#presentationPanel"),
       worshipPanel: document.querySelector("#worshipPanel"),
       worshipMain: document.querySelector("#worshipMain"),
       addWorshipScreen: document.querySelector("#addWorshipScreen"),
@@ -3466,6 +3642,18 @@
       worshipTextOverlayLabel: document.querySelector("#worshipTextOverlayLabel"),
       worshipTextBackgroundImage: document.querySelector("#worshipTextBackgroundImage"),
       worshipTextImageLabel: document.querySelector("#worshipTextImageLabel"),
+      chooseWorshipDeviceImage: document.querySelector("#chooseWorshipDeviceImage"),
+      chooseWorshipAppImage: document.querySelector("#chooseWorshipAppImage"),
+      clearWorshipTextImage: document.querySelector("#clearWorshipTextImage"),
+      worshipAppImageLibrary: document.querySelector("#worshipAppImageLibrary"),
+      worshipImageCategoryTabs: document.querySelector("#worshipImageCategoryTabs"),
+      worshipAppImageGrid: document.querySelector("#worshipAppImageGrid"),
+      closeWorshipAppImageLibrary: document.querySelector("#closeWorshipAppImageLibrary"),
+      chooseWorshipExternalFile: document.querySelector("#chooseWorshipExternalFile"),
+      clearWorshipExternalFile: document.querySelector("#clearWorshipExternalFile"),
+      worshipExternalFile: document.querySelector("#worshipExternalFile"),
+      worshipExternalFileName: document.querySelector("#worshipExternalFileName"),
+      worshipExternalFileWarning: document.querySelector("#worshipExternalFileWarning"),
       worshipTextPreview: document.querySelector("#worshipTextPreview"),
       cancelWorshipText: document.querySelector("#cancelWorshipText"),
       saveWorshipText: document.querySelector("#saveWorshipText"),
@@ -3473,10 +3661,6 @@
       previewWorship: document.querySelector("#previewWorship"),
       startWorship: document.querySelector("#startWorship"),
       clearWorship: document.querySelector("#clearWorship"),
-      presentationList: document.querySelector("#presentationList"),
-      previewPresentation: document.querySelector("#previewPresentation"),
-      startPresentation: document.querySelector("#startPresentation"),
-      clearPresentation: document.querySelector("#clearPresentation"),
       modal: document.querySelector("#modal"),
       modalTitle: document.querySelector("#modalTitle"),
       closeModal: document.querySelector("#closeModal"),
@@ -3553,6 +3737,7 @@
       presentationTitle: document.querySelector("#presentationTitle"),
       presentationSlide: document.querySelector("#presentationSlide"),
       presentationText: document.querySelector("#presentationText"),
+      presentationTextLink: document.querySelector("#presentationTextLink"),
       presentationControls: document.querySelector("#presentationControls"),
       presentationPrev: document.querySelector("#presentationPrev"),
       presentationNext: document.querySelector("#presentationNext"),
@@ -3560,7 +3745,6 @@
       presentationFullscreen: document.querySelector("#presentationFullscreen"),
       toast: document.querySelector("#toast")
     };
-    el.presentationPanelMount.append(el.presentationPanel);
 
     const db = {
       client: null,
@@ -3967,7 +4151,25 @@
           backgroundMode: mode,
           backgroundColor: item.backgroundColor || "#11100e",
           backgroundImage: item.backgroundImage || "",
+          backgroundImageSource: item.backgroundImageSource || (String(item.backgroundImage || "").startsWith("presentation-backgrounds/") ? "app" : item.backgroundImage ? "device" : ""),
           overlay: Math.max(0, Math.min(80, Number(item.overlay ?? 45) || 0)),
+          externalResource: normalizeExternalResource(item.externalResource),
+          target: item.target || "main"
+        };
+      }
+      if (item.type === "image") {
+        return {
+          id,
+          type: "text",
+          title: String(item.categoryLabel || WORSHIP_IMAGE_CATEGORIES[item.category]?.label || "").trim(),
+          subtitle: "",
+          alignment: "center",
+          backgroundMode: "image",
+          backgroundColor: "#11100e",
+          backgroundImage: item.image || "",
+          backgroundImageSource: "app",
+          overlay: 0,
+          externalResource: null,
           target: item.target || "main"
         };
       }
@@ -3976,6 +4178,21 @@
 
     function defaultWorshipPresentation() {
       return { items: [] };
+    }
+
+    function normalizeExternalResource(resource) {
+      if (!resource || typeof resource !== "object") return null;
+      const name = String(resource.name || "").trim();
+      if (!name) return null;
+      return {
+        name,
+        type: resource.type || "",
+        size: Number(resource.size) || 0,
+        lastModified: Number(resource.lastModified) || 0,
+        objectUrl: typeof resource.objectUrl === "string" ? resource.objectUrl : "",
+        sessionId: resource.sessionId || "",
+        transient: true
+      };
     }
 
     function localWorshipPresentation() {
@@ -3990,12 +4207,13 @@
 
     function loadWorshipPresentation() {
       state.worshipPresentation = localWorshipPresentation();
+      migrateLegacyPresentationSongs();
       localStorage.setItem(WORSHIP_PRESENTATION_KEY, JSON.stringify(state.worshipPresentation));
     }
 
     function saveWorshipPresentation(showMessage = false) {
       localStorage.setItem(WORSHIP_PRESENTATION_KEY, JSON.stringify(state.worshipPresentation));
-      if (showMessage) showToast("Presentacion del culto guardada");
+      if (showMessage) showToast("Presentacion guardada");
     }
 
     function canUseWorshipPresentationViewport() {
@@ -4023,11 +4241,36 @@
       return state.worshipPresentation.items || [];
     }
 
+    function createWorshipSongItem(songId, id = createWorshipItemId()) {
+      return { id, type: "song", songId, target: "main" };
+    }
+
+    function worshipSongExists(songId) {
+      return worshipItems().some(item => item.type === "song" && item.songId === songId);
+    }
+
+    function migrateLegacyPresentationSongs() {
+      const legacySongIds = Array.isArray(state.presentation.songIds) ? state.presentation.songIds : [];
+      if (legacySongIds.length === 0) return;
+      const existingSongIds = new Set(worshipItems().filter(item => item.type === "song").map(item => item.songId));
+      const migratedItems = legacySongIds
+        .filter(songId => songId && !existingSongIds.has(songId))
+        .map(songId => createWorshipSongItem(songId));
+      if (migratedItems.length > 0) {
+        state.worshipPresentation.items = [...worshipItems(), ...migratedItems];
+      }
+      state.presentation.songIds = [];
+      savePresentation();
+    }
+
     function showWorshipMain() {
       state.worshipView = "main";
       state.editingWorshipTextId = null;
       state.editingWorshipSongId = null;
+      state.selectedWorshipImagePath = "";
+      state.worshipImageLibraryCategory = "santa-cena";
       state.pendingWorshipImage = "";
+      state.pendingWorshipImageSource = "";
       renderWorshipPresentationPanel();
     }
 
@@ -4039,11 +4282,14 @@
 
     function openWorshipTypeChooser() {
       if (!canUseWorshipPresentationViewport()) {
-        showToast("Presentacion del culto disponible en tablet o computadora");
+        showToast("Presentacion disponible en tablet o computadora");
         return;
       }
       state.editingWorshipTextId = null;
       state.editingWorshipSongId = null;
+      state.selectedWorshipImagePath = "";
+      state.worshipImageLibraryCategory = "santa-cena";
+      state.pendingWorshipImageSource = "";
       showWorshipView("choose");
     }
 
@@ -4054,6 +4300,13 @@
       el.worshipTextBackgroundColor.value = "#11100e";
       el.worshipTextOverlay.value = "45";
       state.pendingWorshipImage = "";
+      state.pendingWorshipImageSource = "";
+      state.pendingWorshipExternalResource = null;
+      state.selectedWorshipImagePath = "";
+      state.worshipImageLibraryCategory = "santa-cena";
+      if (el.worshipAppImageLibrary) el.worshipAppImageLibrary.hidden = true;
+      if (el.worshipExternalFile) el.worshipExternalFile.value = "";
+      updateWorshipExternalFileStatus();
       updateWorshipTextPreview();
     }
 
@@ -4071,6 +4324,11 @@
         el.worshipTextBackgroundColor.value = item.backgroundColor || "#11100e";
         el.worshipTextOverlay.value = String(item.overlay ?? 45);
         state.pendingWorshipImage = item.backgroundImage || "";
+        state.pendingWorshipImageSource = item.backgroundImageSource || (String(item.backgroundImage || "").startsWith("presentation-backgrounds/") ? "app" : item.backgroundImage ? "device" : "");
+        state.selectedWorshipImagePath = state.pendingWorshipImageSource === "app" ? state.pendingWorshipImage : "";
+        state.worshipImageLibraryCategory = findWorshipImageCategory(state.selectedWorshipImagePath) || "santa-cena";
+        state.pendingWorshipExternalResource = normalizeExternalResource(item.externalResource);
+        updateWorshipExternalFileStatus();
       }
       showWorshipView("text");
       updateWorshipTextPreview();
@@ -4124,7 +4382,7 @@
 
     function addWorshipSong() {
       if (!canUseWorshipPresentationViewport()) {
-        showToast("Presentacion del culto disponible en tablet o computadora");
+        showToast("Presentacion disponible en tablet o computadora");
         return;
       }
       const songId = el.worshipSongSelect.value;
@@ -4133,7 +4391,7 @@
         showToast("Selecciona un canto");
         return;
       }
-      const item = { id: state.editingWorshipSongId || createWorshipItemId(), type: "song", songId, target: "main" };
+      const item = createWorshipSongItem(songId, state.editingWorshipSongId || createWorshipItemId());
       state.worshipPresentation.items = state.editingWorshipSongId
         ? worshipItems().map(existing => existing.id === state.editingWorshipSongId ? item : existing)
         : [...worshipItems(), item];
@@ -4155,6 +4413,9 @@
       if (!file) return;
       try {
         state.pendingWorshipImage = await readFileAsDataUrl(file);
+        state.pendingWorshipImageSource = "device";
+        state.selectedWorshipImagePath = "";
+        if (el.worshipAppImageLibrary) el.worshipAppImageLibrary.hidden = true;
         el.worshipTextBackgroundMode.value = "image";
         updateWorshipTextPreview();
       } catch {
@@ -4162,18 +4423,132 @@
       }
     }
 
+    function findWorshipImageCategory(src) {
+      if (!src) return "";
+      return Object.entries(WORSHIP_IMAGE_CATEGORIES).find(([, config]) => config.images.includes(src))?.[0] || "";
+    }
+
+    function openWorshipDeviceImagePicker() {
+      el.worshipTextBackgroundImage?.click();
+    }
+
+    function openWorshipAppImageLibrary() {
+      state.worshipImageLibraryCategory = state.worshipImageLibraryCategory || "santa-cena";
+      if (el.worshipAppImageLibrary) el.worshipAppImageLibrary.hidden = false;
+      renderWorshipAppImageLibrary();
+    }
+
+    function closeWorshipAppImageLibrary() {
+      if (el.worshipAppImageLibrary) el.worshipAppImageLibrary.hidden = true;
+    }
+
+    function clearWorshipTextBackgroundImage() {
+      state.pendingWorshipImage = "";
+      state.pendingWorshipImageSource = "";
+      state.selectedWorshipImagePath = "";
+      if (el.worshipTextBackgroundImage) el.worshipTextBackgroundImage.value = "";
+      if (el.worshipAppImageLibrary) el.worshipAppImageLibrary.hidden = true;
+      if (el.worshipTextBackgroundMode.value === "image") el.worshipTextBackgroundMode.value = "plain";
+      updateWorshipTextPreview();
+    }
+
+    function renderWorshipAppImageLibrary() {
+      if (!el.worshipImageCategoryTabs || !el.worshipAppImageGrid) return;
+      el.worshipImageCategoryTabs.innerHTML = "";
+      Object.entries(WORSHIP_IMAGE_CATEGORIES).forEach(([key, config]) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = key === state.worshipImageLibraryCategory ? "primary" : "secondary";
+        button.textContent = config.label;
+        button.addEventListener("click", () => {
+          state.worshipImageLibraryCategory = key;
+          renderWorshipAppImageLibrary();
+        });
+        el.worshipImageCategoryTabs.append(button);
+      });
+      const config = WORSHIP_IMAGE_CATEGORIES[state.worshipImageLibraryCategory] || WORSHIP_IMAGE_CATEGORIES["santa-cena"];
+      el.worshipAppImageGrid.innerHTML = "";
+      config.images.forEach((src, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `worship-image-choice${src === state.selectedWorshipImagePath ? " selected" : ""}`;
+        button.setAttribute("aria-label", `${config.label} ${index + 1}`);
+        button.setAttribute("aria-pressed", src === state.selectedWorshipImagePath ? "true" : "false");
+        button.innerHTML = `<img alt="" loading="lazy">`;
+        button.querySelector("img").src = src;
+        button.addEventListener("click", () => {
+          state.selectedWorshipImagePath = src;
+          state.pendingWorshipImage = src;
+          state.pendingWorshipImageSource = "app";
+          el.worshipTextBackgroundMode.value = "image";
+          renderWorshipAppImageLibrary();
+          updateWorshipTextPreview();
+        });
+        el.worshipAppImageGrid.append(button);
+      });
+    }
+
+    function updateWorshipExternalFileStatus() {
+      const resource = state.pendingWorshipExternalResource;
+      if (el.worshipExternalFileName) {
+        el.worshipExternalFileName.textContent = resource?.name || "Sin archivo asociado";
+      }
+      if (el.clearWorshipExternalFile) {
+        el.clearWorshipExternalFile.hidden = !resource;
+      }
+      if (el.worshipExternalFileWarning) {
+        el.worshipExternalFileWarning.hidden = !resource;
+      }
+    }
+
+    function chooseWorshipExternalFile() {
+      el.worshipExternalFile?.click();
+    }
+
+    function handleWorshipExternalFileChoice(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      if (state.pendingWorshipExternalResource?.objectUrl?.startsWith("blob:")) {
+        URL.revokeObjectURL(state.pendingWorshipExternalResource.objectUrl);
+      }
+      state.pendingWorshipExternalResource = {
+        name: file.name,
+        type: file.type || "",
+        size: file.size || 0,
+        lastModified: file.lastModified || 0,
+        objectUrl: URL.createObjectURL(file),
+        sessionId: WORSHIP_FILE_SESSION_ID,
+        transient: true
+      };
+      updateWorshipExternalFileStatus();
+    }
+
+    function clearWorshipExternalFile() {
+      if (state.pendingWorshipExternalResource?.objectUrl?.startsWith("blob:")) {
+        URL.revokeObjectURL(state.pendingWorshipExternalResource.objectUrl);
+      }
+      state.pendingWorshipExternalResource = null;
+      if (el.worshipExternalFile) el.worshipExternalFile.value = "";
+      updateWorshipExternalFileStatus();
+    }
+
     function updateWorshipTextPreview() {
       if (!el.worshipTextPreview) return;
-      const title = el.worshipTextTitle.value.trim() || "Texto principal";
-      const subtitle = el.worshipTextSubtitle.value.trim() || "Texto secundario opcional";
+      const title = el.worshipTextTitle.value.trim();
+      const subtitle = el.worshipTextSubtitle.value.trim();
       const mode = el.worshipTextBackgroundMode.value;
       const color = el.worshipTextBackgroundColor.value || "#11100e";
       const overlay = Math.max(0, Math.min(80, Number(el.worshipTextOverlay.value) || 0));
+      const hasText = Boolean(title.trim() || subtitle.trim());
+      const effectiveOverlay =
+        mode === "image" && hasText
+          ? overlay
+          : 0;
       const alignment = el.worshipTextAlignment.value || "center";
       const card = el.worshipTextPreview;
       card.classList.remove("align-left", "align-center", "align-right");
       card.classList.add(`align-${alignment}`);
-      card.style.setProperty("--worship-overlay", mode === "image" ? String(overlay / 100) : "0");
+      card.style.setProperty("--worship-overlay", String(effectiveOverlay / 100));
       card.style.backgroundColor = mode === "color" ? color : "";
       card.style.backgroundImage = mode === "image" && state.pendingWorshipImage ? `url("${state.pendingWorshipImage}")` : "";
       card.style.color = mode === "plain" ? "" : "#ffffff";
@@ -4187,15 +4562,10 @@
     function submitWorshipText(event) {
       event.preventDefault();
       if (!canUseWorshipPresentationViewport()) {
-        showToast("Presentacion del culto disponible en tablet o computadora");
+        showToast("Presentacion disponible en tablet o computadora");
         return;
       }
       const title = el.worshipTextTitle.value.trim();
-      if (!title) {
-        showToast("Escribe el texto principal");
-        el.worshipTextTitle.focus();
-        return;
-      }
       const mode = el.worshipTextBackgroundMode.value;
       const item = {
         id: state.editingWorshipTextId || createWorshipItemId(),
@@ -4206,7 +4576,9 @@
         backgroundMode: mode,
         backgroundColor: mode === "color" ? (el.worshipTextBackgroundColor.value || "#11100e") : "",
         backgroundImage: mode === "image" ? state.pendingWorshipImage : "",
+        backgroundImageSource: mode === "image" ? state.pendingWorshipImageSource : "",
         overlay: Math.max(0, Math.min(80, Number(el.worshipTextOverlay.value) || 0)),
+        externalResource: normalizeExternalResource(state.pendingWorshipExternalResource),
         target: "main"
       };
       state.worshipPresentation.items = state.editingWorshipTextId
@@ -4240,7 +4612,7 @@
     function removeWorshipItem(itemId) {
       const item = worshipItems().find(entry => entry.id === itemId);
       if (!item) return;
-      if (!confirm("Eliminar esta pantalla de la presentacion del culto?")) return;
+      if (!confirm("Eliminar esta pantalla de la presentacion?")) return;
       state.worshipPresentation.items = worshipItems().filter(entry => entry.id !== itemId);
       saveWorshipPresentation();
       renderWorshipPresentationPanel();
@@ -4248,7 +4620,7 @@
 
     function clearWorshipPresentationList() {
       if (worshipItems().length === 0) return;
-      if (!confirm("Vaciar la lista de Presentacion del culto?")) return;
+      if (!confirm("Vaciar la lista de Presentacion?")) return;
       state.worshipPresentation.items = [];
       saveWorshipPresentation();
       showWorshipMain();
@@ -4259,8 +4631,8 @@
         const song = state.songs.find(entry => entry.id === item.songId);
         return song ? `${song.number ?? ""} ${song.title || "Canto"}`.trim() : "Canto no encontrado";
       }
-      const parts = [item.title || "Texto", item.subtitle || ""].filter(Boolean);
-      return parts.join(" - ");
+      const parts = [item.title || "", item.subtitle || ""].filter(Boolean);
+      return parts.join(" - ") || "Pantalla de texto";
     }
 
     function renderWorshipPresentationPanel() {
@@ -4292,10 +4664,13 @@
         const row = document.createElement("div");
         row.className = "worship-item";
         row.innerHTML = `
-          <div>
-            <span class="worship-item-type"></span>
-            <div class="worship-item-title"></div>
-            <div class="worship-item-meta"></div>
+          <div class="worship-item-main">
+            <img class="worship-item-thumb" alt="">
+            <div>
+              <span class="worship-item-type"></span>
+              <div class="worship-item-title"></div>
+              <div class="worship-item-meta"></div>
+            </div>
           </div>
           <div class="mini-actions">
             <button type="button" data-action="edit">Editar</button>
@@ -4305,12 +4680,24 @@
             <button type="button" data-action="down">Bajar</button>
           </div>
         `;
+        const thumb = row.querySelector(".worship-item-thumb");
+        const main = row.querySelector(".worship-item-main");
+        const thumbSource = item.type === "text" && item.backgroundImage ? item.backgroundImage : item.type === "image" && item.image ? item.image : "";
+        if (thumbSource) {
+          thumb.src = thumbSource;
+        } else {
+          thumb.remove();
+          main.classList.add("no-thumb");
+        }
         row.querySelector(".worship-item-type").textContent = item.type === "song" ? "Canto" : "Texto";
         row.querySelector(".worship-item-title").textContent = worshipItemSummary(item);
         row.querySelector(".worship-item-meta").textContent = `Pantalla ${index + 1} de ${items.length}`;
         row.querySelector("[data-action='up']").disabled = index === 0;
         row.querySelector("[data-action='down']").disabled = index === items.length - 1;
-        row.querySelector("[data-action='edit']").addEventListener("click", () => item.type === "text" ? openWorshipTextEditor(item.id) : openWorshipSongEditor(item.id));
+        row.querySelector("[data-action='edit']").addEventListener("click", () => {
+          if (item.type === "text") openWorshipTextEditor(item.id);
+          else if (item.type === "song") openWorshipSongEditor(item.id);
+        });
         row.querySelector("[data-action='duplicate']").addEventListener("click", () => duplicateWorshipItem(item.id));
         row.querySelector("[data-action='remove']").addEventListener("click", () => removeWorshipItem(item.id));
         row.querySelector("[data-action='up']").addEventListener("click", () => moveWorshipItem(index, -1));
@@ -4322,7 +4709,7 @@
 
     function buildWorshipSlidesForText(item) {
       return [{
-        title: item.title || "Texto",
+        title: item.title || "",
         text: item.subtitle || item.title || "",
         indexInSong: 1,
         totalInSong: 1,
@@ -4331,7 +4718,8 @@
         backgroundMode: item.backgroundMode || "plain",
         backgroundColor: item.backgroundColor || "",
         backgroundImage: item.backgroundImage || "",
-        overlay: item.overlay ?? 45
+        overlay: item.overlay ?? 45,
+        externalResource: normalizeExternalResource(item.externalResource)
       }];
     }
 
@@ -4370,7 +4758,13 @@
         el.presentationSlide.style.color = "#ffffff";
       }
       if (slide.backgroundMode === "image" && slide.backgroundImage) {
-        const opacity = Math.max(0, Math.min(80, Number(slide.overlay) || 0)) / 100;
+        const hasText = Boolean(
+          String(slide.title || "").trim() ||
+          String(slide.text || "").trim()
+        );
+        const opacity = hasText
+          ? Math.max(0, Math.min(80, Number(slide.overlay) || 0)) / 100
+          : 0;
         const imageBackground = `linear-gradient(rgba(0,0,0,${opacity}), rgba(0,0,0,${opacity})), url("${slide.backgroundImage}")`;
         el.presentationSlide.style.backgroundImage = imageBackground;
         el.presentationSlide.style.backgroundSize = "cover";
@@ -4386,12 +4780,12 @@
 
     function openWorshipPreview() {
       if (!canUseWorshipPresentationViewport()) {
-        showToast("Presentacion del culto disponible en tablet o computadora");
+        showToast("Presentacion disponible en tablet o computadora");
         return;
       }
       const slides = buildWorshipPresentationSlides();
       if (slides.length === 0) {
-        showToast("Agrega pantallas a la presentacion del culto");
+        showToast("Agrega pantallas a la presentacion");
         return;
       }
       el.worshipPreviewBody.innerHTML = "";
@@ -4416,12 +4810,12 @@
 
     function startWorshipPresentationMode() {
       if (!canUseWorshipPresentationViewport()) {
-        showToast("Presentacion del culto disponible en tablet o computadora");
+        showToast("Presentacion disponible en tablet o computadora");
         return;
       }
       state.presentationSlides = buildWorshipPresentationSlides();
       if (state.presentationSlides.length === 0) {
-        showToast("Agrega pantallas a la presentacion del culto");
+        showToast("Agrega pantallas a la presentacion");
         return;
       }
       state.presentationMode = true;
@@ -4469,7 +4863,8 @@
           if (payload.eventType === "DELETE") {
             state.songs = state.songs.filter(song => song.id !== id);
             if (state.selectedId === id) state.selectedId = null;
-            state.presentation.songIds = state.presentation.songIds.filter(songId => songId !== id);
+            state.worshipPresentation.items = worshipItems().filter(item => !(item.type === "song" && item.songId === id));
+            saveWorshipPresentation();
           } else {
             const incoming = songFromRow(payload.new);
             const exists = state.songs.some(song => song.id === incoming.id);
@@ -4699,7 +5094,7 @@
             const presentButton = document.createElement("button");
             presentButton.type = "button";
             presentButton.className = "song-present";
-            const inPresentation = state.presentation.songIds.includes(song.id);
+            const inPresentation = worshipSongExists(song.id);
             presentButton.textContent = inPresentation ? "Quitar" : "Agregar";
             presentButton.dataset.mobileLabel = inPresentation ? "?" : "+";
             presentButton.title = inPresentation ? "Quitar de presentacion" : "Agregar a presentacion";
@@ -4716,7 +5111,6 @@
         el.list.append(fragment);
       }
 
-      renderPresentationPanel();
       renderWorshipPresentationPanel();
       renderDetail();
       updateReadingToolbar();
@@ -4737,17 +5131,19 @@
     }
 
     function presentationSongs() {
-      return state.presentation.songIds
-        .map(id => state.songs.find(song => song.id === id))
+      return worshipItems()
+        .filter(item => item.type === "song")
+        .map(item => state.songs.find(song => song.id === item.songId))
         .filter(Boolean);
     }
 
     function togglePresentationSong(songId) {
-      const exists = state.presentation.songIds.includes(songId);
-      state.presentation.songIds = exists
-        ? state.presentation.songIds.filter(id => id !== songId)
-        : [...state.presentation.songIds, songId];
-      savePresentation(true);
+      const exists = worshipSongExists(songId);
+      state.worshipPresentation.items = exists
+        ? worshipItems().filter(item => !(item.type === "song" && item.songId === songId))
+        : [...worshipItems(), createWorshipSongItem(songId)];
+      saveWorshipPresentation();
+      showToast(exists ? "Canto quitado de la presentacion" : "Canto agregado a la presentacion.");
       render();
     }
 
@@ -4771,65 +5167,24 @@
     }
 
     function movePresentationSong(index, direction) {
-      const nextIndex = index + direction;
-      if (nextIndex < 0 || nextIndex >= state.presentation.songIds.length) return;
-      const ids = [...state.presentation.songIds];
-      [ids[index], ids[nextIndex]] = [ids[nextIndex], ids[index]];
-      state.presentation.songIds = ids;
-      savePresentation();
-      renderPresentationPanel();
+      moveWorshipItem(index, direction);
     }
 
     function removePresentationSong(songId) {
-      state.presentation.songIds = state.presentation.songIds.filter(id => id !== songId);
-      savePresentation();
+      state.worshipPresentation.items = worshipItems().filter(item => !(item.type === "song" && item.songId === songId));
+      saveWorshipPresentation();
       render();
     }
 
     function clearPresentationList() {
-      if (state.presentation.songIds.length === 0) return;
-      if (!confirm("¿Vaciar la lista de presentación?")) return;
-      state.presentation.songIds = [];
-      savePresentation();
-      render();
+      clearWorshipPresentationList();
     }
 
     function renderPresentationSongPicker() {
     }
 
     function renderPresentationPanel() {
-      const songs = presentationSongs();
-      el.presentationList.innerHTML = "";
-      el.previewPresentation.disabled = songs.length === 0;
-      el.startPresentation.disabled = songs.length === 0;
-      el.clearPresentation.disabled = songs.length === 0;
-
-      if (songs.length === 0) {
-        el.presentationList.innerHTML = "<div class='presentation-empty'><strong>No hay cantos seleccionados.</strong><br>Agrega cantos desde la pantalla principal.</div>";
-        return;
-      }
-
-      const fragment = document.createDocumentFragment();
-      songs.forEach((song, index) => {
-        const item = document.createElement("div");
-        item.className = "presentation-item";
-        item.innerHTML = `
-          <div class="presentation-item-title"></div>
-          <div class="mini-actions">
-            <button type="button" data-action="up">Subir</button>
-            <button type="button" data-action="down">Bajar</button>
-            <button type="button" data-action="remove">Quitar</button>
-          </div>
-        `;
-        item.querySelector(".presentation-item-title").textContent = `${song.number ?? ""} ${song.title}`;
-        item.querySelector("[data-action='up']").disabled = index === 0;
-        item.querySelector("[data-action='down']").disabled = index === songs.length - 1;
-        item.querySelector("[data-action='up']").addEventListener("click", () => movePresentationSong(index, -1));
-        item.querySelector("[data-action='down']").addEventListener("click", () => movePresentationSong(index, 1));
-        item.querySelector("[data-action='remove']").addEventListener("click", () => removePresentationSong(song.id));
-        fragment.append(item);
-      });
-      el.presentationList.append(fragment);
+      renderWorshipPresentationPanel();
     }
 
     function renderDetail() {
@@ -4987,7 +5342,7 @@
     }
 
     function buildPresentationSlides() {
-      return presentationSongs().flatMap(song => buildSlidesForSong(song));
+      return buildWorshipPresentationSlides();
     }
 
     function sectionLabel(section) {
@@ -5141,15 +5496,35 @@
       const title = String(slide.title || "").trim();
       const text = String(slide.text || "").trim();
       const duplicateTextTitle = Boolean(slide.worshipText && title && title === text);
+      const emptyTextSlide = Boolean(slide.worshipText && !title && !text);
+      const hasVisibleExternalLink = Boolean(slide.externalResource && (title || text));
       const titleRow = el.presentationTitle.closest(".presentation-title-row");
-      if (titleRow) titleRow.hidden = duplicateTextTitle;
-      el.presentationTitle.textContent = duplicateTextTitle ? "" : slide.title;
-      el.presentationText.textContent = slide.text;
+      if (titleRow) titleRow.hidden = duplicateTextTitle || emptyTextSlide;
+      el.presentationTitle.textContent = duplicateTextTitle || emptyTextSlide ? "" : slide.title;
+      el.presentationTextLink.textContent = slide.text;
+      el.presentationTextLink.classList.toggle("external-link", hasVisibleExternalLink);
+      el.presentationTextLink.title = hasVisibleExternalLink ? `Abrir ${slide.externalResource.name}` : "";
       applyPresentationSlideStyle(slide);
       el.presentationCount.textContent = `${slide.indexInSong}/${slide.totalInSong}`;
       el.presentationPrev.disabled = state.presentationIndex === 0;
       el.presentationNext.disabled = state.presentationIndex === state.presentationSlides.length - 1;
       requestAnimationFrame(adjustPresentationTextSize);
+    }
+
+    function openPresentationExternalResource(event) {
+      const slide = state.presentationSlides[state.presentationIndex];
+      const title = String(slide?.title || "").trim();
+      const text = String(slide?.text || "").trim();
+      const resource = slide?.externalResource;
+      if (!resource || !(title || text)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      if (resource.objectUrl && resource.objectUrl.startsWith("blob:") && resource.sessionId === WORSHIP_FILE_SESSION_ID) {
+        const opened = window.open(resource.objectUrl, "_blank", "noopener");
+        if (!opened) showToast("El navegador bloqueo la apertura del archivo");
+        return;
+      }
+      showToast("Selecciona nuevamente el archivo antes de presentarlo");
     }
 
     function nextPresentationSlide() {
@@ -6578,9 +6953,9 @@
     });
     el.openPresentation.addEventListener("click", openPresentationView);
     el.closePresentationView.addEventListener("click", closePresentationView);
-    el.previewPresentation.addEventListener("click", openPreview);
-    el.startPresentation.addEventListener("click", startPresentationMode);
-    el.clearPresentation.addEventListener("click", clearPresentationList);
+    el.previewPresentation?.addEventListener("click", openPreview);
+    el.startPresentation?.addEventListener("click", startPresentationMode);
+    el.clearPresentation?.addEventListener("click", clearPresentationList);
     el.addWorshipScreen?.addEventListener("click", openWorshipTypeChooser);
     el.cancelWorshipChoice?.addEventListener("click", showWorshipMain);
     el.chooseWorshipText?.addEventListener("click", () => openWorshipTextEditor());
@@ -6593,6 +6968,13 @@
       input?.addEventListener("change", updateWorshipTextPreview);
     });
     el.worshipTextBackgroundImage?.addEventListener("change", handleWorshipBackgroundImageChoice);
+    el.chooseWorshipDeviceImage?.addEventListener("click", openWorshipDeviceImagePicker);
+    el.chooseWorshipAppImage?.addEventListener("click", openWorshipAppImageLibrary);
+    el.clearWorshipTextImage?.addEventListener("click", clearWorshipTextBackgroundImage);
+    el.closeWorshipAppImageLibrary?.addEventListener("click", closeWorshipAppImageLibrary);
+    el.chooseWorshipExternalFile?.addEventListener("click", chooseWorshipExternalFile);
+    el.worshipExternalFile?.addEventListener("change", handleWorshipExternalFileChoice);
+    el.clearWorshipExternalFile?.addEventListener("click", clearWorshipExternalFile);
     el.worshipSongSearch?.addEventListener("input", renderWorshipSongSelect);
     el.worshipSongSelect?.addEventListener("change", updateWorshipSongPreview);
     el.addWorshipSong?.addEventListener("click", addWorshipSong);
@@ -6636,6 +7018,7 @@
     el.presentationNext.addEventListener("click", nextPresentationSlide);
     el.presentationExit.addEventListener("click", exitPresentationMode);
     if (el.presentationFullscreen) el.presentationFullscreen.addEventListener("click", togglePresentationFullscreen);
+    el.presentationTextLink.addEventListener("click", openPresentationExternalResource);
     el.presentationStage.addEventListener("click", handlePresentationTap);
     el.presentationStage.addEventListener("mousemove", showPresentationControls);
     el.presentationStage.addEventListener("touchstart", handlePresentationTouchStart, { passive: true });
