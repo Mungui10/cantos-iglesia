@@ -1282,8 +1282,27 @@
 
     .worship-choice-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(130px, 1fr));
+      grid-template-columns: repeat(3, minmax(110px, 1fr));
       gap: 8px;
+    }
+
+    .worship-actions .worship-save-action {
+      width: 38px;
+      min-width: 38px;
+      padding-inline: 0;
+      line-height: 1;
+    }
+
+    .worship-save-action svg {
+      display: block;
+      width: 18px;
+      height: 18px;
+      margin: auto;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .worship-choice {
@@ -1325,6 +1344,10 @@
       font-weight: 700;
     }
 
+    .worship-form-grid [hidden] {
+      display: none !important;
+    }
+
     .worship-image-field {
       display: grid;
       gap: 8px;
@@ -1358,6 +1381,7 @@
       color: var(--text);
       font-weight: 750;
       overflow-wrap: anywhere;
+      white-space: pre-line;
     }
 
     .worship-external-help {
@@ -1404,6 +1428,10 @@
       justify-content: center;
       padding: 24px;
       text-align: center;
+    }
+
+    .worship-preview-card[hidden] {
+      display: none !important;
     }
 
     .worship-preview-card::before {
@@ -1799,6 +1827,25 @@
       text-underline-offset: .16em;
     }
 
+    .presentation-stage.song-announcement-active .presentation-slide {
+      padding: clamp(24px, 5vw, 72px);
+    }
+
+    .presentation-stage.song-announcement-active .presentation-text {
+      width: 100%;
+      white-space: nowrap;
+      line-height: 1;
+      font-weight: 850;
+      overflow: hidden;
+    }
+
+    .presentation-stage.song-announcement-active .presentation-text-link {
+      display: inline-block;
+      width: max-content;
+      max-width: none;
+      white-space: nowrap;
+    }
+
     .presentation-controls {
       position: absolute;
       left: 0;
@@ -1826,6 +1873,8 @@
       border: 1px solid rgba(255, 255, 255, .55);
       font-weight: 800;
       box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+      opacity: 1;
+      transition: opacity .16s ease, background .2s ease, border-color .2s ease;
     }
 
     .presentation-controls button:hover,
@@ -1834,7 +1883,7 @@
       border-color: rgba(255, 255, 255, .82);
     }
 
-    .presentation-stage.hide-controls .presentation-controls {
+    .presentation-stage.hide-controls .presentation-controls button {
       opacity: 0;
       pointer-events: none;
     }
@@ -3039,6 +3088,10 @@
       line-height: 1;
     }
 
+    .main-menu-toggle[hidden] {
+      display: none !important;
+    }
+
     .main-navigation {
       position: fixed;
       inset: 0;
@@ -3189,6 +3242,8 @@
     .my-presentations-list { display: grid; gap: 10px; }
     .my-presentation-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
     .my-presentation-card button { min-height: 40px; padding: 8px 14px; border-radius: 8px; background: var(--accent); color: var(--primary-text); font-weight: 800; }
+    .my-presentation-card-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .my-presentation-card .danger { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-line); }
     .my-presentation-card small { display: block; margin-top: 4px; color: var(--muted); }
     .my-editor-toolbar { justify-content: flex-end; margin-bottom: 14px; padding-left: 58px; min-height: 46px; }
     .my-editor-toolbar h2 { margin-right: auto; }
@@ -3258,17 +3313,26 @@
     .visual-editor-toolbar button.active { background: var(--accent); color: var(--primary-text); border-color: var(--accent); }
     .visual-editor-toolbar button.danger { color: var(--danger); }
     .visual-editor-toolbar button:disabled { opacity: .5; cursor: not-allowed; }
-    .visual-text-tools { flex: 1 1 auto; overflow-x: auto; flex-wrap: nowrap; padding: 2px; }
+    .visual-text-tools { flex: 1 1 auto; flex-wrap: wrap; padding: 2px; }
     .visual-text-tools select { width: 130px; }
     .visual-text-tools input[type="number"] { width: 64px; }
     .visual-text-tools input[type="color"] { width: 38px; height: 36px; padding: 3px; border: 1px solid var(--line-strong); border-radius: 7px; background: var(--button-bg); }
     .visual-editor-actions { margin-left: auto; }
+    .visual-editor-toolbar .visual-icon-action { width: 38px; min-width: 38px; padding-inline: 0; font-size: 1.08rem; line-height: 1; }
+    .visual-save-status { min-height: 1.2em; font-size: .82rem; font-weight: 750; color: var(--muted); white-space: nowrap; }
+    .visual-save-status[data-state="saving"] { color: var(--accent); }
+    .visual-save-status[data-state="success"] { color: #218739; }
+    .visual-save-status[data-state="warning"], .visual-save-status[data-state="error"] { color: var(--danger); }
     .visual-editor-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 14px; min-height: calc(100dvh - 110px); }
     .visual-slides-sidebar { min-height: 0; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); overflow-y: auto; }
     .visual-add-slide { width: 100%; min-height: 42px; border-radius: 8px; font-weight: 850; }
     .visual-canvas-workspace { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(10px, 2vw, 24px); border: 1px solid var(--line); border-radius: 10px; background: color-mix(in srgb, var(--bg) 70%, var(--line)); overflow: hidden; }
     .visual-canvas-frame { width: min(100%, calc((100dvh - 210px) * 16 / 9)); min-width: 320px; }
     .visual-slide-canvas, .my-slide-thumb, .my-present-canvas { position: relative; overflow: hidden; aspect-ratio: 16 / 9; container-type: inline-size; background-color: #fff; background-position: center; background-size: cover; color: #222; }
+    .pptx-render-host { position: relative; overflow: hidden; background: #000; }
+    .pptx-render-frame { position: absolute; left: 50%; top: 50%; transform-origin: center center; pointer-events: none; }
+    .pptx-render-frame > * { width: 100% !important; height: 100% !important; }
+    .pptx-render-message { display: grid; place-items: center; width: 100%; height: 100%; padding: 24px; color: #fff; background: #171717; text-align: center; }
     .visual-slide-canvas { width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,.22); user-select: none; touch-action: none; }
     .visual-slide-canvas::before, .my-slide-thumb::before, .my-present-canvas::before { content: ""; position: absolute; inset: 0; z-index: 0; background: rgba(0,0,0,var(--visual-overlay,0)); pointer-events: none; }
     .visual-main-text {
@@ -3289,13 +3353,14 @@
     .visual-object-text { padding: .7%; white-space: pre-wrap; overflow: visible; cursor: default; line-height: 1.12; transform-origin: center center; }
     .visual-object-text[contenteditable="true"] { overflow: hidden; cursor: text; user-select: text; touch-action: auto; }
     .visual-object-image { cursor: move; }
-    .visual-object-image img { width: 100%; height: 100%; display: block; object-fit: contain; pointer-events: none; }
+    .visual-object-image img { width: 100%; height: 100%; display: block; object-fit: fill; pointer-events: none; }
     .visual-resize-handle { position: absolute; z-index: 3; right: -6px; bottom: -6px; width: 14px; height: 14px; border: 2px solid #fff; border-radius: 50%; background: var(--accent); cursor: nwse-resize; }
     .visual-move-handle { position: absolute; z-index: 4; left: -7px; top: -7px; width: 14px; height: 14px; border: 2px solid #fff; border-radius: 4px; background: var(--accent); cursor: move; }
     .visual-rotate-handle { position: absolute; z-index: 4; left: 50%; top: -28px; width: 15px; height: 15px; border: 2px solid #fff; border-radius: 50%; background: var(--accent); cursor: grab; transform: translateX(-50%); }
     .visual-rotate-handle::after { content: ""; position: absolute; left: 50%; top: 13px; width: 1px; height: 13px; background: var(--accent); transform: translateX(-50%); }
     .visual-rotate-handle:active { cursor: grabbing; }
     .visual-object-text:not(.selected) > .visual-move-handle, .visual-object-text:not(.selected) > .visual-rotate-handle, .visual-object-text:not(.selected) > .visual-resize-handle, .visual-object-text.editing > .visual-move-handle, .visual-object-text.editing > .visual-rotate-handle, .visual-object-text.editing > .visual-resize-handle { display: none; }
+    .visual-object-image:not(.selected) > .visual-resize-handle { display: none; }
     .my-slide-thumb .visual-object { border: 0 !important; outline: 0 !important; pointer-events: none; }
     .my-slide-thumb .visual-resize-handle, .my-slide-thumb .visual-move-handle, .my-slide-thumb .visual-rotate-handle, .my-present-canvas .visual-resize-handle, .my-present-canvas .visual-move-handle, .my-present-canvas .visual-rotate-handle { display: none; }
     .my-slide-thumb .visual-object-text, .my-present-canvas .visual-object-text { overflow: hidden; }
@@ -3418,7 +3483,12 @@
               <button class="primary" id="addWorshipScreen" type="button">Anadir pantalla</button>
               <button class="secondary" id="previewWorship" type="button">Vista previa</button>
               <button class="primary" id="startWorship" type="button">Presentar</button>
+              <button class="secondary" id="importWorshipPresentation" type="button">Importar presentación</button>
+              <input id="worshipPresentationFile" type="file" accept=".hnm" hidden>
               <button class="secondary" id="clearWorship" type="button">Vaciar lista</button>
+              <button class="secondary worship-save-action" id="saveWorshipPresentationFile" type="button" title="Guardar presentación" aria-label="Guardar presentación">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 3h12l2 2v16H5z"></path><path d="M8 3v6h8V3"></path><path d="M8 21v-7h8v7"></path></svg>
+              </button>
             </div>
           </div>
           <div class="worship-list" id="worshipList"></div>
@@ -3432,6 +3502,7 @@
           <div class="worship-choice-grid">
             <button class="worship-choice" id="chooseWorshipText" type="button">Texto</button>
             <button class="worship-choice" id="chooseWorshipSong" type="button">Canto</button>
+            <button class="worship-choice" id="chooseWorshipImage" type="button">Imagen</button>
           </div>
         </div>
 
@@ -3440,15 +3511,15 @@
             <h3 id="worshipTextEditorTitle">Pantalla de texto</h3>
           </div>
           <div class="worship-form-grid">
-            <label class="wide">
+            <label class="wide" id="worshipTextTitleLabel">
               Texto principal
               <input class="field" id="worshipTextTitle" type="text" maxlength="120" autocomplete="off">
             </label>
-            <label class="wide">
+            <label class="wide" id="worshipTextSubtitleLabel">
               Texto secundario
               <textarea class="field" id="worshipTextSubtitle" maxlength="500" placeholder="Opcional"></textarea>
             </label>
-            <label>
+            <label id="worshipTextAlignmentLabel">
               Alineacion
               <select class="field" id="worshipTextAlignment">
                 <option value="center">Centro</option>
@@ -3456,13 +3527,17 @@
                 <option value="right">Derecha</option>
               </select>
             </label>
-            <label>
+            <label id="worshipTextBackgroundModeLabel">
               Fondo
               <select class="field" id="worshipTextBackgroundMode">
                 <option value="plain">Solo texto</option>
                 <option value="color">Color de fondo</option>
-                <option value="image">Imagen de fondo</option>
+                <option value="image" hidden>Imagen de fondo</option>
               </select>
+            </label>
+            <label id="worshipTextForegroundColorLabel">
+              Color del texto
+              <input class="field" id="worshipTextForegroundColor" type="color" value="#24201a">
             </label>
             <label id="worshipTextColorLabel">
               Color de fondo
@@ -3488,15 +3563,15 @@
                 </div>
               </div>
             </div>
-            <div class="wide worship-external-field">
-              <span>V&iacute;nculo externo (opcional)</span>
+            <div class="wide worship-external-field" id="worshipExternalField">
+              <span id="worshipExternalLabel">V&iacute;nculo externo (opcional)</span>
               <div class="worship-external-actions">
                 <button class="secondary" id="chooseWorshipExternalFile" type="button">Elegir archivo</button>
                 <button class="secondary" id="clearWorshipExternalFile" type="button" hidden>Quitar v&iacute;nculo</button>
               </div>
               <input class="field" id="worshipExternalFile" type="file" accept=".ppt,.pptx,.pps,.ppsx,.pdf,.doc,.docx,.xls,.xlsx,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf" hidden>
               <span class="worship-external-name" id="worshipExternalFileName">Sin archivo asociado</span>
-              <p class="worship-external-help">Al hacer clic en el texto durante la presentaci&oacute;n, se intentar&aacute; abrir este archivo.</p>
+              <p class="worship-external-help" id="worshipExternalHelp">Al hacer clic en el texto durante la presentaci&oacute;n, se intentar&aacute; abrir este archivo.</p>
               <p class="worship-external-help" id="worshipExternalFileWarning" hidden>Por seguridad del navegador, puede ser necesario seleccionar nuevamente el archivo al volver a abrir la app.</p>
             </div>
           </div>
@@ -3815,7 +3890,8 @@
         </div>
         <div class="my-presentations-actions">
           <button class="primary" id="newMyPresentation" type="button">+ Nueva presentación</button>
-          <button id="openMyPresentationFile" type="button" disabled title="La importación estará disponible en una etapa futura">Abrir presentación</button>
+          <button id="openMyPresentationFile" type="button">Abrir / Importar presentación</button>
+          <input id="myPresentationFileInput" type="file" accept=".mrm,.canto,.ppt,.pptx" hidden>
         </div>
         <div class="my-presentations-list" id="myPresentationsList"></div>
       </div>
@@ -3828,6 +3904,9 @@
             <button id="openMyBackground" type="button">Fondo</button>
             <button id="undoMyEdit" type="button" title="Deshacer" aria-label="Deshacer" disabled>↶</button>
             <button id="redoMyEdit" type="button" title="Rehacer" aria-label="Rehacer" disabled>↷</button>
+            <button class="visual-icon-action" id="saveMyPresentation" type="button" title="Guardar" aria-label="Guardar">💾</button>
+            <span class="visual-save-status" id="mySaveStatus" role="status" aria-live="polite"></span>
+            <button class="primary visual-icon-action" id="presentMyPresentation" type="button" title="Presentar" aria-label="Presentar">▰</button>
           </div>
           <div class="visual-tool-group visual-text-tools" id="myTextTools" aria-label="Formato de texto">
             <select id="myFontFamily" aria-label="Fuente">
@@ -3844,11 +3923,7 @@
             <button id="myAlignRight" type="button" aria-label="Alinear a la derecha">≡</button>
             <button id="duplicateMyObject" type="button">Duplicar</button>
             <button class="danger" id="deleteMyObject" type="button">Eliminar</button>
-          </div>
-          <div class="visual-editor-actions">
-            <button id="saveMyPresentation" type="button">Guardar</button>
-            <button class="primary" id="presentMyPresentation" type="button">Presentar</button>
-            <button id="addMyToWorship" type="button" disabled title="Disponible en una etapa futura">Agregar a Presentación del culto</button>
+            <button id="addMyToWorship" type="button">Agregar a Presentación del culto</button>
             <button id="backToMyPresentations" type="button">Mis presentaciones</button>
           </div>
         </div>
@@ -3897,13 +3972,23 @@
   <div class="toast" id="toast"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/main-text-editor.js?v=20260816-lexical4"></script>
+  <script src="./assets/auth-storage.js?v=20260819-1"></script>
+  <script src="./assets/autocorrect.js?v=20260816-2"></script>
+  <script src="./assets/presentation-repository.js?v=20260817-5"></script>
+  <script src="./assets/pptx-integration.js?v=20260817-1"></script>
+  <script src="./assets/main-text-editor.js?v=20260816-lexical10"></script>
   <script>
     const STORAGE_KEY = "cantos-iglesia-v1";
     const CONFIG_KEY = "cantos-iglesia-config-v1";
     const THEME_KEY = "cantos-iglesia-theme-v1";
     const PRESENTATION_KEY = "cantos-iglesia-presentacion-v1";
     const WORSHIP_PRESENTATION_KEY = "himnario-presentacion-culto-v1";
+    const LEGACY_MY_PRESENTATIONS_KEY = "himnario-mis-presentaciones-v1";
+    const sharedPresentationRepository = window.HimnarioPresentationRepository.create();
+    const sharedRepositoryReady = sharedPresentationRepository.initialize(LEGACY_MY_PRESENTATIONS_KEY).catch(error => {
+      console.error("LIBRARY LOAD initialize-error", { name: error?.name, message: error?.message, error });
+      throw error;
+    });
     const READING_FONT_SIZE_KEY = "himnario-reading-font-size-v1";
     const WORSHIP_FILE_SESSION_ID = `worship-file-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
     const ADMIN_INACTIVITY_LIMIT_MS = 2 * 60 * 60 * 1000;
@@ -3973,9 +4058,13 @@
       pendingWorshipImage: "",
       pendingWorshipImageSource: "",
       pendingWorshipExternalResource: null,
+      worshipEditorKind: "text",
+      worshipItemSaveInProgress: false,
       presentationSlides: [],
       presentationIndex: 0,
       controlsTimer: null,
+      presentationWasFullscreen: false,
+      presentationExitInProgress: false,
       adminInactivityTimer: null,
       adminActivityListening: false,
       adminNotesLoading: false,
@@ -3988,6 +4077,7 @@
 
     const el = {
       themeColor: document.querySelector("#themeColor"),
+      mainMenuToggle: document.querySelector("#mainMenuToggle"),
       app: document.querySelector("#app"),
       appTitle: document.querySelector("#appTitle"),
       homeSubtitle: document.querySelector("#homeSubtitle"),
@@ -4043,6 +4133,7 @@
       cancelWorshipChoice: document.querySelector("#cancelWorshipChoice"),
       chooseWorshipText: document.querySelector("#chooseWorshipText"),
       chooseWorshipSong: document.querySelector("#chooseWorshipSong"),
+      chooseWorshipImage: document.querySelector("#chooseWorshipImage"),
       worshipSongEditor: document.querySelector("#worshipSongEditor"),
       worshipSongSearch: document.querySelector("#worshipSongSearch"),
       worshipSongSelect: document.querySelector("#worshipSongSelect"),
@@ -4050,10 +4141,17 @@
       addWorshipSong: document.querySelector("#addWorshipSong"),
       cancelWorshipSong: document.querySelector("#cancelWorshipSong"),
       worshipTextForm: document.querySelector("#worshipTextForm"),
+      worshipTextEditorTitle: document.querySelector("#worshipTextEditorTitle"),
       worshipTextTitle: document.querySelector("#worshipTextTitle"),
+      worshipTextTitleLabel: document.querySelector("#worshipTextTitleLabel"),
       worshipTextSubtitle: document.querySelector("#worshipTextSubtitle"),
+      worshipTextSubtitleLabel: document.querySelector("#worshipTextSubtitleLabel"),
       worshipTextAlignment: document.querySelector("#worshipTextAlignment"),
+      worshipTextAlignmentLabel: document.querySelector("#worshipTextAlignmentLabel"),
       worshipTextBackgroundMode: document.querySelector("#worshipTextBackgroundMode"),
+      worshipTextBackgroundModeLabel: document.querySelector("#worshipTextBackgroundModeLabel"),
+      worshipTextForegroundColor: document.querySelector("#worshipTextForegroundColor"),
+      worshipTextForegroundColorLabel: document.querySelector("#worshipTextForegroundColorLabel"),
       worshipTextBackgroundColor: document.querySelector("#worshipTextBackgroundColor"),
       worshipTextColorLabel: document.querySelector("#worshipTextColorLabel"),
       worshipTextOverlay: document.querySelector("#worshipTextOverlay"),
@@ -4069,6 +4167,8 @@
       closeWorshipAppImageLibrary: document.querySelector("#closeWorshipAppImageLibrary"),
       chooseWorshipExternalFile: document.querySelector("#chooseWorshipExternalFile"),
       clearWorshipExternalFile: document.querySelector("#clearWorshipExternalFile"),
+      worshipExternalLabel: document.querySelector("#worshipExternalLabel"),
+      worshipExternalHelp: document.querySelector("#worshipExternalHelp"),
       worshipExternalFile: document.querySelector("#worshipExternalFile"),
       worshipExternalFileName: document.querySelector("#worshipExternalFileName"),
       worshipExternalFileWarning: document.querySelector("#worshipExternalFileWarning"),
@@ -4078,11 +4178,15 @@
       worshipList: document.querySelector("#worshipList"),
       previewWorship: document.querySelector("#previewWorship"),
       startWorship: document.querySelector("#startWorship"),
+      importWorshipPresentation: document.querySelector("#importWorshipPresentation"),
+      saveWorshipPresentationFile: document.querySelector("#saveWorshipPresentationFile"),
+      worshipPresentationFile: document.querySelector("#worshipPresentationFile"),
       clearWorship: document.querySelector("#clearWorship"),
       modal: document.querySelector("#modal"),
       modalTitle: document.querySelector("#modalTitle"),
       closeModal: document.querySelector("#closeModal"),
       cancelEdit: document.querySelector("#cancelEdit"),
+      saveSong: document.querySelector("#saveSong"),
       form: document.querySelector("#songForm"),
       numberInput: document.querySelector("#numberInput"),
       titleInput: document.querySelector("#titleInput"),
@@ -4098,6 +4202,7 @@
       removeHomeImage: document.querySelector("#removeHomeImage"),
       authModal: document.querySelector("#authModal"),
       authForm: document.querySelector("#authForm"),
+      authSubmit: document.querySelector("#authSubmit"),
       closeAuth: document.querySelector("#closeAuth"),
       cancelAuth: document.querySelector("#cancelAuth"),
       authEmail: document.querySelector("#authEmail"),
@@ -4168,6 +4273,7 @@
       client: null,
       channel: null,
       enabled: false,
+      authInitializationError: null,
       savingSongs: false,
       savingConfig: false
     };
@@ -4180,10 +4286,25 @@
       return SUPABASE_PROJECT_URL.startsWith("https://") && SUPABASE_PUBLISHABLE_KEY.length > 20;
     }
 
-    function initSupabase() {
-      db.enabled = isSupabaseConfigured() && window.supabase?.createClient;
+    async function initSupabase() {
+      db.enabled = Boolean(isSupabaseConfigured() && window.supabase?.createClient);
+      db.authInitializationError = null;
       if (!db.enabled) return;
-      db.client = window.supabase.createClient(SUPABASE_PROJECT_URL, SUPABASE_PUBLISHABLE_KEY);
+      const authStorage = window.HimnarioAuthStorage;
+      if (!authStorage?.storage) {
+        const error = new Error("No se cargó el almacenamiento de la sesión administrativa.");
+        error.name = "AuthStorageError";
+        throw error;
+      }
+      await authStorage.copyLegacySupabaseSessions();
+      db.client = window.supabase.createClient(SUPABASE_PROJECT_URL, SUPABASE_PUBLISHABLE_KEY, {
+        auth: {
+          storage: authStorage.storage,
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true
+        }
+      });
     }
 
     function hasAdminAccess(role, status = "active") {
@@ -4248,16 +4369,51 @@
       state.authUser = null;
     }
 
+    function logAdminAuthError(phase, error) {
+      const details = {
+        phase,
+        name: error?.name || "Error",
+        message: error?.message || String(error || "Error desconocido"),
+        code: error?.code || null,
+        status: error?.status ?? error?.statusCode ?? error?.context?.status ?? null
+      };
+      console.error("ADMIN AUTH failure", JSON.stringify(details));
+    }
+
+    function isAdminAuthNetworkError(error) {
+      const name = String(error?.name || "");
+      const message = String(error?.message || "");
+      return name === "AuthRetryableFetchError" || name === "TypeError" || /fetch|network|conexi[oó]n|socket/i.test(message);
+    }
+
+    function isAdminAuthStorageError(error) {
+      const name = String(error?.name || "");
+      const message = String(error?.message || "");
+      return name === "QuotaExceededError" || name === "AuthStorageError" || /quota|storage|setItem|almacenamiento|guardar la sesi[oó]n/i.test(message);
+    }
+
+    function adminSignInErrorMessage(error) {
+      const code = String(error?.code || "");
+      const message = String(error?.message || "");
+      if (code === "invalid_credentials" || /invalid login credentials/i.test(message)) return "Correo o contraseña incorrectos";
+      if (isAdminAuthStorageError(error)) return "No se pudo guardar la sesión administrativa en este navegador.";
+      if (isAdminAuthNetworkError(error)) return "No se pudo contactar el servicio de autenticación. Comprueba la conexión e inténtalo nuevamente.";
+      return "No se pudo iniciar sesión. Revisa los datos e inténtalo nuevamente.";
+    }
+
     async function loadCurrentProfile() {
       if (!db.client) return null;
-      const { data: { user } } = await db.client.auth.getUser();
+      const { data: { user }, error: userError } = await db.client.auth.getUser();
+      if (userError?.name === "AuthSessionMissingError") return null;
+      if (userError) throw userError;
       if (!user) return null;
       const { data, error } = await db.client
         .from("profiles")
         .select("role, alias, status, is_owner, can_delete_songs")
         .eq("id", user.id)
         .maybeSingle();
-      if (error || !data || !hasAdminAccess(data.role, data.status || "active")) return null;
+      if (error) throw error;
+      if (!data || !hasAdminAccess(data.role, data.status || "active")) return null;
       return {
         id: user.id,
         role: data.role,
@@ -4286,17 +4442,31 @@
         showToast("Esta cuenta no tiene permiso administrativo activo.");
         state.isAdmin = false;
         render();
-        return;
+        return false;
       }
-      state.isAdmin = true;
-      storeAdminProfile(profile);
-      state.selectedId = null;
-      closeAuthModal();
-      await saveConfigToSupabase();
-      await loadSongs();
-      startAdminInactivityTimer();
-      showToast(profile.role === "superadmin" ? "Acceso superadministrador" : "Acceso administrativo");
-      render();
+      try {
+        await loadSongs();
+        storeAdminProfile(profile);
+        state.selectedId = null;
+        state.isAdmin = true;
+        render();
+        closeAuthModal();
+        await saveConfigToSupabase();
+        startAdminInactivityTimer();
+        showToast(profile.role === "superadmin" ? "Acceso superadministrador" : "Acceso administrativo");
+        return true;
+      } catch (error) {
+        logAdminAuthError("admin-entry", error);
+        state.isAdmin = false;
+        clearAdminProfile();
+        stopAdminInactivityTimer();
+        try {
+          render();
+        } catch (renderError) {
+          logAdminAuthError("admin-entry-user-render", renderError);
+        }
+        throw error;
+      }
     }
 
     function localConfig() {
@@ -4428,23 +4598,57 @@
       }
     }
 
-    async function loadSongs() {
-      state.songs = localSongs();
+    function normalizeStoredSongs(values) {
+      const seen = new Set();
+      return (Array.isArray(values) ? values : []).flatMap((song, index) => {
+        if (!song || typeof song !== "object" || Array.isArray(song)) return [];
+        const id = String(song.id || `legacy-song-${index}-${crypto.randomUUID()}`);
+        if (seen.has(id)) return [];
+        seen.add(id);
+        return [{
+          ...song,
+          id,
+          number: normalizeSongNumberIdentifier(song.number ?? index) || String(index),
+          title: String(song.title || ""),
+          lyrics: String(song.lyrics || "")
+        }];
+      });
+    }
 
-      if (db.client) {
-        try {
-          const { data, error } = await db.client
-            .from("songs")
-            .select("id, number, title, lyrics")
-            .order("number", { ascending: true })
-            .order("title", { ascending: true });
-          if (error) throw error;
-          if (Array.isArray(data) && data.length > 0) {
-            state.songs = data.map(songFromRow);
-          }
-        } catch {
-          showToast("No se pudieron cargar los cantos de Supabase");
-        }
+    async function migrateSongsToIndexedDB() {
+      await sharedRepositoryReady;
+      const migration = await sharedPresentationRepository.songsMigrationStatus();
+      if (migration?.value) {
+        const stored = normalizeStoredSongs(await sharedPresentationRepository.listSongs());
+        console.info("SONGS MIGRATION already-complete", { songs: stored.length });
+        return stored;
+      }
+
+      const legacyRaw = localStorage.getItem(STORAGE_KEY) || "";
+      const legacySongs = normalizeStoredSongs(localSongs());
+      const existingSongs = normalizeStoredSongs(await sharedPresentationRepository.listSongs());
+      const candidate = legacySongs.length ? legacySongs : existingSongs;
+      await sharedPresentationRepository.replaceSongs(candidate);
+      const verified = normalizeStoredSongs(await sharedPresentationRepository.listSongs());
+      if (JSON.stringify(verified) !== JSON.stringify(candidate)) throw new Error("La verificación de la migración de cantos no coincide");
+      await sharedPresentationRepository.markSongsMigration({ songs: verified.length, legacyCharacters: legacyRaw.length, approximateUtf16Bytes: legacyRaw.length * 2, legacyRetained: Boolean(legacyRaw) });
+      console.info("SONGS MIGRATION complete", { songs: verified.length, legacyCharacters: legacyRaw.length, approximateUtf16Bytes: legacyRaw.length * 2, legacyRetained: Boolean(legacyRaw) });
+      return verified;
+    }
+
+    async function loadSongs() {
+      try {
+        await sharedRepositoryReady;
+        state.songs = normalizeStoredSongs(await sharedPresentationRepository.listSongs());
+        console.info("SONGS LOAD IndexedDB", { songs: state.songs.length, readOnly: true });
+      } catch (error) {
+        console.error("SONGS LOAD IndexedDB failed", { name: error?.name, message: error?.message, error });
+        state.songs = normalizeStoredSongs(localSongs());
+        showToast("No se pudo leer IndexedDB; se utilizó la copia local disponible");
+      }
+
+      if (state.songs.length === 0) {
+        state.songs = normalizeStoredSongs(localSongs());
       }
 
       if (state.songs.length === 0) {
@@ -4454,21 +4658,34 @@
           title: "Sublime gracia",
           lyrics: "Sublime gracia del Señor\nQue a un pecador salvó\nFui ciego mas hoy miro yo\nPerdido y Él me halló"
         }];
-        saveSongs(false);
       }
 
-      state.songs = state.songs.map((song, index) => ({
-        ...song,
-        number: normalizeSongNumberIdentifier(song.number ?? index) || String(index)
-      }));
+      state.songs = normalizeStoredSongs(state.songs);
       sortSongs();
-      saveSongs(false);
       state.selectedId = null;
     }
 
-    function saveSongs(showMessage = true) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.songs));
-      if (showMessage) showToast("Guardado");
+    async function saveSongs(showMessage = true) {
+      try {
+        await sharedRepositoryReady;
+        await sharedPresentationRepository.replaceSongs(normalizeStoredSongs(state.songs));
+        if (showMessage) showToast("Guardado");
+        return true;
+      } catch (error) {
+        logSongAdminError("indexeddb-save", error);
+        showToast(error?.name === "QuotaExceededError" ? "No hay espacio local suficiente para guardar el himnario" : "No se pudo guardar el himnario");
+        return false;
+      }
+    }
+
+    function logSongAdminError(phase, error) {
+      console.error("SONG ADMIN failed", {
+        phase,
+        name: error?.name || "Error",
+        message: error?.message || String(error || "Error desconocido"),
+        code: error?.code ?? null,
+        status: error?.status ?? null
+      });
     }
 
     async function createSongInSupabase(song) {
@@ -4482,7 +4699,8 @@
           .single();
         if (error) throw error;
         return data ? songFromRow(data) : song;
-      } catch {
+      } catch (error) {
+        logSongAdminError("supabase-create", error);
         showToast("No se pudo crear el canto en Supabase");
         return null;
       } finally {
@@ -4502,7 +4720,8 @@
           .single();
         if (error) throw error;
         return data ? songFromRow(data) : song;
-      } catch {
+      } catch (error) {
+        logSongAdminError("supabase-update", error);
         showToast("No se pudo actualizar el canto en Supabase");
         return null;
       } finally {
@@ -4516,8 +4735,24 @@
         const { error } = await db.client.from("songs").delete().eq("id", id);
         if (error) throw error;
         return true;
-      } catch {
+      } catch (error) {
+        logSongAdminError("supabase-delete", error);
         showToast("No se pudo borrar el canto en Supabase");
+        return false;
+      }
+    }
+
+    async function rollbackSongRemoteChange(kind, song) {
+      if (!db.client || !song?.id) return true;
+      try {
+        const query = kind === "create"
+          ? db.client.from("songs").delete().eq("id", song.id)
+          : db.client.from("songs").update(songToWritableRow(song)).eq("id", song.id);
+        const { error } = await query;
+        if (error) throw error;
+        return true;
+      } catch (error) {
+        logSongAdminError(`supabase-${kind}-rollback`, error);
         return false;
       }
     }
@@ -4560,6 +4795,7 @@
       if (item.type === "text") {
         const mode = ["plain", "color", "image"].includes(item.backgroundMode) ? item.backgroundMode : "plain";
         const alignment = ["left", "center", "right"].includes(item.alignment) ? item.alignment : "center";
+        const sermon = item.role === "sermon" || isSermonLabel(item.title || item.text) || String(item.backgroundImage || "").includes("presentation-backgrounds/sermon-");
         return {
           id,
           type: "text",
@@ -4568,10 +4804,14 @@
           alignment,
           backgroundMode: mode,
           backgroundColor: item.backgroundColor || "#11100e",
+          textColor: /^#[0-9a-f]{6}$/i.test(String(item.textColor || "")) ? String(item.textColor) : "",
           backgroundImage: item.backgroundImage || "",
           backgroundImageSource: item.backgroundImageSource || (String(item.backgroundImage || "").startsWith("presentation-backgrounds/") ? "app" : item.backgroundImage ? "device" : ""),
           overlay: Math.max(0, Math.min(80, Number(item.overlay ?? 45) || 0)),
           externalResource: normalizeExternalResource(item.externalResource),
+          contentKind: item.contentKind === "image" ? "image" : "text",
+          role: sermon ? "sermon" : "",
+          presentationId: sermon && item.presentationId ? String(item.presentationId) : "",
           target: item.target || "main"
         };
       }
@@ -4579,11 +4819,13 @@
         return {
           id,
           type: "text",
+          contentKind: "image",
           title: String(item.categoryLabel || WORSHIP_IMAGE_CATEGORIES[item.category]?.label || "").trim(),
           subtitle: "",
           alignment: "center",
           backgroundMode: "image",
           backgroundColor: "#11100e",
+          textColor: "",
           backgroundImage: item.image || "",
           backgroundImageSource: "app",
           overlay: 0,
@@ -4591,11 +4833,51 @@
           target: item.target || "main"
         };
       }
+      if (item.type === "visual-presentation" && item.presentationId) {
+        return { id, type: "visual-presentation", presentationId: String(item.presentationId), target: item.target || "main" };
+      }
       return null;
     }
 
     function defaultWorshipPresentation() {
       return { items: [] };
+    }
+
+    function isSermonLabel(value) {
+      return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase() === "sermon";
+    }
+
+    function legacyPptUnsupportedMessage() {
+      return "Este archivo usa el formato antiguo .ppt. Conviértelo o guárdalo como .pptx para importarlo.";
+    }
+
+    function isSermonWorshipItem(item) {
+      return item?.type === "text" && (item.role === "sermon" || isSermonLabel(item.title));
+    }
+
+    function createDefaultSermonItem(id = createWorshipItemId()) {
+      return { id, type: "text", role: "sermon", presentationId: "", title: "Sermón", subtitle: "", alignment: "center", backgroundMode: "plain", backgroundColor: "#11100e", backgroundImage: "", backgroundImageSource: "", overlay: 45, externalResource: null, target: "main" };
+    }
+
+    function normalizeWorshipSermonAssociation(items) {
+      const normalized = [...items];
+      const legacy = normalized.filter(item => item.type === "visual-presentation" && item.presentationId);
+      let sermonIndex = normalized.findIndex(isSermonWorshipItem);
+      if (legacy.length && sermonIndex < 0) {
+        const legacyIndex = normalized.indexOf(legacy[0]);
+        normalized[legacyIndex] = { ...createDefaultSermonItem(legacy[0].id), presentationId: legacy[0].presentationId };
+        sermonIndex = legacyIndex;
+      } else if (legacy.length && sermonIndex >= 0 && !normalized[sermonIndex].presentationId) {
+        normalized[sermonIndex] = { ...normalized[sermonIndex], role: "sermon", presentationId: legacy[0].presentationId };
+      }
+      const withoutLegacy = normalized.filter(item => item.type !== "visual-presentation");
+      let associationSeen = false;
+      return withoutLegacy.map(item => {
+        if (!isSermonWorshipItem(item)) return item;
+        const presentationId = !associationSeen && item.presentationId ? String(item.presentationId) : "";
+        if (presentationId) associationSeen = true;
+        return { ...item, role: "sermon", presentationId };
+      });
     }
 
     function normalizeExternalResource(resource) {
@@ -4613,25 +4895,275 @@
       };
     }
 
+    function normalizeWorshipPresentation(value) {
+      const saved = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+      const items = normalizeWorshipSermonAssociation(Array.isArray(saved.items) ? saved.items.map(normalizeWorshipItem).filter(Boolean) : []);
+      return { items };
+    }
+
     function localWorshipPresentation() {
       try {
         const saved = JSON.parse(localStorage.getItem(WORSHIP_PRESENTATION_KEY) || "{}");
-        const items = Array.isArray(saved.items) ? saved.items.map(normalizeWorshipItem).filter(Boolean) : [];
-        return { items };
+        return normalizeWorshipPresentation(saved);
       } catch {
         return defaultWorshipPresentation();
       }
     }
 
-    function loadWorshipPresentation() {
-      state.worshipPresentation = localWorshipPresentation();
+    function cloneWorshipPresentation(value) {
+      return typeof structuredClone === "function" ? structuredClone(value) : JSON.parse(JSON.stringify(value));
+    }
+
+    async function storageEstimate(label) {
+      if (!navigator.storage?.estimate) return null;
+      try {
+        const estimate = await navigator.storage.estimate();
+        console.info("STORAGE ESTIMATE", JSON.stringify({ label, usage: estimate.usage || 0, quota: estimate.quota || 0, available: Math.max(0, (estimate.quota || 0) - (estimate.usage || 0)) }));
+        return estimate;
+      } catch (error) {
+        console.warn("STORAGE ESTIMATE unavailable", { label, name: error?.name, message: error?.message });
+        return null;
+      }
+    }
+
+    function auditLocalStorageUsage() {
+      try {
+        const entries = [];
+        for (let index = 0; index < localStorage.length; index += 1) {
+          const key = localStorage.key(index) || "";
+          const value = localStorage.getItem(key) || "";
+          entries.push({ key, characters: value.length, utf8Bytes: new Blob([value]).size, approximateUtf16Bytes: value.length * 2 });
+        }
+        entries.sort((a, b) => b.approximateUtf16Bytes - a.approximateUtf16Bytes);
+        console.info("LOCALSTORAGE AUDIT", JSON.stringify({ totalApproximateUtf16Bytes: entries.reduce((sum, entry) => sum + entry.approximateUtf16Bytes, 0), entries }));
+        return entries;
+      } catch (error) {
+        console.warn("LOCALSTORAGE AUDIT unavailable", { name: error?.name, message: error?.message });
+        return [];
+      }
+    }
+
+    async function persistWorshipPresentation(snapshot) {
+      await sharedRepositoryReady;
+      await sharedPresentationRepository.putWorshipPresentation(snapshot);
+      return true;
+    }
+
+    let worshipSaveQueue = Promise.resolve();
+    function enqueueWorshipPresentationSave(snapshot) {
+      const storedSnapshot = cloneWorshipPresentation(snapshot);
+      const operation = worshipSaveQueue.then(() => persistWorshipPresentation(storedSnapshot));
+      worshipSaveQueue = operation.catch(() => undefined);
+      return operation;
+    }
+
+    async function loadWorshipPresentation() {
+      await sharedRepositoryReady;
+      auditLocalStorageUsage();
+      await storageEstimate("startup-before-worship-load");
+      const stored = await sharedPresentationRepository.getWorshipPresentation();
+      if (stored) {
+        state.worshipPresentation = normalizeWorshipPresentation(stored);
+        console.info("WORSHIP LOAD IndexedDB", { items: state.worshipPresentation.items.length });
+      } else {
+        const legacyRaw = localStorage.getItem(WORSHIP_PRESENTATION_KEY);
+        const migrated = localWorshipPresentation();
+        await persistWorshipPresentation(migrated);
+        const verified = normalizeWorshipPresentation(await sharedPresentationRepository.getWorshipPresentation());
+        if (JSON.stringify(verified) !== JSON.stringify(migrated)) throw new Error("La verificación de la migración del culto no coincide");
+        await sharedPresentationRepository.markWorshipMigration({ source: legacyRaw == null ? "default" : "localStorage", legacyCharacters: legacyRaw?.length || 0, legacyRetained: legacyRaw != null });
+        state.worshipPresentation = verified;
+        console.info("WORSHIP MIGRATION complete", { items: verified.items.length, legacyCharacters: legacyRaw?.length || 0, legacyRetained: legacyRaw != null });
+      }
       migrateLegacyPresentationSongs();
-      localStorage.setItem(WORSHIP_PRESENTATION_KEY, JSON.stringify(state.worshipPresentation));
+      await persistWorshipPresentation(state.worshipPresentation);
     }
 
     function saveWorshipPresentation(showMessage = false) {
-      localStorage.setItem(WORSHIP_PRESENTATION_KEY, JSON.stringify(state.worshipPresentation));
-      if (showMessage) showToast("Presentacion guardada");
+      return enqueueWorshipPresentationSave(state.worshipPresentation).then(() => {
+        if (showMessage) showToast("Presentacion guardada");
+        return true;
+      }).catch(async error => {
+        console.error("No se pudo guardar la Presentación del culto", { name: error?.name, message: error?.message, error });
+        await storageEstimate("worship-save-failed");
+        showToast(error?.name === "QuotaExceededError" ? "No hay espacio local suficiente para guardar la presentación" : "No se pudo guardar la Presentación del culto");
+        return false;
+      });
+    }
+
+    const WORSHIP_FILE_FORMAT = "himnario-worship-presentation";
+    const WORSHIP_FILE_VERSION = 1;
+    const MAX_WORSHIP_FILE_SIZE = 250 * 1024 * 1024;
+    const MAX_WORSHIP_ITEMS = 500;
+
+    function safeDownloadName(name, extension) {
+      const clean = String(name || "Presentación del culto").replace(/[<>:"/\\|?*\u0000-\u001f]/g, "-").replace(/[. ]+$/g, "").trim();
+      return `${clean || "Presentación del culto"}.${extension}`;
+    }
+
+    function portableWorshipPresentation(value) {
+      const normalized = normalizeWorshipPresentation(value);
+      return {
+        items: normalized.items.map(item => {
+          const copy = cloneWorshipPresentation(item);
+          if (isSermonWorshipItem(copy)) {
+            copy.presentationId = "";
+            copy.externalResource = null;
+          } else if (copy.externalResource) {
+            copy.externalResource = { ...copy.externalResource, objectUrl: "", sessionId: "", transient: true };
+          }
+          return copy;
+        })
+      };
+    }
+
+    function worshipFileDocument() {
+      return {
+        format: WORSHIP_FILE_FORMAT,
+        version: WORSHIP_FILE_VERSION,
+        exportedAt: new Date().toISOString(),
+        worshipPresentation: portableWorshipPresentation(state.worshipPresentation)
+      };
+    }
+
+    function validateWorshipFileDocument(documentValue, byteLength) {
+      if (!documentValue || typeof documentValue !== "object" || Array.isArray(documentValue)) throw new Error("El archivo no contiene una Presentación del culto válida");
+      if (documentValue.format !== WORSHIP_FILE_FORMAT) throw new Error("El archivo no es una Presentación del culto .hnm válida");
+      if (documentValue.version !== WORSHIP_FILE_VERSION) throw new Error(`Versión .hnm no compatible: ${String(documentValue.version ?? "desconocida")}`);
+      if (byteLength > MAX_WORSHIP_FILE_SIZE) throw new Error("La Presentación del culto supera el tamaño máximo permitido");
+      const source = documentValue.worshipPresentation;
+      if (!source || typeof source !== "object" || Array.isArray(source) || !Array.isArray(source.items)) throw new Error("Falta la estructura editable de la Presentación del culto");
+      if (source.items.length > MAX_WORSHIP_ITEMS) throw new Error(`La Presentación del culto supera el máximo de ${MAX_WORSHIP_ITEMS} elementos`);
+      const ids = new Set();
+      source.items.forEach((item, index) => {
+        if (!item || typeof item !== "object" || Array.isArray(item)) throw new Error(`El elemento ${index + 1} no es válido`);
+        if (!item.id || typeof item.id !== "string" || item.id.length > 180 || ids.has(item.id)) throw new Error(`El identificador del elemento ${index + 1} no es válido o está duplicado`);
+        ids.add(item.id);
+        if (!new Set(["song", "text", "image", "visual-presentation"]).has(item.type)) throw new Error(`El tipo del elemento ${index + 1} no es compatible`);
+        if (item.type === "song" && !state.songs.some(song => String(song.id) === String(item.songId || item.idSong || ""))) throw new Error(`El canto del elemento ${index + 1} no existe en este Himnario`);
+        for (const field of ["title", "text", "subtitle", "backgroundImage"]) {
+          if (item[field] != null && typeof item[field] !== "string") throw new Error(`El campo ${field} del elemento ${index + 1} no es válido`);
+        }
+        if (String(item.title || item.text || "").length > 120 || String(item.subtitle || "").length > 500) throw new Error(`El texto del elemento ${index + 1} supera el límite permitido`);
+        if (String(item.backgroundImage || "").length > MAX_WORSHIP_FILE_SIZE) throw new Error(`La imagen del elemento ${index + 1} supera el límite permitido`);
+      });
+      const normalized = portableWorshipPresentation(source);
+      if (normalized.items.length !== source.items.length) throw new Error("Uno o más elementos del archivo no pudieron reconstruirse de forma segura");
+      return normalized;
+    }
+
+    function validatedWorshipFileBlob() {
+      const documentValue = worshipFileDocument();
+      const serialized = JSON.stringify(documentValue, null, 2);
+      const blob = new Blob([serialized], { type: "application/json" });
+      const verified = validateWorshipFileDocument(JSON.parse(serialized), blob.size);
+      if (JSON.stringify(verified) !== JSON.stringify(documentValue.worshipPresentation)) throw new Error("La verificación del snapshot .hnm no coincide");
+      return blob;
+    }
+
+    function downloadWorshipPresentationFallback(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      link.hidden = true;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    async function saveWorshipPresentationFile() {
+      try {
+        const filename = safeDownloadName("Presentación del culto", "hnm");
+        if (typeof window.showSaveFilePicker === "function") {
+          let handle;
+          try {
+            handle = await window.showSaveFilePicker({
+              suggestedName: filename,
+              excludeAcceptAllOption: true,
+              types: [{ description: "Presentación del culto (*.hnm)", accept: { "application/json": [".hnm"] } }]
+            });
+          } catch (error) {
+            if (error?.name === "AbortError") return;
+            throw error;
+          }
+          if (!/\.hnm$/i.test(handle?.name || "")) throw new Error("El archivo debe conservar la extensión .hnm");
+          const blob = validatedWorshipFileBlob();
+          const writable = await handle.createWritable();
+          await writable.write(blob);
+          await writable.close();
+        } else {
+          const blob = validatedWorshipFileBlob();
+          downloadWorshipPresentationFallback(blob, filename);
+        }
+        showToast("✓ Presentación guardada correctamente");
+      } catch (error) {
+        console.error("HNM SAVE failed", error);
+        showToast(error?.message || "No se pudo guardar la Presentación del culto");
+      }
+    }
+
+    async function importWorshipPresentationFile(event) {
+      const file = event.target.files?.[0];
+      event.target.value = "";
+      if (!file) return;
+      const previousPresentation = cloneWorshipPresentation(state.worshipPresentation);
+      let attemptedPersist = false;
+      try {
+        if (!/\.hnm$/i.test(file.name)) throw new Error("Selecciona un archivo de Presentación del culto con extensión .hnm");
+        if (file.size > MAX_WORSHIP_FILE_SIZE) throw new Error("La Presentación del culto supera el tamaño máximo permitido");
+        let parsed;
+        try { parsed = JSON.parse(await file.text()); }
+        catch { throw new Error("El archivo .hnm está corrupto o no contiene JSON válido"); }
+        const imported = validateWorshipFileDocument(parsed, file.size);
+        if (worshipItems().length && !window.confirm("La importación reemplazará la Presentación del culto actual. ¿Deseas continuar?")) return;
+        attemptedPersist = true;
+        await enqueueWorshipPresentationSave(imported);
+        const stored = normalizeWorshipPresentation(await sharedPresentationRepository.getWorshipPresentation());
+        if (JSON.stringify(stored) !== JSON.stringify(imported)) throw new Error("No se pudo verificar la Presentación del culto importada");
+        state.worshipPresentation = imported;
+        state.editingWorshipTextId = null;
+        renderWorshipPresentationPanel();
+        showWorshipMain();
+        showToast("✓ Presentación del culto importada correctamente");
+      } catch (error) {
+        state.worshipPresentation = previousPresentation;
+        if (attemptedPersist) {
+          try { await enqueueWorshipPresentationSave(previousPresentation); }
+          catch (restoreError) { console.error("HNM IMPORT restore-failed", restoreError); }
+        }
+        renderWorshipPresentationPanel();
+        console.error("HNM IMPORT failed", error);
+        showToast(error?.message || "No se pudo importar la Presentación del culto");
+      }
+    }
+
+    async function unlinkVisualPresentationFromSermon(presentationId = "") {
+      const previousPresentation = cloneWorshipPresentation(state.worshipPresentation);
+      let changed = false;
+      const nextItems = worshipItems().map(item => {
+        if (!isSermonWorshipItem(item) || !item.presentationId || (presentationId && item.presentationId !== presentationId)) return item;
+        changed = true;
+        return { ...item, role: "sermon", presentationId: "" };
+      });
+      if (!changed) return false;
+      const nextPresentation = { ...state.worshipPresentation, items: nextItems };
+      try {
+        await enqueueWorshipPresentationSave(nextPresentation);
+        const stored = normalizeWorshipPresentation(await sharedPresentationRepository.getWorshipPresentation());
+        if (stored.items.some(item => isSermonWorshipItem(item) && item.presentationId && (!presentationId || item.presentationId === presentationId))) {
+          throw new Error("No se pudo verificar que la presentación fue desvinculada del Sermón");
+        }
+        state.worshipPresentation = nextPresentation;
+        renderWorshipPresentationPanel();
+        return true;
+      } catch (error) {
+        state.worshipPresentation = previousPresentation;
+        console.error("No se pudo desvincular la presentación del Sermón", error);
+        renderWorshipPresentationPanel();
+        return false;
+      }
     }
 
     function canUseWorshipPresentationViewport() {
@@ -4692,6 +5224,48 @@
       renderWorshipPresentationPanel();
     }
 
+    function setWorshipItemSaveDisabled(disabled) {
+      if (el.saveWorshipText) el.saveWorshipText.disabled = disabled;
+      if (el.addWorshipSong) el.addWorshipSong.disabled = disabled;
+    }
+
+    function prepareWorshipItemEditor() {
+      state.worshipItemSaveInProgress = false;
+      setWorshipItemSaveDisabled(false);
+    }
+
+    function finishSuccessfulWorshipItemSave() {
+      resetWorshipTextFields();
+      if (el.worshipSongSearch) el.worshipSongSearch.value = "";
+      if (el.worshipAppImageLibrary) el.worshipAppImageLibrary.hidden = true;
+      showWorshipMain();
+    }
+
+    async function commitWorshipItem(item, editingItemId = null) {
+      if (state.worshipItemSaveInProgress) return false;
+      state.worshipItemSaveInProgress = true;
+      setWorshipItemSaveDisabled(true);
+      const nextItems = editingItemId
+        ? worshipItems().map(existing => existing.id === editingItemId ? item : existing)
+        : [...worshipItems(), item];
+      try {
+        const nextPresentation = { ...state.worshipPresentation, items: nextItems };
+        await enqueueWorshipPresentationSave(nextPresentation);
+        state.worshipPresentation = nextPresentation;
+        finishSuccessfulWorshipItemSave();
+        if (editingItemId) showToast("Pantalla guardada");
+        else showAddedToWorshipToast();
+        return true;
+      } catch (error) {
+        state.worshipItemSaveInProgress = false;
+        setWorshipItemSaveDisabled(false);
+        console.error("No se pudo guardar la pantalla del culto", { name: error?.name, message: error?.message, error });
+        await storageEstimate("worship-item-save-failed");
+        showToast(error?.name === "QuotaExceededError" ? "No hay espacio local suficiente para guardar la pantalla" : "No se pudo guardar la pantalla");
+        return false;
+      }
+    }
+
     function showWorshipView(view) {
       if (!canUseWorshipPresentationViewport()) return;
       state.worshipView = view;
@@ -4705,6 +5279,7 @@
       }
       state.editingWorshipTextId = null;
       state.editingWorshipSongId = null;
+      prepareWorshipItemEditor();
       state.selectedWorshipImagePath = "";
       state.worshipImageLibraryCategory = "santa-cena";
       state.pendingWorshipImageSource = "";
@@ -4715,6 +5290,7 @@
       el.worshipTextForm.reset();
       el.worshipTextAlignment.value = "center";
       el.worshipTextBackgroundMode.value = "plain";
+      el.worshipTextForegroundColor.value = "#24201a";
       el.worshipTextBackgroundColor.value = "#11100e";
       el.worshipTextOverlay.value = "45";
       state.pendingWorshipImage = "";
@@ -4728,9 +5304,11 @@
       updateWorshipTextPreview();
     }
 
-    function openWorshipTextEditor(itemId = null) {
+    function openWorshipContentEditor(kind, itemId = null) {
       if (!canUseWorshipPresentationViewport()) return;
+      prepareWorshipItemEditor();
       const item = itemId ? worshipItems().find(entry => entry.id === itemId && entry.type === "text") : null;
+      state.worshipEditorKind = kind === "image" ? "image" : "text";
       state.editingWorshipTextId = item?.id || null;
       state.editingWorshipSongId = null;
       resetWorshipTextFields();
@@ -4739,6 +5317,7 @@
         el.worshipTextSubtitle.value = item.subtitle || "";
         el.worshipTextAlignment.value = item.alignment || "center";
         el.worshipTextBackgroundMode.value = item.backgroundMode || "plain";
+        el.worshipTextForegroundColor.value = item.textColor || "#24201a";
         el.worshipTextBackgroundColor.value = item.backgroundColor || "#11100e";
         el.worshipTextOverlay.value = String(item.overlay ?? 45);
         state.pendingWorshipImage = item.backgroundImage || "";
@@ -4748,10 +5327,14 @@
         state.pendingWorshipExternalResource = normalizeExternalResource(item.externalResource);
         updateWorshipExternalFileStatus();
       }
+      if (state.worshipEditorKind === "image") el.worshipTextBackgroundMode.value = "image";
       showWorshipView("text");
       updateWorshipTextPreview();
-      setTimeout(() => el.worshipTextTitle?.focus(), 40);
+      if (state.worshipEditorKind === "text") setTimeout(() => el.worshipTextTitle?.focus(), 40);
     }
+
+    function openWorshipTextEditor(itemId = null) { openWorshipContentEditor("text", itemId); }
+    function openWorshipImageEditor(itemId = null) { openWorshipContentEditor("image", itemId); }
 
     function renderWorshipSongSelect() {
       if (!el.worshipSongSelect) return;
@@ -4785,6 +5368,7 @@
 
     function openWorshipSongEditor(itemId = null) {
       if (!canUseWorshipPresentationViewport()) return;
+      prepareWorshipItemEditor();
       const item = itemId ? worshipItems().find(entry => entry.id === itemId && entry.type === "song") : null;
       state.editingWorshipSongId = item?.id || null;
       state.editingWorshipTextId = null;
@@ -4810,11 +5394,7 @@
         return;
       }
       const item = createWorshipSongItem(songId, state.editingWorshipSongId || createWorshipItemId());
-      state.worshipPresentation.items = state.editingWorshipSongId
-        ? worshipItems().map(existing => existing.id === state.editingWorshipSongId ? item : existing)
-        : [...worshipItems(), item];
-      saveWorshipPresentation(true);
-      showWorshipMain();
+      commitWorshipItem(item, state.editingWorshipSongId);
     }
 
     function readFileAsDataUrl(file) {
@@ -4906,7 +5486,40 @@
       });
     }
 
+    function editedWorshipSermonItem() {
+      const item = state.editingWorshipTextId ? worshipItems().find(entry => entry.id === state.editingWorshipTextId) : null;
+      return isSermonWorshipItem(item) ? item : null;
+    }
+
+    function worshipEditorIsSermon() {
+      return Boolean(
+        editedWorshipSermonItem()
+        || isSermonLabel(el.worshipTextTitle?.value)
+        || String(state.pendingWorshipImage || "").includes("presentation-backgrounds/sermon-")
+      );
+    }
+
     function updateWorshipExternalFileStatus() {
+      const sermon = editedWorshipSermonItem();
+      if (worshipEditorIsSermon()) {
+        const presentation = sermon?.presentationId ? storedVisualPresentation(sermon.presentationId) : null;
+        const fileName = presentation?.pptx?.fileName || presentation?.sourceFileName || presentation?.name || "";
+        const slideCount = Number(presentation?.pptx?.slideCount || presentation?.slides?.length || 0);
+        el.worshipExternalLabel.textContent = "Presentación del predicador (opcional)";
+        el.chooseWorshipExternalFile.textContent = "Agregar archivo";
+        el.clearWorshipExternalFile.textContent = "Quitar archivo";
+        el.worshipExternalFile.accept = ".mrm,.canto,.ppt,.pptx";
+        el.worshipExternalFileName.textContent = presentation ? `Presentación del predicador:\n${fileName}\n${slideCount} diapositiva${slideCount === 1 ? "" : "s"}` : "Sin presentación asociada";
+        el.clearWorshipExternalFile.hidden = !presentation;
+        el.worshipExternalHelp.textContent = "La presentación se proyectará dentro de la aplicación entre las dos pantallas de Sermón.";
+        el.worshipExternalFileWarning.hidden = true;
+        return;
+      }
+      el.worshipExternalLabel.textContent = "Vínculo externo (opcional)";
+      el.chooseWorshipExternalFile.textContent = "Elegir archivo";
+      el.clearWorshipExternalFile.textContent = "Quitar vínculo";
+      el.worshipExternalFile.accept = ".ppt,.pptx,.pps,.ppsx,.pdf,.doc,.docx,.xls,.xlsx,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf";
+      el.worshipExternalHelp.textContent = "Al hacer clic en el texto durante la presentación, se intentará abrir este archivo.";
       const resource = state.pendingWorshipExternalResource;
       if (el.worshipExternalFileName) {
         el.worshipExternalFileName.textContent = resource?.name || "Sin archivo asociado";
@@ -4923,9 +5536,66 @@
       el.worshipExternalFile?.click();
     }
 
-    function handleWorshipExternalFileChoice(event) {
+    async function associateImportedPresentationWithSermon(presentation, created) {
+      const existingSermon = editedWorshipSermonItem();
+      if (!worshipEditorIsSermon()) throw new Error("Abre primero la pantalla especial Sermón");
+      const sermon = existingSermon || worshipItemFromEditor(presentation.id);
+      const previousPresentation = cloneWorshipPresentation(state.worshipPresentation);
+      const nextSermon = { ...sermon, role: "sermon", presentationId: presentation.id, externalResource: null };
+      const nextItems = existingSermon
+        ? worshipItems().map(item => item.id === existingSermon.id
+          ? nextSermon
+          : isSermonWorshipItem(item) && item.presentationId ? { ...item, role: "sermon", presentationId: "" } : item)
+        : [
+            ...worshipItems().map(item => isSermonWorshipItem(item) && item.presentationId ? { ...item, role: "sermon", presentationId: "" } : item),
+            nextSermon
+          ];
+      const nextPresentation = { ...state.worshipPresentation, items: nextItems };
+      try {
+        await enqueueWorshipPresentationSave(nextPresentation);
+        const [storedPresentation, storedFile, storedWorship] = await Promise.all([
+          sharedPresentationRepository.get(presentation.id),
+          presentation.sourceType === "pptx" ? sharedPresentationRepository.getPresentationFile(presentation.id) : Promise.resolve(null),
+          sharedPresentationRepository.getWorshipPresentation()
+        ]);
+        const associationVerified = normalizeWorshipPresentation(storedWorship).items
+          .some(item => item.id === nextSermon.id && isSermonWorshipItem(item) && item.presentationId === presentation.id);
+        const fileVerified = presentation.sourceType !== "pptx" || Boolean(storedFile?.blob);
+        if (!storedPresentation || !fileVerified || !associationVerified) {
+          throw new Error("No se pudo verificar el almacenamiento completo de la presentación y su asociación con Sermón");
+        }
+        state.worshipPresentation = nextPresentation;
+        state.editingWorshipTextId = nextSermon.id;
+        renderWorshipPresentationPanel();
+        updateWorshipExternalFileStatus();
+        showToast("✓ Presentación agregada al Sermón");
+      } catch (error) {
+        state.worshipPresentation = previousPresentation;
+        try { await enqueueWorshipPresentationSave(previousPresentation); }
+        catch (restoreError) { console.error("No se pudo restaurar la asociación anterior de Sermón", restoreError); }
+        if (created) await visualEditor.rollbackImportedPresentation(presentation.id);
+        throw error;
+      }
+    }
+
+    async function handleWorshipExternalFileChoice(event) {
       const file = event.target.files?.[0];
       if (!file) return;
+      if (worshipEditorIsSermon()) {
+        event.target.value = "";
+        if (/\.ppt$/i.test(file.name)) { showToast(legacyPptUnsupportedMessage()); return; }
+        if (!/\.(mrm|canto|pptx)$/i.test(file.name)) { showToast("Selecciona una presentación .mrm, .canto o .pptx"); return; }
+        try {
+          const result = /\.pptx$/i.test(file.name)
+            ? await visualEditor.importPptxFile(file, { showSuccess: false })
+            : await visualEditor.importProjectFile(file, null, { showSuccess: false, openEditor: false, throwOnError: true, requirePersistence: true });
+          await associateImportedPresentationWithSermon(result.presentation, result.created);
+        } catch (error) {
+          console.error("No se pudo agregar la presentación al Sermón", error);
+          showToast(error?.message || "La presentación es inválida o no pudo guardarse");
+        }
+        return;
+      }
       if (state.pendingWorshipExternalResource?.objectUrl?.startsWith("blob:")) {
         URL.revokeObjectURL(state.pendingWorshipExternalResource.objectUrl);
       }
@@ -4941,7 +5611,17 @@
       updateWorshipExternalFileStatus();
     }
 
-    function clearWorshipExternalFile() {
+    async function clearWorshipExternalFile() {
+      const sermon = editedWorshipSermonItem();
+      if (sermon?.presentationId) {
+        if (!await unlinkVisualPresentationFromSermon(sermon.presentationId)) {
+          showToast("No se pudo quitar la presentación del Sermón");
+          return;
+        }
+        updateWorshipExternalFileStatus();
+        showToast("Presentación quitada del Sermón");
+        return;
+      }
       if (state.pendingWorshipExternalResource?.objectUrl?.startsWith("blob:")) {
         URL.revokeObjectURL(state.pendingWorshipExternalResource.objectUrl);
       }
@@ -4952,9 +5632,10 @@
 
     function updateWorshipTextPreview() {
       if (!el.worshipTextPreview) return;
+      const imageEditor = state.worshipEditorKind === "image";
       const title = el.worshipTextTitle.value.trim();
       const subtitle = el.worshipTextSubtitle.value.trim();
-      const mode = el.worshipTextBackgroundMode.value;
+      const mode = imageEditor ? "image" : el.worshipTextBackgroundMode.value;
       const color = el.worshipTextBackgroundColor.value || "#11100e";
       const overlay = Math.max(0, Math.min(80, Number(el.worshipTextOverlay.value) || 0));
       const hasText = Boolean(title.trim() || subtitle.trim());
@@ -4969,12 +5650,48 @@
       card.style.setProperty("--worship-overlay", String(effectiveOverlay / 100));
       card.style.backgroundColor = mode === "color" ? color : "";
       card.style.backgroundImage = mode === "image" && state.pendingWorshipImage ? `url("${state.pendingWorshipImage}")` : "";
-      card.style.color = mode === "plain" ? "" : "#ffffff";
+      card.style.color = imageEditor ? "#ffffff" : el.worshipTextForegroundColor.value;
+      card.hidden = !imageEditor;
       el.worshipTextColorLabel.hidden = mode !== "color";
-      el.worshipTextOverlayLabel.hidden = mode !== "image";
-      el.worshipTextImageLabel.hidden = mode !== "image";
+      el.worshipTextOverlayLabel.hidden = true;
+      el.worshipTextImageLabel.hidden = !imageEditor;
+      el.worshipTextForegroundColorLabel.hidden = imageEditor;
+      el.worshipTextTitleLabel.hidden = imageEditor;
+      el.worshipTextSubtitleLabel.hidden = imageEditor;
+      el.worshipTextAlignmentLabel.hidden = imageEditor;
+      el.worshipTextBackgroundModeLabel.hidden = imageEditor;
+      el.worshipTextEditorTitle.textContent = imageEditor ? "Pantalla de imagen" : "Pantalla de texto";
+      el.saveWorshipText.textContent = imageEditor ? "Guardar imagen" : "Guardar pantalla";
+      card.setAttribute("aria-label", imageEditor ? "Vista previa de imagen" : "Vista previa de texto");
       card.querySelector("strong").textContent = title;
       card.querySelector("span").textContent = subtitle;
+      updateWorshipExternalFileStatus();
+    }
+
+    function worshipItemFromEditor(presentationId = "") {
+      const title = el.worshipTextTitle.value.trim();
+      const imageEditor = state.worshipEditorKind === "image";
+      const mode = imageEditor ? "image" : el.worshipTextBackgroundMode.value;
+      const existingItem = state.editingWorshipTextId ? worshipItems().find(item => item.id === state.editingWorshipTextId) : null;
+      const sermon = isSermonWorshipItem(existingItem) || isSermonLabel(title) || String(state.pendingWorshipImage || "").includes("presentation-backgrounds/sermon-");
+      return {
+        id: state.editingWorshipTextId || createWorshipItemId(),
+        type: "text",
+        contentKind: imageEditor ? "image" : "text",
+        title,
+        subtitle: el.worshipTextSubtitle.value.trim(),
+        alignment: el.worshipTextAlignment.value || "center",
+        backgroundMode: mode,
+        backgroundColor: mode === "color" ? (el.worshipTextBackgroundColor.value || "#11100e") : "",
+        textColor: imageEditor ? "" : el.worshipTextForegroundColor.value,
+        backgroundImage: mode === "image" ? state.pendingWorshipImage : "",
+        backgroundImageSource: mode === "image" ? state.pendingWorshipImageSource : "",
+        overlay: Math.max(0, Math.min(80, Number(el.worshipTextOverlay.value) || 0)),
+        externalResource: sermon ? null : normalizeExternalResource(state.pendingWorshipExternalResource),
+        role: sermon ? "sermon" : "",
+        presentationId: sermon ? String(presentationId || existingItem?.presentationId || "") : "",
+        target: "main"
+      };
     }
 
     function submitWorshipText(event) {
@@ -4983,27 +5700,10 @@
         showToast("Presentacion disponible en tablet o computadora");
         return;
       }
-      const title = el.worshipTextTitle.value.trim();
-      const mode = el.worshipTextBackgroundMode.value;
-      const item = {
-        id: state.editingWorshipTextId || createWorshipItemId(),
-        type: "text",
-        title,
-        subtitle: el.worshipTextSubtitle.value.trim(),
-        alignment: el.worshipTextAlignment.value || "center",
-        backgroundMode: mode,
-        backgroundColor: mode === "color" ? (el.worshipTextBackgroundColor.value || "#11100e") : "",
-        backgroundImage: mode === "image" ? state.pendingWorshipImage : "",
-        backgroundImageSource: mode === "image" ? state.pendingWorshipImageSource : "",
-        overlay: Math.max(0, Math.min(80, Number(el.worshipTextOverlay.value) || 0)),
-        externalResource: normalizeExternalResource(state.pendingWorshipExternalResource),
-        target: "main"
-      };
-      state.worshipPresentation.items = state.editingWorshipTextId
-        ? worshipItems().map(existing => existing.id === state.editingWorshipTextId ? item : existing)
-        : [...worshipItems(), item];
-      saveWorshipPresentation(true);
-      showWorshipMain();
+      const imageEditor = state.worshipEditorKind === "image";
+      if (imageEditor && !state.pendingWorshipImage) { showToast("Selecciona una imagen para esta pantalla"); return; }
+      const item = worshipItemFromEditor();
+      commitWorshipItem(item, state.editingWorshipTextId);
     }
 
     function moveWorshipItem(index, direction) {
@@ -5049,8 +5749,12 @@
         const song = state.songs.find(entry => entry.id === item.songId);
         return song ? `${song.number ?? ""} ${song.title || "Canto"}`.trim() : "Canto no encontrado";
       }
+      if (item.type === "visual-presentation") {
+        const presentation = storedVisualPresentation(item.presentationId);
+        return presentation?.name || "Presentación no encontrada";
+      }
       const parts = [item.title || "", item.subtitle || ""].filter(Boolean);
-      return parts.join(" - ") || "Pantalla de texto";
+      return parts.join(" - ") || (item.contentKind === "image" ? "Pantalla de imagen" : "Pantalla de texto");
     }
 
     function renderWorshipPresentationPanel() {
@@ -5092,6 +5796,7 @@
           </div>
           <div class="mini-actions">
             <button type="button" data-action="edit">Editar</button>
+            <button type="button" data-action="unlink" hidden>Desvincular presentación</button>
             <button type="button" data-action="duplicate">Duplicar</button>
             <button type="button" data-action="remove">Eliminar</button>
             <button type="button" data-action="up">Subir</button>
@@ -5107,15 +5812,26 @@
           thumb.remove();
           main.classList.add("no-thumb");
         }
-        row.querySelector(".worship-item-type").textContent = item.type === "song" ? "Canto" : "Texto";
+        const sermon = isSermonWorshipItem(item);
+        const linkedPresentation = sermon && item.presentationId ? storedVisualPresentation(item.presentationId) : null;
+        row.querySelector(".worship-item-type").textContent = item.type === "song" ? "Canto" : sermon ? "Sermón" : item.contentKind === "image" ? "Imagen" : "Texto";
         row.querySelector(".worship-item-title").textContent = worshipItemSummary(item);
-        row.querySelector(".worship-item-meta").textContent = `Pantalla ${index + 1} de ${items.length}`;
+        const associationText = sermon ? item.presentationId ? linkedPresentation ? `Presentación: ${linkedPresentation.name}` : "Presentación asociada no disponible" : "Sin presentación asociada" : "";
+        row.querySelector(".worship-item-meta").textContent = [associationText, `Pantalla ${index + 1} de ${items.length}`].filter(Boolean).join(" · ");
         row.querySelector("[data-action='up']").disabled = index === 0;
         row.querySelector("[data-action='down']").disabled = index === items.length - 1;
         row.querySelector("[data-action='edit']").addEventListener("click", () => {
-          if (item.type === "text") openWorshipTextEditor(item.id);
+          if (item.type === "text") (item.contentKind === "image" ? openWorshipImageEditor : openWorshipTextEditor)(item.id);
           else if (item.type === "song") openWorshipSongEditor(item.id);
         });
+        row.querySelector("[data-action='edit']").disabled = item.type === "visual-presentation";
+        const unlink = row.querySelector("[data-action='unlink']");
+        unlink.hidden = !(sermon && item.presentationId);
+        unlink.addEventListener("click", async () => {
+          if (await unlinkVisualPresentationFromSermon(item.presentationId)) showToast("Presentación desvinculada del Sermón");
+          else showToast("No se pudo quitar la presentación del Sermón");
+        });
+        row.querySelector("[data-action='duplicate']").disabled = sermon;
         row.querySelector("[data-action='duplicate']").addEventListener("click", () => duplicateWorshipItem(item.id));
         row.querySelector("[data-action='remove']").addEventListener("click", () => removeWorshipItem(item.id));
         row.querySelector("[data-action='up']").addEventListener("click", () => moveWorshipItem(index, -1));
@@ -5135,19 +5851,49 @@
         alignment: item.alignment || "center",
         backgroundMode: item.backgroundMode || "plain",
         backgroundColor: item.backgroundColor || "",
+        textColor: item.textColor || "",
         backgroundImage: item.backgroundImage || "",
         overlay: item.overlay ?? 45,
         externalResource: normalizeExternalResource(item.externalResource)
       }];
     }
 
+    function storedVisualPresentation(id) {
+      return visualEditor?.getPresentation?.(id) || null;
+    }
+
     function buildWorshipPresentationSlides() {
       return worshipItems().flatMap(item => {
         if (item.type === "song") {
           const song = state.songs.find(entry => entry.id === item.songId);
-          return song ? buildSlidesForSong(song) : [];
+          if (!song) return [];
+          return [{
+            songId: song.id,
+            title: song.title || "",
+            text: song.title || "",
+            songAnnouncement: true,
+            indexInSong: null,
+            totalInSong: null
+          }, ...buildSlidesForSong(song)];
         }
-        if (item.type === "text") return buildWorshipSlidesForText(item);
+        if (item.type === "text") {
+          const sermonScreen = buildWorshipSlidesForText(item)[0];
+          if (!isSermonWorshipItem(item) || !item.presentationId) return [sermonScreen];
+          const presentation = storedVisualPresentation(item.presentationId);
+          const slides = Array.isArray(presentation?.slides) ? presentation.slides : [];
+          if (!slides.length) return [sermonScreen];
+          const visualSlides = presentation.sourceType === "pptx"
+            ? slides.map((pptxSlide, index) => ({ title: presentation.name || "PowerPoint", text: "", indexInSong: index + 1, totalInSong: slides.length, pptxPresentationId: presentation.id, pptxSlideIndex: pptxSlide.pptxSlideIndex ?? index }))
+            : slides.map((visualSlide, index) => ({ title: presentation.name || "Presentación", text: "", indexInSong: index + 1, totalInSong: slides.length, visualSlide }));
+          return [sermonScreen, ...visualSlides, sermonScreen];
+        }
+        if (item.type === "visual-presentation") {
+          const presentation = storedVisualPresentation(item.presentationId);
+          const slides = Array.isArray(presentation?.slides) ? presentation.slides : [];
+          return presentation.sourceType === "pptx"
+            ? slides.map((pptxSlide, index) => ({ title: presentation.name || "PowerPoint", text: "", indexInSong: index + 1, totalInSong: slides.length, pptxPresentationId: presentation.id, pptxSlideIndex: pptxSlide.pptxSlideIndex ?? index }))
+            : slides.map((visualSlide, index) => ({ title: presentation.name || "Presentación", text: "", indexInSong: index + 1, totalInSong: slides.length, visualSlide }));
+        }
         return [];
       });
     }
@@ -5194,6 +5940,7 @@
         el.presentationStage.style.backgroundRepeat = "no-repeat";
         el.presentationSlide.style.color = "#ffffff";
       }
+      if (slide.textColor) el.presentationSlide.style.color = slide.textColor;
     }
 
     function openWorshipPreview() {
@@ -5238,12 +5985,13 @@
       }
       state.presentationMode = true;
       state.presentationIndex = 0;
+      state.presentationWasFullscreen = false;
+      state.presentationExitInProgress = false;
       closeWorshipPreviewModal();
       closePreviewModal();
-      el.presentationStage.classList.add("open");
+      el.presentationStage.classList.add("open", "hide-controls");
       document.body.style.overflow = "hidden";
       renderPresentationSlide();
-      showPresentationControls();
       requestPresentationFullscreen();
     }
 
@@ -5274,27 +6022,6 @@
       if (!db.client || db.channel) return;
       db.channel = db.client
         .channel("cantos-iglesia-sync")
-        .on("postgres_changes", { event: "*", schema: "public", table: "songs" }, payload => {
-          if (db.savingSongs) return;
-          const id = payload.old?.id || payload.new?.id;
-          if (!id) return;
-          if (payload.eventType === "DELETE") {
-            state.songs = state.songs.filter(song => song.id !== id);
-            if (state.selectedId === id) state.selectedId = null;
-            state.worshipPresentation.items = worshipItems().filter(item => !(item.type === "song" && item.songId === id));
-            saveWorshipPresentation();
-          } else {
-            const incoming = songFromRow(payload.new);
-            const exists = state.songs.some(song => song.id === incoming.id);
-            state.songs = exists
-              ? state.songs.map(song => song.id === incoming.id ? incoming : song)
-              : [...state.songs, incoming];
-          }
-          sortSongs();
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state.songs));
-          localStorage.setItem(PRESENTATION_KEY, JSON.stringify(state.presentation));
-          render();
-        })
         .on("postgres_changes", { event: "*", schema: "public", table: "app_config" }, payload => {
           if (db.savingConfig || payload.new?.id !== SUPABASE_MAIN_ID) return;
           state.config = configFromRow(payload.new);
@@ -5307,12 +6034,21 @@
     async function initializeApp() {
       loadTheme();
       state.readingFontSize = loadReadingFontSize();
-      initSupabase();
-      await restoreAuthSession();
+      try {
+        await initSupabase();
+        await restoreAuthSession();
+      } catch (error) {
+        const phase = db.client ? "restore-session" : "initialize-auth-storage";
+        logAdminAuthError(phase, error);
+        if (!db.client) db.authInitializationError = error;
+        state.isAdmin = false;
+        clearAdminProfile();
+        stopAdminInactivityTimer();
+      }
       await loadConfig();
       await loadSongs();
       loadPresentation();
-      loadWorshipPresentation();
+      await loadWorshipPresentation();
       subscribeToSupabaseChanges();
       render();
       handleInviteLink();
@@ -5470,6 +6206,8 @@
       const adminLabel = state.adminDisplayName && state.adminDisplayName !== "Administrador" ? `Administrador: ${state.adminDisplayName}` : "Administrador";
       el.adminProfileLabel.textContent = adminLabel;
       el.mobileAdminProfileLabel.textContent = adminLabel;
+      if (state.isAdmin) closeVisualMainNavigation();
+      el.mainMenuToggle.hidden = state.isAdmin;
       el.themeToggle.style.display = !state.isAdmin && !state.selectedId && !state.presentationMode ? "inline-flex" : "none";
       if (!state.isAdmin || state.presentationMode) closeAdminMenu();
 
@@ -5554,13 +6292,16 @@
         .filter(Boolean);
     }
 
-    function togglePresentationSong(songId) {
+    async function togglePresentationSong(songId) {
       const exists = worshipSongExists(songId);
       state.worshipPresentation.items = exists
         ? worshipItems().filter(item => !(item.type === "song" && item.songId === songId))
         : [...worshipItems(), createWorshipSongItem(songId)];
-      saveWorshipPresentation();
-      showToast(exists ? "Canto quitado de la presentacion" : "Canto agregado a la presentacion.");
+      const saved = await saveWorshipPresentation();
+      if (saved) {
+        if (exists) showToast("Canto quitado de la presentacion");
+        else showAddedToWorshipToast();
+      }
       render();
     }
 
@@ -5706,6 +6447,18 @@
       return verses.flatMap(verse => [verse, chorus]);
     }
 
+    function projectionSectionsForSong(song) {
+      const generated = generatedSectionsForSong(song);
+      if (String(song?.number ?? "").trim() !== "0") return generated;
+      const specialIndex = generated.findIndex(section => /^\s*\(Segundo coro para 4a estrofa\)\s*(?:\n|$)/i.test(String(section?.text || "")));
+      if (specialIndex < 1) return generated;
+      const specialSection = {
+        ...generated[specialIndex],
+        text: String(generated[specialIndex].text || "").replace(/^\s*\(Segundo coro para 4a estrofa\)\s*(?:\n|$)/i, "").trim()
+      };
+      return [...generated.slice(0, specialIndex - 1), specialSection].filter(section => String(section.text || "").trim());
+    }
+
     function splitSectionForProjection(text) {
       const originalLines = String(text || "")
         .split(/\n/)
@@ -5739,7 +6492,7 @@
     }
 
     function buildSlidesForSong(song) {
-      const baseSections = generatedSectionsForSong(song);
+      const baseSections = projectionSectionsForSong(song);
       const slides = [];
       baseSections.forEach(section => {
         splitSectionForProjection(section.text).forEach(text => {
@@ -5899,23 +6652,61 @@
         return;
       }
       state.presentationIndex = 0;
+      state.presentationWasFullscreen = false;
+      state.presentationExitInProgress = false;
       closePreviewModal();
-      el.presentationStage.classList.add("open");
+      el.presentationStage.classList.add("open", "hide-controls");
       document.body.style.overflow = "hidden";
       renderPresentationSlide();
-      showPresentationControls();
       requestPresentationFullscreen();
     }
 
     function renderPresentationSlide() {
       const slide = state.presentationSlides[state.presentationIndex];
       if (!slide) return;
+      el.presentationSlide.querySelector(".worship-visual-project-slide")?.remove();
+      el.presentationStage.classList.toggle("song-announcement-active", Boolean(slide.songAnnouncement));
+      const titleRow = el.presentationTitle.closest(".presentation-title-row");
+      if (slide.pptxPresentationId) {
+        if (titleRow) titleRow.hidden = true; el.presentationText.hidden = true;
+        applyPresentationSlideStyle(null);
+        const canvas = document.createElement("div"); canvas.className = "visual-slide-canvas worship-visual-project-slide";
+        Object.assign(canvas.style, { position: "absolute", inset: "0", width: "100%", height: "100%", maxWidth: "none", margin: "0", aspectRatio: "auto" });
+        el.presentationSlide.append(canvas);
+        visualEditor.renderPptxSlide(canvas, slide.pptxPresentationId, slide.pptxSlideIndex).catch(error => console.error("PPTX PROJECT render-failed", error));
+        el.presentationCount.textContent = `${slide.indexInSong}/${slide.totalInSong}`;
+        el.presentationPrev.disabled = state.presentationIndex === 0; el.presentationNext.disabled = state.presentationIndex === state.presentationSlides.length - 1;
+        return;
+      }
+      if (slide.visualSlide) {
+        if (titleRow) titleRow.hidden = true; el.presentationText.hidden = true;
+        applyPresentationSlideStyle(null);
+        const canvas = document.createElement("div"); canvas.className = "visual-slide-canvas worship-visual-project-slide";
+        Object.assign(canvas.style, { position: "absolute", inset: "0", width: "100%", height: "100%", maxWidth: "none", margin: "0" });
+        el.presentationSlide.append(canvas); visualEditor.renderExternalSlide(canvas, slide.visualSlide);
+        el.presentationCount.textContent = `${slide.indexInSong}/${slide.totalInSong}`;
+        el.presentationPrev.disabled = state.presentationIndex === 0; el.presentationNext.disabled = state.presentationIndex === state.presentationSlides.length - 1;
+        return;
+      }
+      el.presentationText.hidden = false;
+      if (slide.songAnnouncement) {
+        if (titleRow) titleRow.hidden = true;
+        el.presentationTitle.textContent = "";
+        el.presentationTextLink.textContent = String(slide.title || "").trim();
+        el.presentationTextLink.classList.remove("external-link");
+        el.presentationTextLink.title = "";
+        applyPresentationSlideStyle(null);
+        el.presentationCount.textContent = "";
+        el.presentationPrev.disabled = state.presentationIndex === 0;
+        el.presentationNext.disabled = state.presentationIndex === state.presentationSlides.length - 1;
+        requestAnimationFrame(adjustSongAnnouncementSize);
+        return;
+      }
       const title = String(slide.title || "").trim();
       const text = String(slide.text || "").trim();
       const duplicateTextTitle = Boolean(slide.worshipText && title && title === text);
       const emptyTextSlide = Boolean(slide.worshipText && !title && !text);
       const hasVisibleExternalLink = Boolean(slide.externalResource && (title || text));
-      const titleRow = el.presentationTitle.closest(".presentation-title-row");
       if (titleRow) titleRow.hidden = duplicateTextTitle || emptyTextSlide;
       el.presentationTitle.textContent = duplicateTextTitle || emptyTextSlide ? "" : slide.title;
       el.presentationTextLink.textContent = slide.text;
@@ -5950,7 +6741,6 @@
         state.presentationIndex += 1;
         renderPresentationSlide();
       }
-      showPresentationControls();
     }
 
     function previousPresentationSlide() {
@@ -5959,17 +6749,23 @@
         state.presentationIndex -= 1;
         renderPresentationSlide();
       }
-      showPresentationControls();
     }
 
     function exitPresentationMode() {
+      if (state.presentationExitInProgress) return;
+      state.presentationExitInProgress = true;
       const closePresentation = () => {
-        el.presentationStage.classList.remove("open", "hide-controls");
+        el.presentationStage.classList.remove("open", "hide-controls", "song-announcement-active");
         clearTimeout(state.controlsTimer);
+        state.presentationMode = false;
+        state.presentationSlides = [];
+        state.presentationIndex = 0;
+        state.presentationWasFullscreen = false;
+        state.presentationExitInProgress = false;
         document.body.style.overflow = "";
       };
 
-      if (document.fullscreenElement) {
+      if (document.fullscreenElement === el.presentationStage) {
         document.exitFullscreen().catch(() => {}).finally(closePresentation);
       } else {
         closePresentation();
@@ -5986,7 +6782,6 @@
         await el.presentationStage.requestFullscreen();
       } catch {
         showToast("Pantalla completa no disponible");
-        showPresentationControls();
       }
       updatePresentationFullscreenButton();
     }
@@ -6005,7 +6800,20 @@
         await document.exitFullscreen?.();
       }
       updatePresentationFullscreenButton();
-      showPresentationControls();
+    }
+
+    function adjustSongAnnouncementSize() {
+      if (!el.presentationStage.classList.contains("open") || !el.presentationStage.classList.contains("song-announcement-active")) return;
+      const viewport = el.presentationSlide.getBoundingClientRect();
+      let size = Math.max(8, Math.min(viewport.height * 0.32, 220));
+      el.presentationText.style.whiteSpace = "nowrap";
+      el.presentationText.style.overflowWrap = "normal";
+      el.presentationText.style.wordBreak = "normal";
+      el.presentationText.style.setProperty("--presentation-font-size", `${size}px`);
+      while (size > 8 && el.presentationText.scrollWidth > el.presentationText.clientWidth) {
+        size -= 2;
+        el.presentationText.style.setProperty("--presentation-font-size", `${size}px`);
+      }
     }
 
     function adjustPresentationTextSize() {
@@ -6044,9 +6852,17 @@
       if (!el.presentationStage.classList.contains("open")) return;
       el.presentationStage.classList.remove("hide-controls");
       clearTimeout(state.controlsTimer);
-      state.controlsTimer = setTimeout(() => {
-        el.presentationStage.classList.add("hide-controls");
-      }, 3200);
+    }
+
+    function hidePresentationControls() {
+      if (!el.presentationStage.classList.contains("open")) return;
+      clearTimeout(state.controlsTimer);
+      el.presentationStage.classList.add("hide-controls");
+    }
+
+    function showPresentationControlsTemporarily() {
+      showPresentationControls();
+      state.controlsTimer = setTimeout(hidePresentationControls, 3200);
     }
 
     function handlePresentationTap(event) {
@@ -6064,7 +6880,6 @@
       const touch = event.changedTouches[0];
       state.touchStartX = touch.clientX;
       state.touchStartY = touch.clientY;
-      showPresentationControls();
     }
 
     function handlePresentationTouchEnd(event) {
@@ -6123,7 +6938,9 @@
         return;
       }
       if (!db.client) {
-        showToast("Supabase no esta configurado");
+        showToast(db.authInitializationError
+          ? adminSignInErrorMessage(db.authInitializationError)
+          : "Supabase no esta configurado");
         return;
       }
       el.authModal.classList.add("open");
@@ -6139,25 +6956,72 @@
 
     async function submitAuth(event) {
       event.preventDefault();
-      if (!db.client) return;
+      if (!db.client) {
+        showToast("No se pudo cargar el servicio de autenticación. Recarga la aplicación e inténtalo nuevamente.");
+        return;
+      }
       const email = el.authEmail.value.trim();
       const password = el.authPassword.value;
-      if (!email || !password) return;
-
-      const { error } = await db.client.auth.signInWithPassword({ email, password });
-      if (error) {
-        showToast("Correo o contrasena incorrectos");
+      if (!email || !password) {
+        showToast("Escribe el correo y la contraseña");
         return;
       }
-
-      const profile = await loadCurrentProfile();
-      if (!profile) {
-        await db.client.auth.signOut();
-        showToast("Esta cuenta no tiene permiso de administrador");
-        return;
+      if (el.authSubmit?.disabled) return;
+      if (el.authSubmit) {
+        el.authSubmit.disabled = true;
+        el.authSubmit.textContent = "Entrando…";
       }
+      showToast("Iniciando sesión…");
+      try {
+        let signInResult;
+        try {
+          signInResult = await db.client.auth.signInWithPassword({ email, password });
+        } catch (error) {
+          logAdminAuthError("sign-in", error);
+          showToast(adminSignInErrorMessage(error));
+          return;
+        }
 
-      await enterAuthenticatedAdmin(profile);
+        if (signInResult.error) {
+          logAdminAuthError("sign-in", signInResult.error);
+          showToast(adminSignInErrorMessage(signInResult.error));
+          return;
+        }
+
+        let profile;
+        try {
+          profile = await loadCurrentProfile();
+        } catch (error) {
+          logAdminAuthError("load-profile", error);
+          state.isAdmin = false;
+          render();
+          showToast("La sesión se inició, pero no se pudo cargar el perfil administrativo.");
+          return;
+        }
+
+        if (!profile) {
+          try {
+            await db.client.auth.signOut();
+          } catch (error) {
+            logAdminAuthError("unauthorized-sign-out", error);
+          }
+          state.isAdmin = false;
+          render();
+          showToast("Esta cuenta no tiene permiso de administrador");
+          return;
+        }
+
+        try {
+          await enterAuthenticatedAdmin(profile);
+        } catch {
+          showToast("La sesión se inició, pero falló la entrada al modo administrativo. La aplicación continúa en modo usuario.");
+        }
+      } finally {
+        if (el.authSubmit) {
+          el.authSubmit.disabled = false;
+          el.authSubmit.textContent = "Entrar";
+        }
+      }
     }
 
     function updateImagePreview() {
@@ -6262,45 +7126,9 @@
       context.putImageData(imageData, 0, 0);
     }
 
-    function autoCorrectSpanishText(text) {
-      const corrections = [
-        ["senor", "Señor"],
-        ["senora", "señora"],
-        ["jesus", "Jesús"],
-        ["dios", "Dios"],
-        ["cristo", "Cristo"],
-        ["espiritu", "Espíritu"],
-        ["santisimo", "santísimo"],
-        ["corazon", "corazón"],
-        ["cancion", "canción"],
-        ["oracion", "oración"],
-        ["salvacion", "salvación"],
-        ["bendicion", "bendición"],
-        ["perdon", "perdón"],
-        ["aleluya", "aleluya"],
-        ["amen", "amén"],
-        ["tambien", "también"],
-        ["aqui", "aquí"],
-        ["alli", "allí"],
-        ["mas", "más"],
-        ["grasias", "gracias"],
-        ["nesecito", "necesito"],
-        ["resivir", "recibir"],
-        ["recivir", "recibir"],
-        ["adorasion", "adoración"],
-        ["adoracion", "adoración"]
-      ];
-
-      return corrections.reduce((current, [wrong, right]) => {
-        const pattern = new RegExp(`\\b${wrong}\\b`, "gi");
-        return current.replace(pattern, right);
-      }, text);
-    }
-
-    function autoCorrectEditorText() {
-      el.titleInput.value = autoCorrectSpanishText(el.titleInput.value);
-      el.lyricsInput.value = autoCorrectSpanishText(el.lyricsInput.value);
-    }
+    window.HimnarioAutocorrect.attach(el.titleInput);
+    window.HimnarioAutocorrect.attach(el.lyricsInput);
+    [el.worshipTextTitle, el.worshipTextSubtitle].forEach(field => window.HimnarioAutocorrect.attach(field));
 
     function submitSettings(event) {
       event.preventDefault();
@@ -6323,40 +7151,100 @@
 
     async function submitSong(event) {
       event.preventDefault();
-      if (!state.isAdmin) return;
-      autoCorrectEditorText();
-      const number = normalizeSongNumberIdentifier(el.numberInput.value || nextSongNumber());
-      if (!isValidSongNumberIdentifier(number)) {
-        showToast("Usa un numero o numero con una letra, por ejemplo 61A");
-        el.numberInput.focus();
+      let phase = "authorization";
+      if (!state.isAdmin) {
+        showToast("Tu sesión administrativa ya no está activa");
         return;
       }
-      const title = el.titleInput.value.trim();
-      const lyrics = el.lyricsInput.value.trim();
-      if (!title || !lyrics) return;
-
-      if (state.editingId) {
-        const current = state.songs.find(song => song.id === state.editingId);
-        if (!current) return;
-        const updatedSong = { ...current, number, title, lyrics };
-        const savedSong = await updateSongInSupabase(updatedSong);
-        if (!savedSong) return;
-        state.songs = state.songs.map(song =>
-          song.id === state.editingId ? savedSong : song
-        );
-        state.selectedId = state.editingId;
-      } else {
-        const song = { id: crypto.randomUUID(), number, title, lyrics };
-        const savedSong = await createSongInSupabase(song);
-        if (!savedSong) return;
-        state.songs = [savedSong, ...state.songs];
-        state.selectedId = savedSong.id;
+      if (db.savingSongs) {
+        showToast("Ya hay una operación de cantos en curso");
+        return;
       }
+      el.saveSong.disabled = true;
+      const previousSongs = state.songs;
+      const previousSelectedId = state.selectedId;
+      let remoteRollback = null;
+      try {
+        phase = "validation";
+        const number = normalizeSongNumberIdentifier(el.numberInput.value || nextSongNumber());
+        if (!isValidSongNumberIdentifier(number)) {
+          showToast("Usa un numero o numero con una letra, por ejemplo 61A");
+          el.numberInput.focus();
+          return;
+        }
+        el.titleInput.value = window.HimnarioAutocorrect.correctOnCommit(el.titleInput.value);
+        el.lyricsInput.value = window.HimnarioAutocorrect.correctOnCommit(el.lyricsInput.value);
+        const title = el.titleInput.value.trim();
+        const lyrics = el.lyricsInput.value.trim();
+        if (!title) {
+          showToast("Escribe el título del canto");
+          el.titleInput.focus();
+          return;
+        }
+        if (!lyrics) {
+          showToast("Escribe la letra del canto");
+          el.lyricsInput.focus();
+          return;
+        }
+        const duplicate = findDuplicateSong(state.songs, number, title, state.editingId);
+        if (duplicate) {
+          const duplicateLabel = `${duplicate.song.number ?? ""} — ${duplicate.song.title || "Canto sin título"}`.trim();
+          if (duplicate.matchesNumber && duplicate.matchesTitle) {
+            showToast(`Este canto ya existe: ${duplicateLabel}.`);
+          } else if (duplicate.matchesNumber) {
+            showToast(`Ya existe un canto con este número: ${duplicateLabel}.`);
+            el.numberInput.focus();
+          } else {
+            showToast(`Ya existe un canto con este título: ${duplicateLabel}.`);
+            el.titleInput.focus();
+          }
+          return;
+        }
 
-      sortSongs();
-      saveSongs();
-      closeEditor();
-      render();
+        if (state.editingId) {
+          const current = state.songs.find(song => song.id === state.editingId);
+          if (!current) throw new Error("El canto que intentas editar ya no está disponible");
+          phase = "supabase-update";
+          const updatedSong = { ...current, number, title, lyrics };
+          const savedSong = await updateSongInSupabase(updatedSong);
+          if (!savedSong) return;
+          remoteRollback = { kind: "update", song: current };
+          state.songs = state.songs.map(song => song.id === state.editingId ? savedSong : song);
+          state.selectedId = state.editingId;
+        } else {
+          phase = "supabase-create";
+          const song = { id: crypto.randomUUID(), number, title, lyrics };
+          const savedSong = await createSongInSupabase(song);
+          if (!savedSong) return;
+          remoteRollback = { kind: "create", song: savedSong };
+          state.songs = [savedSong, ...state.songs];
+          state.selectedId = savedSong.id;
+        }
+
+        sortSongs();
+        phase = "indexeddb-save";
+        if (!await saveSongs(false)) {
+          state.songs = previousSongs;
+          state.selectedId = previousSelectedId;
+          const rolledBack = await rollbackSongRemoteChange(remoteRollback.kind, remoteRollback.song);
+          showToast(rolledBack ? "No se guardó el canto; los cambios fueron revertidos" : "No se completó el guardado y se requiere revisar la sincronización remota");
+          render();
+          return;
+        }
+        phase = "render";
+        closeEditor();
+        render();
+        showToast("✓ Canto guardado correctamente");
+      } catch (error) {
+        state.songs = previousSongs;
+        state.selectedId = previousSelectedId;
+        logSongAdminError(phase, error);
+        const rolledBack = remoteRollback ? await rollbackSongRemoteChange(remoteRollback.kind, remoteRollback.song) : true;
+        showToast(rolledBack ? (error?.message || "No se pudo guardar el canto") : "No se completó el guardado y se requiere revisar la sincronización remota");
+        render();
+      } finally {
+        el.saveSong.disabled = false;
+      }
     }
 
     async function deleteSong(id) {
@@ -6370,7 +7258,7 @@
       if (!deleted) return;
       state.songs = state.songs.filter(item => item.id !== id);
       state.selectedId = state.songs[0]?.id || null;
-      saveSongs();
+      if (!await saveSongs()) return;
       render();
     }
 
@@ -6379,6 +7267,28 @@
         .trim()
         .replace(/\s+/g, "")
         .toUpperCase();
+    }
+
+    function normalizeSongTitleForDuplicate(value) {
+      return String(value ?? "")
+        .trim()
+        .replace(/\s+/g, " ")
+        .toLocaleLowerCase("es");
+    }
+
+    function findDuplicateSong(songs, number, title, excludedId = null) {
+      const normalizedNumber = normalizeSongNumberIdentifier(number);
+      const normalizedTitle = normalizeSongTitleForDuplicate(title);
+      const candidates = (Array.isArray(songs) ? songs : []).filter(song => String(song?.id ?? "") !== String(excludedId ?? ""));
+      const numberMatch = candidates.find(song => normalizeSongNumberIdentifier(song?.number) === normalizedNumber);
+      const titleMatch = candidates.find(song => normalizeSongTitleForDuplicate(song?.title) === normalizedTitle);
+      const song = numberMatch || titleMatch;
+      if (!song) return null;
+      return {
+        song,
+        matchesNumber: normalizeSongNumberIdentifier(song.number) === normalizedNumber,
+        matchesTitle: normalizeSongTitleForDuplicate(song.title) === normalizedTitle
+      };
     }
 
     function isValidSongNumberIdentifier(value) {
@@ -7321,11 +8231,15 @@
       openInviteAcceptModal(inviteToken);
     }
 
-    function showToast(message) {
+    function showToast(message, duration = 1400) {
       el.toast.textContent = message;
       el.toast.classList.add("show");
       clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => el.toast.classList.remove("show"), 1400);
+      showToast.timer = setTimeout(() => el.toast.classList.remove("show"), duration);
+    }
+
+    function showAddedToWorshipToast() {
+      showToast("✓ Agregado a Presentación del culto", 2000);
     }
 
     el.newSong.addEventListener("click", () => openEditor());
@@ -7376,10 +8290,11 @@
     el.cancelWorshipChoice?.addEventListener("click", showWorshipMain);
     el.chooseWorshipText?.addEventListener("click", () => openWorshipTextEditor());
     el.chooseWorshipSong?.addEventListener("click", () => openWorshipSongEditor());
+    el.chooseWorshipImage?.addEventListener("click", () => openWorshipImageEditor());
     el.cancelWorshipText?.addEventListener("click", showWorshipMain);
     el.cancelWorshipSong?.addEventListener("click", showWorshipMain);
     el.worshipTextForm?.addEventListener("submit", submitWorshipText);
-    [el.worshipTextTitle, el.worshipTextSubtitle, el.worshipTextAlignment, el.worshipTextBackgroundMode, el.worshipTextBackgroundColor, el.worshipTextOverlay].forEach(input => {
+    [el.worshipTextTitle, el.worshipTextSubtitle, el.worshipTextAlignment, el.worshipTextBackgroundMode, el.worshipTextForegroundColor, el.worshipTextBackgroundColor, el.worshipTextOverlay].forEach(input => {
       input?.addEventListener("input", updateWorshipTextPreview);
       input?.addEventListener("change", updateWorshipTextPreview);
     });
@@ -7396,12 +8311,13 @@
     el.addWorshipSong?.addEventListener("click", addWorshipSong);
     el.previewWorship?.addEventListener("click", openWorshipPreview);
     el.startWorship?.addEventListener("click", startWorshipPresentationMode);
+    el.importWorshipPresentation?.addEventListener("click", () => el.worshipPresentationFile?.click());
+    el.worshipPresentationFile?.addEventListener("change", importWorshipPresentationFile);
+    el.saveWorshipPresentationFile?.addEventListener("click", saveWorshipPresentationFile);
     el.clearWorship?.addEventListener("click", clearWorshipPresentationList);
     el.closeModal.addEventListener("click", closeEditor);
     el.cancelEdit.addEventListener("click", closeEditor);
     el.form.addEventListener("submit", submitSong);
-    el.titleInput.addEventListener("blur", autoCorrectEditorText);
-    el.lyricsInput.addEventListener("blur", autoCorrectEditorText);
     el.closeSettings.addEventListener("click", closeSettingsModal);
     el.cancelSettings.addEventListener("click", closeSettingsModal);
     el.settingsForm.addEventListener("submit", submitSettings);
@@ -7409,6 +8325,11 @@
     el.closeAuth.addEventListener("click", closeAuthModal);
     el.cancelAuth.addEventListener("click", closeAuthModal);
     el.authForm.addEventListener("submit", submitAuth);
+    el.authPassword.addEventListener("keydown", event => {
+      if (event.key !== "Enter" || event.isComposing) return;
+      event.preventDefault();
+      el.authForm.requestSubmit(el.authSubmit);
+    });
     el.closeAdminNotes.addEventListener("click", closeAdminNotes);
     el.refreshAdminNotes.addEventListener("click", loadAdminNotes);
     el.adminNotesForm.addEventListener("submit", submitAdminNote);
@@ -7436,7 +8357,9 @@
     if (el.presentationFullscreen) el.presentationFullscreen.addEventListener("click", togglePresentationFullscreen);
     el.presentationTextLink.addEventListener("click", openPresentationExternalResource);
     el.presentationStage.addEventListener("click", handlePresentationTap);
-    el.presentationStage.addEventListener("mousemove", showPresentationControls);
+    el.presentationControls.addEventListener("mouseenter", showPresentationControls);
+    el.presentationControls.addEventListener("mouseleave", hidePresentationControls);
+    el.presentationControls.addEventListener("touchstart", showPresentationControlsTemporarily, { passive: true });
     el.presentationStage.addEventListener("touchstart", handlePresentationTouchStart, { passive: true });
     el.presentationStage.addEventListener("touchend", handlePresentationTouchEnd, { passive: true });
     el.removeHomeImage.addEventListener("click", () => {
@@ -7524,7 +8447,6 @@
     window.addEventListener("keydown", event => {
       const presenting = el.presentationStage.classList.contains("open");
       if (presenting) {
-        showPresentationControls();
         if (event.key === "ArrowRight" || event.key === " ") {
           event.preventDefault();
           nextPresentationSlide();
@@ -7535,8 +8457,7 @@
         }
         if (event.key === "Escape") {
           event.preventDefault();
-          if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
-          else exitPresentationMode();
+          exitPresentationMode();
         }
         return;
       }
@@ -7564,12 +8485,21 @@
         closeMobilePresentationAccess();
         render();
       }
-      adjustPresentationTextSize();
+      if (el.presentationStage.classList.contains("song-announcement-active")) adjustSongAnnouncementSize();
+      else adjustPresentationTextSize();
       updateReadingToolbar();
     }));
     document.addEventListener("fullscreenchange", () => {
       updatePresentationFullscreenButton();
-      requestAnimationFrame(adjustPresentationTextSize);
+      if (document.fullscreenElement === el.presentationStage) {
+        state.presentationWasFullscreen = true;
+      } else if (el.presentationStage.classList.contains("open") && state.presentationWasFullscreen && !state.presentationExitInProgress) {
+        exitPresentationMode();
+      }
+      requestAnimationFrame(() => {
+        if (el.presentationStage.classList.contains("song-announcement-active")) adjustSongAnnouncementSize();
+        else adjustPresentationTextSize();
+      });
     });
 
     if ("serviceWorker" in navigator) {
@@ -7980,8 +8910,46 @@
     // Editor visual basado en bloques.
     const visualEditor = (() => {
       const KEY = "himnario-mis-presentaciones-v1";
+      const PROJECT_FORMAT = "himnario-mrm-presentation";
+      const LEGACY_PROJECT_FORMAT = "himnario-canto-presentation";
+      const PROJECT_VERSION = 1;
+      const SAVE_DEBUG_VERSION = "2026-08-16-1";
+      const MAX_CANTO_FILE_SIZE = 200 * 1024 * 1024;
+      const MAX_PPTX_FILE_SIZE = 200 * 1024 * 1024;
+      const MAX_SLIDES = 300;
+      const MAX_BLOCKS_PER_SLIDE = 500;
+      function formatCantoFileSize(bytes) {
+        const megabytes = Number(bytes || 0) / (1024 * 1024);
+        return `${megabytes >= 10 ? Math.round(megabytes) : megabytes.toFixed(1)} MB`;
+      }
+      function cantoFileSizeError(bytes) {
+        return `Esta presentación es demasiado grande para esta versión de la aplicación. Archivo: ${formatCantoFileSize(bytes)} — máximo permitido: ${formatCantoFileSize(MAX_CANTO_FILE_SIZE)}`;
+      }
       const fonts = ["Arial", "Georgia", "Times New Roman", "Verdana", "Trebuchet MS", "Tahoma", "Courier New", "Segoe Script, Brush Script MT, cursive", "Comic Sans MS, cursive", "Garamond, Georgia, serif", "Impact, Haettenschweiler, sans-serif", "Copperplate Gothic Bold, Copperplate, fantasy", "Century Gothic, Segoe UI, sans-serif"];
       const data = { presentations: [], activePresentationId: null };
+      const presentationRepository = sharedPresentationRepository;
+      const repositoryReady = sharedRepositoryReady;
+      const pendingLibraryWrites = new Map();
+      let libraryDrainPromise = null;
+      let lastLibraryError = null;
+      const projectFileHandles = new Map();
+      const pptxSessions = new Map();
+      const pptxRenderTokens = new WeakMap();
+      const pendingResourceOperations = new Set();
+      const presentationRevisions = new Map();
+      const fileSavedRevisions = new Map();
+      let objectImageRequest = 0;
+      let backgroundImageRequest = 0;
+      let pendingResourceError = null;
+      let saveProjectPromise = null;
+      let saveAgainRequested = false;
+      let saveStatusTimer = null;
+      let lastProjectSaveOutcome = null;
+      let saveDebugCounter = 0;
+      let pendingSaveDebugId = 0;
+      console.info(`SAVE SYSTEM DEBUG VERSION: ${SAVE_DEBUG_VERSION}`);
+      if ("serviceWorker" in navigator) navigator.serviceWorker.ready.then(registration => console.info("SAVE DEBUG SERVICE WORKER", { controller: navigator.serviceWorker.controller?.scriptURL || null, active: registration.active?.scriptURL || null, state: registration.active?.state || null })).catch(error => console.warn("SAVE DEBUG SERVICE WORKER ERROR", error));
+      if ("caches" in window) caches.keys().then(keys => console.info("SAVE DEBUG CACHES", keys)).catch(error => console.warn("SAVE DEBUG CACHES ERROR", error));
       let selectedBlockId = null;
       let editingBlockId = null;
       let libraryCategory = "sermon";
@@ -7995,12 +8963,18 @@
       let fontSizeInputDraft = false;
       let lastValidFontSize = 32;
       let lexicalHistoryStatus = { canUndo: false, canRedo: false };
+      const HISTORY_LIMIT = 100;
+      const globalUndoStack = [];
+      const globalRedoStack = [];
+      let historyApplying = false;
+      let lexicalHistoryTracker = null;
+      let backgroundHistoryBefore = null;
 
       const v = Object.fromEntries([
-        "myPresentationsView", "myPresentationsHome", "newMyPresentation", "myPresentationsList", "myPresentationEditor",
+        "myPresentationsView", "myPresentationsHome", "newMyPresentation", "openMyPresentationFile", "myPresentationFileInput", "myPresentationsList", "myPresentationEditor",
         "myPresentationName", "addMyText", "addMyImage", "openMyBackground", "undoMyEdit", "redoMyEdit", "myTextTools", "myFontFamily", "myFontSize",
         "myBold", "myItalic", "myUnderline", "myTextColor", "myAlignLeft", "myAlignCenter", "myAlignRight",
-        "duplicateMyObject", "deleteMyObject", "saveMyPresentation", "presentMyPresentation", "addMyToWorship",
+        "duplicateMyObject", "deleteMyObject", "saveMyPresentation", "mySaveStatus", "presentMyPresentation", "addMyToWorship",
         "backToMyPresentations", "addMySlide", "mySlidesList", "mySlideCanvas", "myEditorHint", "myImageModal",
         "closeMyImageModal", "chooseMyObjectDeviceImage", "chooseMyObjectAppImage", "myObjectImageInput", "myObjectLibrary",
         "myObjectLibraryTabs", "myObjectImageGrid", "myBackgroundModal", "closeMyBackgroundModal", "myBackgroundColor",
@@ -8035,24 +9009,518 @@
         if (!slide.mainText && (legacyTitle || legacySubtitle)) blocks = blocks.filter(block => block.type !== "text" || ![legacyTitle, legacySubtitle].includes(String(block.text || "").trim()));
         return { id: slide.id || uid("slide"), type: "visual", title: legacyTitle, subtitle: legacySubtitle, alignment: slide.alignment || "center", backgroundMode: slide.backgroundImage ? "image" : "color", backgroundColor: slide.backgroundColor || (slide.backgroundMode === "plain" ? "#ffffff" : "#11100e"), backgroundImage: slide.backgroundImage || "", backgroundImageSource: slide.backgroundImageSource || (String(slide.backgroundImage || "").startsWith("presentation-backgrounds/") ? "app" : slide.backgroundImage ? "device" : ""), overlay: clamp(slide.overlay || 0, 0, 80), mainText, style: { fontFamily: "", fontSize: "", bold: false, italic: false, underline: false, textColor: "", verticalPosition: "center", ...(slide.style || {}) }, blocks };
       }
-      function load() {
+      async function load() {
         try {
-          const saved = JSON.parse(localStorage.getItem(KEY) || "{}");
-          data.presentations = Array.isArray(saved.presentations) ? saved.presentations.map(p => ({ id: p.id || uid("presentation"), name: String(p.name || "Presentación sin título"), createdAt: p.createdAt || new Date().toISOString(), updatedAt: p.updatedAt || p.createdAt || new Date().toISOString(), slides: Array.isArray(p.slides) ? p.slides.map(normalizeSlide) : [] })) : [];
-          data.activePresentationId = saved.activePresentationId || null;
-        } catch { data.presentations = []; data.activePresentationId = null; }
+          await repositoryReady;
+          const savedPresentations = await presentationRepository.list();
+          data.presentations = savedPresentations.map(p => p.sourceType === "pptx"
+            ? { ...p, id: p.id || uid("presentation"), name: String(p.name || "PowerPoint"), sourceType: "pptx", createdAt: p.createdAt || new Date().toISOString(), updatedAt: p.updatedAt || p.createdAt || new Date().toISOString(), slides: Array.isArray(p.slides) ? p.slides.map((slide, index) => ({ id: slide.id || `${p.id}-pptx-${index}`, type: "pptx-slide", pptxSlideIndex: Number.isInteger(slide.pptxSlideIndex) ? slide.pptxSlideIndex : index })) : [] }
+            : { id: p.id || uid("presentation"), name: String(p.name || "Presentación sin título"), sourceFileName: String(p.sourceFileName || ""), createdAt: p.createdAt || new Date().toISOString(), updatedAt: p.updatedAt || p.createdAt || new Date().toISOString(), activeSlideId: p.activeSlideId, slides: Array.isArray(p.slides) ? p.slides.map(normalizeSlide) : [] });
+          await restoreProjectFileHandles(data.presentations);
+          data.activePresentationId = await presentationRepository.activePresentationId();
+          console.info("LIBRARY LOAD complete", { database: window.HimnarioPresentationRepository.DB_NAME, presentations: data.presentations.length, activePresentationId: data.activePresentationId });
+        } catch (error) { console.error("LIBRARY LOAD failed", { name: error?.name, message: error?.message, error }); data.presentations = []; data.activePresentationId = null; showToast("No se pudo abrir Mis presentaciones en IndexedDB"); }
       }
       function activePresentation() { return data.presentations.find(p => p.id === data.activePresentationId) || null; }
       function activeSlide() { const p = activePresentation(); return p?.slides.find(s => s.id === p.activeSlideId) || p?.slides[0] || null; }
       function selectedBlock() { return activeSlide()?.blocks.find(block => block.id === selectedBlockId) || null; }
-      function save(showMessage = false) {
+      function cloneHistoryValue(value) { return value == null ? value : structuredClone(value); }
+      function presentationById(id) { return data.presentations.find(item => item.id === id) || null; }
+      function slideById(presentationId, slideId) { return presentationById(presentationId)?.slides.find(item => item.id === slideId) || null; }
+      function snapshotSlideExternal(slide) { return { backgroundMode: slide.backgroundMode, backgroundColor: slide.backgroundColor, backgroundImage: slide.backgroundImage, backgroundImageSource: slide.backgroundImageSource, overlay: slide.overlay, blocks: cloneHistoryValue(slide.blocks) }; }
+      function restoreSlideExternal(slide, snapshot) { Object.assign(slide, cloneHistoryValue(snapshot)); }
+      function snapshotSlides(presentation) { return { activeSlideId: presentation.activeSlideId, slides: cloneHistoryValue(presentation.slides) }; }
+      function restoreSlides(presentation, snapshot) { presentation.activeSlideId = snapshot.activeSlideId; presentation.slides = cloneHistoryValue(snapshot.slides).map(normalizeSlide); }
+      function sameHistoryValue(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+      function recordGlobalAction(action) {
+        if (historyApplying || sameHistoryValue(action.before, action.after)) return;
+        globalUndoStack.push(action); if (globalUndoStack.length > HISTORY_LIMIT) globalUndoStack.shift();
+        globalRedoStack.length = 0; if (action.source !== "lexical") lexicalMainText?.breakHistoryGroup(); updateUndoRedoButtons();
+      }
+      function recordSlideExternal(before, label, slide = activeSlide(), presentation = activePresentation()) {
+        if (!slide || !presentation) return;
+        recordGlobalAction({ source: "external", type: "slide-external", label, presentationId: presentation.id, slideId: slide.id, before, after: snapshotSlideExternal(slide) });
+      }
+      function recordSlidesState(before, label, presentation = activePresentation()) {
+        if (!presentation) return;
+        recordGlobalAction({ source: "external", type: "slides-state", label, presentationId: presentation.id, before, after: snapshotSlides(presentation) });
+      }
+      function handleLexicalHistory(status, presentationId, slideId) {
+        lexicalHistoryStatus = { canUndo: status.undoDepth > 0, canRedo: status.redoDepth > 0 };
+        const currentKey = JSON.stringify(status.current?.editorState || null);
+        if (!lexicalHistoryTracker || lexicalHistoryTracker.presentationId !== presentationId || lexicalHistoryTracker.slideId !== slideId) {
+          lexicalHistoryTracker = { presentationId, slideId, undoDepth: status.undoDepth, currentKey };
+          updateUndoRedoButtons(); return;
+        }
+        if (historyApplying) { lexicalHistoryTracker.undoDepth = status.undoDepth; lexicalHistoryTracker.currentKey = currentKey; updateUndoRedoButtons(); return; }
+        if (status.undoDepth > lexicalHistoryTracker.undoDepth && status.undoTop && status.current) {
+          const action = { source: "lexical", type: "main-text", presentationId, slideId, before: cloneHistoryValue(status.undoTop), after: cloneHistoryValue(status.current), lexicalDepth: status.undoDepth };
+          recordGlobalAction(action);
+        } else if (status.undoDepth === lexicalHistoryTracker.undoDepth && currentKey !== lexicalHistoryTracker.currentKey) {
+          const last = globalUndoStack[globalUndoStack.length - 1];
+          if (last?.source === "lexical" && last.presentationId === presentationId && last.slideId === slideId && last.lexicalDepth === status.undoDepth && status.current) last.after = cloneHistoryValue(status.current);
+        }
+        lexicalHistoryTracker.undoDepth = status.undoDepth; lexicalHistoryTracker.currentKey = currentKey; updateUndoRedoButtons();
+      }
+      function revisionFor(id) { return presentationRevisions.get(id) || 0; }
+      async function drainLibraryWrites() {
+        while (pendingLibraryWrites.size) {
+          const entries = [...pendingLibraryWrites.entries()]; pendingLibraryWrites.clear();
+          for (const [id, presentation] of entries) {
+            try { await presentationRepository.put(presentation, data.activePresentationId); }
+            catch (error) { lastLibraryError = error; console.error("LIBRARY SAVE failed", { id, name: error?.name, message: error?.message, error }); }
+          }
+        }
+        return { ok: !lastLibraryError, error: lastLibraryError };
+      }
+      function startLibraryDrain() {
+        if (libraryDrainPromise) return;
+        libraryDrainPromise = Promise.resolve().then(drainLibraryWrites).finally(() => { libraryDrainPromise = null; if (pendingLibraryWrites.size) startLibraryDrain(); });
+      }
+      function queueLibrarySave(presentation) {
+        if (!presentation) return;
+        pendingLibraryWrites.set(presentation.id, presentation);
+        startLibraryDrain();
+      }
+      async function flushLibraryWrites(presentation) {
+        lastLibraryError = null;
+        queueLibrarySave(presentation);
+        while (libraryDrainPromise) await libraryDrainPromise;
+        return { ok: !lastLibraryError, error: lastLibraryError };
+      }
+      function save(showMessage = false, markDirty = true) {
         snapshotActiveMainText();
         const p = activePresentation(); if (p) p.updatedAt = new Date().toISOString();
-        try { localStorage.setItem(KEY, JSON.stringify(data)); if (showMessage) showToast("Presentación guardada"); return true; }
-        catch { showToast("No hay espacio suficiente para guardar. Usa imágenes más pequeñas"); return false; }
+        if (p && markDirty) presentationRevisions.set(p.id, revisionFor(p.id) + 1);
+        queueLibrarySave(p);
+        if (showMessage) showToast("Guardado de biblioteca en curso");
+        return true;
       }
 
-      function openHome() { load(); v.myPresentationsView.hidden = false; v.myPresentationsHome.hidden = false; v.myPresentationEditor.hidden = true; document.body.style.overflow = "hidden"; renderPresentationList(); }
+      function trackResourceOperation(operation) {
+        const pending = Promise.resolve(operation).catch(error => { pendingResourceError ||= error; }); pendingResourceOperations.add(pending);
+        pending.finally(() => pendingResourceOperations.delete(pending)); return pending;
+      }
+      async function waitForPendingResources() {
+        while (pendingResourceOperations.size) await Promise.allSettled([...pendingResourceOperations]);
+        if (pendingResourceError) { const error = pendingResourceError; pendingResourceError = null; throw error; }
+      }
+
+      function validProjectName(presentation) {
+        let name = String(v.myPresentationName.value || presentation.name || "").trim();
+        if (!name || name === "Presentación sin título") {
+          name = String(window.prompt("Escribe un nombre para la presentación:", name === "Presentación sin título" ? "" : name) || "").trim();
+        }
+        if (!name) { showToast("La presentación necesita un nombre para guardarse"); return false; }
+        presentation.name = name.slice(0, 120); v.myPresentationName.value = presentation.name; return true;
+      }
+      function safeProjectFilename(name) {
+        const clean = String(name || "Presentación").replace(/[<>:"/\\|?*\u0000-\u001f]/g, "-").replace(/[. ]+$/g, "").trim();
+        return `${clean || "Presentación"}.mrm`;
+      }
+      function setSaveStatus(state, message, clearAfter = 0) {
+        if (saveStatusTimer) { clearTimeout(saveStatusTimer); saveStatusTimer = null; }
+        v.mySaveStatus.dataset.state = state || "";
+        v.mySaveStatus.textContent = message || "";
+        if (clearAfter > 0) saveStatusTimer = setTimeout(() => {
+          if (v.mySaveStatus.dataset.state === state) { v.mySaveStatus.dataset.state = ""; v.mySaveStatus.textContent = ""; }
+          saveStatusTimer = null;
+        }, clearAfter);
+      }
+      function finishSaveStatus(outcome, presentationId) {
+        const currentRevisionSaved = revisionFor(presentationId) === fileSavedRevisions.get(presentationId);
+        if (!outcome) { setSaveStatus("error", "✕ No se pudo guardar"); return; }
+        if (outcome.libraryOk && outcome.fileOk && outcome.verified && outcome.associationOk !== false && currentRevisionSaved) { setSaveStatus("success", "✓ Guardado correctamente", 5000); return; }
+        if (outcome.fileOk && !outcome.libraryOk) { setSaveStatus("warning", "⚠ Archivo guardado, pero Mis presentaciones no pudo actualizarse"); return; }
+        if (outcome.fileOk && outcome.associationOk === false) { setSaveStatus("warning", "⚠ Archivo guardado, pero no se pudo conservar su asociación"); return; }
+        if (outcome.libraryOk && outcome.fileOk && !outcome.verified) { setSaveStatus("warning", "⚠ Archivo descargado, pero no pudo verificarse automáticamente"); return; }
+        if (outcome.libraryOk && !outcome.fileOk) { setSaveStatus("warning", "⚠ Guardado en Mis presentaciones, pero el archivo .mrm no pudo actualizarse"); return; }
+        setSaveStatus("error", "✕ No se pudo guardar");
+      }
+      function projectDocument(presentation) {
+        return { format: PROJECT_FORMAT, version: PROJECT_VERSION, exportedAt: new Date().toISOString(), presentation: structuredClone(presentation) };
+      }
+      function debugImageValue(value) {
+        const text = String(value || ""); return { present: Boolean(text), prefix: text.slice(0, 48), length: text.length };
+      }
+      function debugPresentationSummary(presentation) {
+        return {
+          id: presentation?.id || null,
+          name: presentation?.name || "",
+          revision: revisionFor(presentation?.id),
+          savedRevision: fileSavedRevisions.get(presentation?.id) ?? null,
+          slides: Array.isArray(presentation?.slides) ? presentation.slides.map((slide, index) => ({
+            index: index + 1, id: slide.id, active: slide.id === presentation.activeSlideId,
+            backgroundMode: slide.backgroundMode, backgroundColor: slide.backgroundColor,
+            backgroundImage: debugImageValue(slide.backgroundImage), backgroundImageSource: slide.backgroundImageSource || "", overlay: slide.overlay,
+            blocks: Array.isArray(slide.blocks) ? slide.blocks.length : 0,
+            images: Array.isArray(slide.blocks) ? slide.blocks.filter(block => block.type === "image").length : 0,
+            textBlocks: Array.isArray(slide.blocks) ? slide.blocks.filter(block => block.type === "text").map(block => ({ id: block.id, text: block.text, x: block.x, y: block.y, width: block.width, height: block.height })) : [],
+            mainText: { htmlLength: String(slide.mainText?.html || "").length, htmlPreview: String(slide.mainText?.html || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160), hasEditorState: Boolean(slide.mainText?.editorState) }
+          })) : [],
+          slidesLength: Array.isArray(presentation?.slides) ? presentation.slides.length : 0,
+          activeSlideId: presentation?.activeSlideId || null
+        };
+      }
+      function sameProjectData(left, right) { return JSON.stringify(left) === JSON.stringify(right); }
+      function downloadProject(blob, filename) {
+        const url = URL.createObjectURL(blob); const link = document.createElement("a");
+        link.href = url; link.download = filename; link.hidden = true; document.body.append(link); link.click(); link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
+      async function writableFileHandle(handle) {
+        try {
+          if (!handle || typeof handle.createWritable !== "function") return false;
+          if (typeof handle.queryPermission !== "function") return true;
+          let permission = await handle.queryPermission({ mode: "readwrite" });
+          if (permission === "prompt" && typeof handle.requestPermission === "function") permission = await handle.requestPermission({ mode: "readwrite" });
+          if (permission !== "granted") return false;
+          if (typeof handle.getFile === "function") await handle.getFile();
+          return true;
+        } catch { return false; }
+      }
+      async function persistProjectFileHandle(presentationId, handle) {
+        if (!presentationId || !handle) return false;
+        projectFileHandles.set(presentationId, handle);
+        try {
+          await presentationRepository.putFileHandle(presentationId, handle, handle.name || "");
+          console.info("FILE HANDLE ASSOCIATED", { presentationId, fileName: handle.name || "", persisted: true });
+          return true;
+        } catch (error) {
+          console.error("FILE HANDLE SAVE failed", { presentationId, fileName: handle.name || "", name: error?.name, message: error?.message, error });
+          return false;
+        }
+      }
+      async function forgetProjectFileHandle(presentationId) {
+        projectFileHandles.delete(presentationId);
+        try { await presentationRepository.deleteFileHandle(presentationId); }
+        catch (error) { console.warn("FILE HANDLE DELETE failed", { presentationId, name: error?.name, message: error?.message, error }); }
+      }
+      async function restoreProjectFileHandles(presentations) {
+        const restored = await Promise.all((presentations || []).map(async presentation => {
+          try {
+            const association = await presentationRepository.getFileHandle(presentation.id);
+            const handle = association?.handle;
+            if (!handle || handle.kind !== "file" || typeof handle.createWritable !== "function") return false;
+            const fileName = String(association.fileName || handle.name || "");
+            if (!/\.mrm$/i.test(fileName)) {
+              console.info("FILE HANDLE LEGACY retained-but-not-restored", { presentationId: presentation.id, fileName });
+              return false;
+            }
+            projectFileHandles.set(presentation.id, handle);
+            console.info("FILE HANDLE RESTORED", { presentationId: presentation.id, fileName });
+            return true;
+          } catch (error) {
+            console.warn("FILE HANDLE RESTORE failed", { presentationId: presentation.id, name: error?.name, message: error?.message, error });
+            return false;
+          }
+        }));
+        console.info("FILE HANDLE RESTORE complete", { presentations: presentations?.length || 0, restored: restored.filter(Boolean).length });
+      }
+      async function chooseProjectSaveHandle(filename) {
+        return window.showSaveFilePicker({ suggestedName: filename, excludeAcceptAllOption: true, types: [{ description: "Presentación del editor Himnario (.mrm)", accept: { "application/json": [".mrm"] } }] });
+      }
+      async function performSaveProjectFile(presentationId, debugId) {
+        const presentation = presentationById(presentationId); if (!presentation || data.activePresentationId !== presentationId || !validProjectName(presentation)) return { completed: false, libraryOk: false, fileOk: false, verified: false };
+        const filename = safeProjectFilename(presentation.name);
+        let localSaved = false;
+        let physicalWritten = false;
+        let physicalVerified = false;
+        let verificationAvailable = false;
+        let associationSaved = true;
+        try {
+          let handle = null;
+          if (window.showSaveFilePicker) {
+            handle = projectFileHandles.get(presentationId);
+            if (handle && !await writableFileHandle(handle)) {
+              await forgetProjectFileHandle(presentationId);
+              showToast("El archivo original ya no tiene permiso de escritura; selecciona dónde guardarlo");
+              handle = null;
+            }
+            if (!handle) handle = await chooseProjectSaveHandle(filename);
+            if (!await writableFileHandle(handle)) throw new DOMException("No se concedió permiso para escribir el archivo", "NotAllowedError");
+          }
+          console.info(`SAVE #${debugId} TARGET`, { presentationId, revision: revisionFor(presentationId), savedRevision: fileSavedRevisions.get(presentationId) ?? null, filename, handle: Boolean(handle), handleName: handle?.name || null, mode: handle ? (projectFileHandles.has(presentationId) ? "overwrite" : "save-as") : "download" });
+          await waitForPendingResources();
+          if (interaction) endPointer();
+          snapshotActiveMainText();
+          const currentPresentation = presentationById(presentationId);
+          if (!currentPresentation) throw new Error("La presentación dejó de estar disponible durante el guardado");
+          currentPresentation.updatedAt = new Date().toISOString();
+          save(false, false);
+          const libraryResult = await flushLibraryWrites(currentPresentation); localSaved = libraryResult.ok;
+          console.info(`SAVE #${debugId} LIBRARY SAVE`, { ok: libraryResult.ok, database: window.HimnarioPresentationRepository.DB_NAME, errorName: libraryResult.error?.name || null, errorMessage: libraryResult.error?.message || null });
+          const capturedRevision = revisionFor(presentationId);
+          const documentToWrite = projectDocument(currentPresentation);
+          const expectedSummary = debugPresentationSummary(documentToWrite.presentation);
+          console.info(`SAVE #${debugId} SNAPSHOT`, expectedSummary);
+          const serialized = JSON.stringify(documentToWrite, null, 2);
+          const preparedDocument = JSON.parse(serialized);
+          const preparedSummary = debugPresentationSummary(preparedDocument.presentation);
+          console.info(`SAVE #${debugId} PREPARED`, { bytes: new Blob([serialized]).size, summary: preparedSummary, matchSnapshot: sameProjectData(documentToWrite, preparedDocument) });
+          if (!sameProjectData(documentToWrite, preparedDocument)) throw new Error("El JSON preparado no coincide con el snapshot de memoria");
+          const blob = new Blob([serialized], { type: "application/json" });
+          if (handle) {
+            const writable = await handle.createWritable(); await writable.write(blob); await writable.close(); projectFileHandles.set(presentationId, handle);
+            physicalWritten = true;
+            if (typeof handle.getFile === "function") {
+              verificationAvailable = true;
+              const diskFile = await handle.getFile(); const diskText = await diskFile.text(); let diskDocument;
+              try { diskDocument = JSON.parse(diskText); } catch { throw new Error("El archivo físico escrito no contiene JSON válido"); }
+              const diskSummary = debugPresentationSummary(diskDocument.presentation);
+              const diskMatch = sameProjectData(preparedDocument, diskDocument);
+              console.info(`SAVE #${debugId} VERIFY`, { fileName: diskFile.name, size: diskFile.size, lastModified: diskFile.lastModified, expected: preparedSummary, disk: diskSummary, match: diskMatch });
+              if (!diskMatch) throw new Error("El archivo físico no coincide con el snapshot preparado");
+              physicalVerified = true;
+            } else console.warn(`SAVE #${debugId} VERIFY`, "El handle no permite releer el archivo");
+            associationSaved = await persistProjectFileHandle(presentationId, handle);
+          } else {
+            downloadProject(blob, filename);
+            physicalWritten = true;
+            console.warn(`SAVE #${debugId} VERIFY`, "La descarga tradicional no permite releer automáticamente el archivo físico");
+          }
+          fileSavedRevisions.set(presentationId, capturedRevision);
+          const changedWhileWriting = revisionFor(presentationId) !== capturedRevision;
+          lastProjectSaveOutcome = { completed: true, libraryOk: localSaved, fileOk: physicalWritten && (!verificationAvailable || physicalVerified), verified: physicalVerified, associationOk: associationSaved, changedWhileWriting };
+          return lastProjectSaveOutcome;
+        } catch (error) {
+          if (error?.name === "AbortError") console.info("Se canceló el guardado del archivo del dispositivo");
+          else console.error("No se pudo guardar el archivo .mrm", error);
+          lastProjectSaveOutcome = { completed: false, libraryOk: localSaved, fileOk: false, verified: false, error };
+          return lastProjectSaveOutcome;
+        }
+      }
+      function saveProjectFile() {
+        const debugId = ++saveDebugCounter; pendingSaveDebugId = debugId;
+        const presentationId = activePresentation()?.id; if (!presentationId) { setSaveStatus("error", "✕ No se pudo guardar"); return Promise.resolve(false); }
+        const handle = projectFileHandles.get(presentationId);
+        console.info(`SAVE #${debugId} REQUEST`, { debugVersion: SAVE_DEBUG_VERSION, presentation: debugPresentationSummary(activePresentation()), handle: Boolean(handle), handleName: handle?.name || null, physicalMode: handle ? "overwrite" : window.showSaveFilePicker ? "save-as" : "download", pendingResources: pendingResourceOperations.size, saveAlreadyRunning: Boolean(saveProjectPromise) });
+        setSaveStatus("saving", "Guardando…");
+        if (saveProjectPromise) { saveAgainRequested = true; return saveProjectPromise; }
+        lastProjectSaveOutcome = null;
+        v.saveMyPresentation.disabled = true; v.saveMyPresentation.setAttribute("aria-busy", "true");
+        saveProjectPromise = (async () => {
+          let outcome;
+          do {
+            saveAgainRequested = false;
+            const writeDebugId = pendingSaveDebugId;
+            outcome = await performSaveProjectFile(presentationId, writeDebugId);
+            if (!outcome.completed) break;
+          } while (saveAgainRequested || revisionFor(presentationId) !== fileSavedRevisions.get(presentationId));
+          finishSaveStatus(outcome, presentationId);
+          return outcome?.completed || false;
+        })().catch(error => {
+          console.error("No se pudo completar el coordinador de guardado", error);
+          finishSaveStatus(lastProjectSaveOutcome, presentationId);
+          return false;
+        }).finally(() => { saveProjectPromise = null; v.saveMyPresentation.disabled = false; v.saveMyPresentation.removeAttribute("aria-busy"); });
+        return saveProjectPromise;
+      }
+      function sanitizeProjectHtml(html) {
+        const doc = new DOMParser().parseFromString(`<div id="project-main">${String(html || "").slice(0, 2_000_000)}</div>`, "text/html");
+        const root = doc.getElementById("project-main"); const allowed = new Set(["DIV", "P", "SPAN", "STRONG", "B", "EM", "I", "U", "BR"]);
+        [...root.querySelectorAll("*")].reverse().forEach(element => {
+          if (!allowed.has(element.tagName)) { element.replaceWith(...element.childNodes); return; }
+          const style = element.style; const keep = {};
+          if (fonts.some(font => font.toLowerCase() === String(style.fontFamily || "").replace(/["']/g, "").toLowerCase())) keep.fontFamily = style.fontFamily;
+          if (/^(?:\d+(?:\.\d+)?(?:px|%|cqw))$/i.test(style.fontSize)) keep.fontSize = style.fontSize;
+          if (style.color && !/url|expression/i.test(style.color)) keep.color = style.color;
+          if (["left", "center", "right"].includes(style.textAlign)) keep.textAlign = style.textAlign;
+          if (style.fontWeight === "bold" || Number(style.fontWeight) >= 600) keep.fontWeight = "bold";
+          if (style.fontStyle === "italic") keep.fontStyle = "italic";
+          if (/underline/i.test(style.textDecoration)) keep.textDecoration = "underline";
+          [...element.attributes].forEach(attribute => element.removeAttribute(attribute.name)); Object.assign(element.style, keep);
+        });
+        return root.innerHTML.replace(/\u200B/g, "");
+      }
+      function validateLexicalState(editorState, slideNumber) {
+        if (editorState == null) return;
+        const allowedTypes = new Set(["root", "paragraph", "text", "linebreak", "tab"]); let count = 0;
+        function visit(node, depth) {
+          if (!node || typeof node !== "object" || Array.isArray(node) || depth > 100 || ++count > 50_000) throw new Error(`El texto principal de la diapositiva ${slideNumber} es demasiado complejo o está dañado`);
+          if (!allowedTypes.has(node.type)) throw new Error(`El texto principal de la diapositiva ${slideNumber} usa elementos incompatibles`);
+          if (node.text != null && (typeof node.text !== "string" || node.text.length > 200_000)) throw new Error(`El texto principal de la diapositiva ${slideNumber} no es válido`);
+          if (node.children != null) {
+            if (!Array.isArray(node.children)) throw new Error(`La estructura de texto de la diapositiva ${slideNumber} no es válida`);
+            node.children.forEach(child => visit(child, depth + 1));
+          }
+        }
+        if (!editorState.root || editorState.root.type !== "root") throw new Error(`Falta la raíz del texto principal en la diapositiva ${slideNumber}`);
+        visit(editorState.root, 0);
+      }
+      function validateProjectDocument(documentValue, byteLength) {
+        if (!documentValue || typeof documentValue !== "object" || Array.isArray(documentValue)) throw new Error("El archivo no contiene una presentación válida");
+        if (![PROJECT_FORMAT, LEGACY_PROJECT_FORMAT].includes(documentValue.format)) throw new Error("El archivo no pertenece al editor de Himnario o usa un formato incompatible");
+        if (documentValue.version !== PROJECT_VERSION) throw new Error(`Versión de presentación no compatible: ${String(documentValue.version ?? "desconocida")}`);
+        if (byteLength > MAX_CANTO_FILE_SIZE) throw new Error(cantoFileSizeError(byteLength));
+        const source = documentValue.presentation;
+        if (!source || typeof source !== "object" || Array.isArray(source)) throw new Error("Falta la información principal de la presentación");
+        if (!Array.isArray(source.slides) || source.slides.length < 1 || source.slides.length > MAX_SLIDES) throw new Error(`La presentación debe contener entre 1 y ${MAX_SLIDES} diapositivas`);
+        source.slides.forEach((slide, index) => {
+          if (!slide || typeof slide !== "object" || Array.isArray(slide)) throw new Error(`La diapositiva ${index + 1} no es válida`);
+          if (slide.blocks != null && !Array.isArray(slide.blocks)) throw new Error(`Los objetos de la diapositiva ${index + 1} no son válidos`);
+          if ((slide.blocks?.length || 0) > MAX_BLOCKS_PER_SLIDE) throw new Error(`La diapositiva ${index + 1} contiene demasiados objetos`);
+          if (slide.mainText?.editorState != null && (typeof slide.mainText.editorState !== "object" || Array.isArray(slide.mainText.editorState))) throw new Error(`El texto principal de la diapositiva ${index + 1} está dañado`);
+          validateLexicalState(slide.mainText?.editorState, index + 1);
+        });
+        const now = new Date().toISOString();
+        const slides = source.slides.map(slide => normalizeSlide({ ...slide, mainText: slide.mainText ? { ...slide.mainText, html: sanitizeProjectHtml(slide.mainText.html) } : slide.mainText }));
+        const activeSlideId = slides.some(slide => slide.id === source.activeSlideId) ? source.activeSlideId : slides[0].id;
+        return { id: String(source.id || uid("presentation")).slice(0, 160), name: String(source.name || "Presentación importada").trim().slice(0, 120) || "Presentación importada", createdAt: source.createdAt || now, updatedAt: now, slides, activeSlideId };
+      }
+      async function getPptxSession(presentationId) {
+        if (pptxSessions.has(presentationId)) return pptxSessions.get(presentationId);
+        const pending = (async () => {
+          const record = await presentationRepository.getPresentationFile(presentationId);
+          if (!record?.blob) throw new Error("No se encontró el archivo PowerPoint guardado");
+          return window.HimnarioPptx.createSession(record.blob);
+        })();
+        pptxSessions.set(presentationId, pending);
+        try { return await pending; }
+        catch (error) { pptxSessions.delete(presentationId); throw error; }
+      }
+      async function renderPptxSlide(container, presentationId, slideIndex) {
+        const token = Symbol("pptx-render"); pptxRenderTokens.set(container, token);
+        container.innerHTML = "<div class='pptx-render-message'>Cargando PowerPoint…</div>";
+        try {
+          const session = await getPptxSession(presentationId);
+          if (pptxRenderTokens.get(container) !== token || !container.isConnected) return;
+          await window.HimnarioPptx.render(session, slideIndex, container);
+        } catch (error) {
+          if (pptxRenderTokens.get(container) === token) container.innerHTML = "<div class='pptx-render-message'>No se pudo mostrar esta diapositiva de PowerPoint.</div>";
+          throw error;
+        }
+      }
+      async function importPptxFile(file, options = {}) {
+        if (/\.ppt$/i.test(file?.name || "")) throw new Error(legacyPptUnsupportedMessage());
+        if (!/\.pptx$/i.test(file?.name || "")) throw new Error("Selecciona un archivo PowerPoint con extensión .pptx");
+        if (file.size > MAX_PPTX_FILE_SIZE) throw new Error(`El archivo PowerPoint supera el máximo permitido de ${formatCantoFileSize(MAX_PPTX_FILE_SIZE)}`);
+        const existing = data.presentations.find(item => item.sourceType === "pptx" && item.pptx?.fileName === file.name && Number(item.pptx?.size) === Number(file.size) && Number(item.pptx?.lastModified) === Number(file.lastModified));
+        if (existing && await presentationRepository.getPresentationFile(existing.id)) {
+          data.activePresentationId = existing.id;
+          if (options.showSuccess !== false) showToast("PowerPoint ya disponible en Mis presentaciones");
+          return { presentation: existing, created: false };
+        }
+        let session;
+        try { session = await window.HimnarioPptx.createSession(file); }
+        catch (error) { console.error("PPTX IMPORT invalid-file", error); throw new Error("El archivo PowerPoint está corrupto o no es un .pptx válido"); }
+        const details = window.HimnarioPptx.metadata(session);
+        if (details.slideCount > MAX_SLIDES) { window.HimnarioPptx.disposeSession(session); throw new Error(`La presentación supera el máximo de ${MAX_SLIDES} diapositivas`); }
+        const now = new Date().toISOString(); const id = uid("pptx");
+        const name = String(file.name || "PowerPoint").replace(/\.pptx$/i, "").trim().slice(0, 120) || "PowerPoint";
+        const imported = { id, name, sourceType: "pptx", createdAt: now, updatedAt: now, activeSlideId: `${id}-pptx-0`, pptx: { fileName: String(file.name || `${name}.pptx`), size: file.size, lastModified: Number(file.lastModified || 0), slideCount: details.slideCount, width: details.width, height: details.height, aspectRatio: details.aspectRatio, renderer: "@aiden0z/pptx-renderer", rendererVersion: "1.2.4" }, slides: Array.from({ length: details.slideCount }, (_, index) => ({ id: `${id}-pptx-${index}`, type: "pptx-slide", pptxSlideIndex: index })) };
+        try {
+          await presentationRepository.putPptxPresentation(imported, file, id);
+          const [storedPresentation, storedFile] = await Promise.all([
+            presentationRepository.get(id),
+            presentationRepository.getPresentationFile(id)
+          ]);
+          if (!storedPresentation || !storedFile?.blob || storedFile.blob.size !== file.size) {
+            throw new Error("No se pudo verificar el PowerPoint guardado en IndexedDB");
+          }
+        } catch (error) {
+          window.HimnarioPptx.disposeSession(session);
+          try { await presentationRepository.delete(id, data.activePresentationId); }
+          catch (cleanupError) { console.error("PPTX IMPORT cleanup-failed", cleanupError); }
+          throw error;
+        }
+        pptxSessions.set(id, Promise.resolve(session));
+        data.presentations.push(imported); data.activePresentationId = id;
+        console.info("PPTX IMPORT complete", { id, name, slides: details.slideCount, bytes: file.size, aspectRatio: details.aspectRatio });
+        renderPresentationList(); if (options.showSuccess !== false) showToast("PowerPoint importado correctamente");
+        return { presentation: imported, created: true };
+      }
+      async function rollbackImportedPptx(id) {
+        const presentation = presentationById(id); if (!presentation || presentation.sourceType !== "pptx") return;
+        data.presentations = data.presentations.filter(item => item.id !== id);
+        if (data.activePresentationId === id) data.activePresentationId = null;
+        const session = pptxSessions.get(id); pptxSessions.delete(id); session?.then(window.HimnarioPptx.disposeSession).catch(() => {});
+        await presentationRepository.delete(id, data.activePresentationId);
+        renderPresentationList();
+      }
+      async function rollbackImportedPresentation(id) {
+        const presentation = presentationById(id);
+        if (!presentation) return;
+        if (presentation.sourceType === "pptx") return rollbackImportedPptx(id);
+        data.presentations = data.presentations.filter(item => item.id !== id);
+        if (data.activePresentationId === id) data.activePresentationId = null;
+        await presentationRepository.delete(id, data.activePresentationId);
+        renderPresentationList();
+      }
+      async function importProjectFile(file, handle = null, options = {}) {
+        if (!file) return;
+        if (/\.ppt$/i.test(file.name)) {
+          const error = new Error(legacyPptUnsupportedMessage());
+          if (options.throwOnError) throw error;
+          showToast(error.message);
+          return;
+        }
+        if (/\.pptx$/i.test(file.name)) {
+          try { return await importPptxFile(file, { showSuccess: options.showSuccess }); }
+          catch (error) {
+            console.error("No se pudo importar .pptx", error);
+            if (options.throwOnError) throw error;
+            showToast(error?.message || "El archivo PowerPoint está corrupto o no es válido");
+            return;
+          }
+        }
+        let imported = null;
+        let created = false;
+        let previousExisting = null;
+        try {
+          console.info("IMPORT FILE SELECTED", { debugVersion: SAVE_DEBUG_VERSION, name: file.name, size: file.size, lastModified: file.lastModified, handle: Boolean(handle), handleName: handle?.name || null });
+          if (!/\.(mrm|canto)$/i.test(file.name)) throw new Error("Selecciona un archivo de presentación con extensión .mrm, .canto o .pptx");
+          if (file.size > MAX_CANTO_FILE_SIZE) throw new Error(cantoFileSizeError(file.size));
+          const text = await file.text(); let parsed;
+          try { parsed = JSON.parse(text); } catch { throw new Error("El archivo está corrupto o no contiene datos válidos"); }
+          imported = validateProjectDocument(parsed, file.size);
+          imported.sourceFileName = String(file.name || "").slice(0, 260);
+          console.info("IMPORT FILE PARSED", { file: { name: file.name, size: file.size, lastModified: file.lastModified }, raw: debugPresentationSummary(parsed.presentation), normalized: debugPresentationSummary(imported) });
+          data.presentations = [...data.presentations];
+          const existingIndex = data.presentations.findIndex(item => item.id === imported.id);
+          created = existingIndex < 0;
+          previousExisting = existingIndex >= 0 ? structuredClone(data.presentations[existingIndex]) : null;
+          if (existingIndex >= 0) data.presentations[existingIndex] = imported; else data.presentations.push(imported);
+          data.activePresentationId = imported.id;
+          globalUndoStack.length = 0; globalRedoStack.length = 0;
+          save(false, false);
+          const libraryResult = await flushLibraryWrites(imported);
+          if (options.requirePersistence && !libraryResult.ok) throw libraryResult.error || new Error("No se pudo guardar la presentación importada");
+          presentationRevisions.set(imported.id, 0); fileSavedRevisions.set(imported.id, 0);
+          const shouldAssociateHandle = Boolean(handle && /\.mrm$/i.test(file.name));
+          if (/\.canto$/i.test(file.name) && projectFileHandles.has(imported.id)) await forgetProjectFileHandle(imported.id);
+          const handleAssociationSaved = shouldAssociateHandle ? await persistProjectFileHandle(imported.id, handle) : true;
+          const storedPresentation = libraryResult.ok ? await presentationRepository.get(imported.id) : null;
+          console.info("IMPORT FILE HYDRATED", { presentation: debugPresentationSummary(presentationById(imported.id)), indexedDB: debugPresentationSummary(storedPresentation), librarySaved: libraryResult.ok, libraryErrorName: libraryResult.error?.name || null, libraryErrorMessage: libraryResult.error?.message || null, associatedHandle: projectFileHandles.get(imported.id)?.name || null });
+          if (options.showSuccess !== false) showToast(!handleAssociationSaved ? "Presentación importada, pero no se pudo conservar la asociación al archivo" : libraryResult.ok ? "Presentación importada correctamente" : "Presentación abierta, pero no se pudo agregar a Mis presentaciones");
+          if (options.openEditor !== false) openEditor(imported.id);
+          return { presentation: imported, created };
+        } catch (error) {
+          if (imported && options.requirePersistence) {
+            if (created) data.presentations = data.presentations.filter(item => item.id !== imported.id);
+            else if (previousExisting) data.presentations = data.presentations.map(item => item.id === imported.id ? previousExisting : item);
+          }
+          console.error("No se pudo importar .mrm/.canto", error);
+          if (options.throwOnError) throw error;
+          showToast(error?.message || "No se pudo abrir la presentación");
+          return null;
+        }
+      }
+      async function openProjectFile() {
+        if (!window.showOpenFilePicker) { v.myPresentationFileInput.click(); return; }
+        try {
+          const [handle] = await window.showOpenFilePicker({ multiple: false, types: [{ description: "Presentación (.mrm, .canto, .ppt o .pptx)", accept: { "application/octet-stream": [".mrm", ".canto", ".ppt", ".pptx"] } }] });
+          if (!handle) return;
+          await importProjectFile(await handle.getFile(), handle);
+        } catch (error) {
+          if (error?.name !== "AbortError") { console.error("No se pudo abrir el archivo de presentación", error); showToast("No se pudo abrir la presentación"); }
+        }
+      }
+      function importProjectFileFallback(event) {
+        const file = event.target.files?.[0]; event.target.value = ""; importProjectFile(file);
+      }
+
+      async function openHome() { await load(); v.myPresentationsView.hidden = false; v.myPresentationsHome.hidden = false; v.myPresentationEditor.hidden = true; document.body.style.overflow = "hidden"; renderPresentationList(); }
       function closeView() { destroyActiveMainText(true); v.myPresentationsView.hidden = true; document.body.style.overflow = ""; closePopovers(); }
       function renderPresentationList() {
         v.myPresentationsList.innerHTML = "";
@@ -8060,10 +9528,27 @@
         data.presentations.slice().sort((a,b) => String(b.updatedAt).localeCompare(String(a.updatedAt))).forEach(p => {
           const card = document.createElement("article"); card.className = "my-presentation-card";
           const info = document.createElement("div"); const strong = document.createElement("strong"); strong.textContent = p.name;
-          const small = document.createElement("small"); small.textContent = `${p.slides.length} diapositiva${p.slides.length === 1 ? "" : "s"}`; info.append(strong, small);
-          const button = document.createElement("button"); button.type = "button"; button.textContent = "Editar"; button.addEventListener("click", () => openEditor(p.id));
-          card.append(info, button); v.myPresentationsList.append(card);
+          const small = document.createElement("small"); small.textContent = `${p.sourceType === "pptx" ? "PowerPoint · " : ""}${p.slides.length} diapositiva${p.slides.length === 1 ? "" : "s"}`; info.append(strong, small);
+          const actions = document.createElement("div"); actions.className = "my-presentation-card-actions";
+          const edit = document.createElement("button"); edit.type = "button"; edit.textContent = p.sourceType === "pptx" ? "Presentar" : "Editar"; edit.addEventListener("click", () => p.sourceType === "pptx" ? startPresentation(p.id) : openEditor(p.id));
+          const worship = document.createElement("button"); worship.type = "button"; worship.textContent = "Agregar a Presentación del culto"; worship.addEventListener("click", () => addPresentationToWorship(p));
+          const remove = document.createElement("button"); remove.type = "button"; remove.className = "danger"; remove.textContent = "Eliminar"; remove.addEventListener("click", () => deletePresentation(p.id));
+          actions.append(edit); if (p.sourceType === "pptx") actions.append(worship); actions.append(remove); card.append(info, actions); v.myPresentationsList.append(card);
         });
+      }
+      async function deletePresentation(id) {
+        if (!window.confirm("¿Seguro que quieres eliminar esta presentación?")) return;
+        if (!await unlinkVisualPresentationFromSermon(id) && worshipItems().some(item => isSermonWorshipItem(item) && item.presentationId === id)) {
+          showToast("No se pudo quitar la asociación con Sermón; la presentación no fue eliminada");
+          return;
+        }
+        data.presentations = data.presentations.filter(item => item.id !== id);
+        if (data.activePresentationId === id) data.activePresentationId = null;
+        projectFileHandles.delete(id);
+        const sessionPromise = pptxSessions.get(id); pptxSessions.delete(id); sessionPromise?.then(window.HimnarioPptx.disposeSession).catch(() => {});
+        pendingLibraryWrites.delete(id); renderPresentationList();
+        try { while (libraryDrainPromise) await libraryDrainPromise; await presentationRepository.delete(id, data.activePresentationId); }
+        catch (error) { console.error("LIBRARY SAVE delete-failed", { id, name: error?.name, message: error?.message, error }); showToast("No se pudo eliminar la presentación de la biblioteca"); }
       }
       function createPresentation() {
         const now = new Date().toISOString(); const slide = defaultSlide();
@@ -8072,9 +9557,11 @@
       }
       function openEditor(id) {
         const p = data.presentations.find(item => item.id === id); if (!p) return;
+        if (p.sourceType === "pptx") { startPresentation(p.id); return; }
         data.activePresentationId = id; if (!p.slides.length) p.slides.push(defaultSlide());
         if (!p.slides.some(s => s.id === p.activeSlideId)) p.activeSlideId = p.slides[0].id;
-        selectedBlockId = null; v.myPresentationsHome.hidden = true; v.myPresentationEditor.hidden = false; v.myPresentationName.value = p.name || "Presentación sin título"; renderAll(); save();
+        selectedBlockId = null; v.myPresentationsHome.hidden = true; v.myPresentationEditor.hidden = false; v.myPresentationName.value = p.name || "Presentación sin título"; renderAll(); save(false, false);
+        requestAnimationFrame(() => console.info("RENDER PRESENTATION", { debugVersion: SAVE_DEBUG_VERSION, model: debugPresentationSummary(presentationById(id)), dom: { slideRows: v.mySlidesList.querySelectorAll(".my-slide-row").length, activeBlocks: v.mySlideCanvas.querySelectorAll(".visual-object").length, activeImages: v.mySlideCanvas.querySelectorAll(".visual-object-image").length, canvasBackgroundColor: v.mySlideCanvas.style.backgroundColor, canvasHasBackgroundImage: Boolean(v.mySlideCanvas.style.backgroundImage) } }));
       }
       function backToList() { destroyActiveMainText(true); save(); selectedBlockId = null; v.myPresentationEditor.hidden = true; v.myPresentationsHome.hidden = false; renderPresentationList(); }
 
@@ -8120,16 +9607,16 @@
         const slide = activePresentation()?.slides.find(item => item.id === lexicalSlideId);
         if (slide && lexicalMainText) applyMainTextSnapshot(slide, lexicalMainText.snapshot());
       }
-      function queueMainTextSave() {
+      function queueMainTextSave(markDirty = true) {
         clearTimeout(mainTextSaveTimer);
-        mainTextSaveTimer = setTimeout(() => { mainTextSaveTimer = null; save(); renderSlides(); }, 450);
+        mainTextSaveTimer = setTimeout(() => { mainTextSaveTimer = null; save(false, markDirty); renderSlides(); }, 450);
       }
       function destroyActiveMainText(persist = true) {
         clearTimeout(mainTextSaveTimer); mainTextSaveTimer = null;
         if (!lexicalMainText) return;
         const slide = activePresentation()?.slides.find(item => item.id === lexicalSlideId);
         const instance = lexicalMainText;
-        lexicalMainText = null; lexicalSlideId = null;
+        lexicalMainText = null; lexicalSlideId = null; lexicalHistoryTracker = null;
         if (slide) applyMainTextSnapshot(slide, instance.destroy()); else instance.destroy();
         if (persist) save();
       }
@@ -8152,10 +9639,12 @@
           defaults: slide.mainText,
           editorState: slide.mainText.editorState,
           html: slide.mainText.html,
-          onReady: snapshot => { applyMainTextSnapshot(slide, snapshot); queueMainTextSave(); renderSlides(); },
+          onReady: snapshot => { applyMainTextSnapshot(slide, snapshot); queueMainTextSave(false); renderSlides(); },
           onChange: snapshot => { applyMainTextSnapshot(slide, snapshot); queueMainTextSave(); },
           onToolbar: applyLexicalToolbar,
-          onHistory: status => { lexicalHistoryStatus = status; updateUndoRedoButtons(); }
+          onHistory: status => { lexicalHistoryStatus = status; },
+          onHistoryState: status => handleLexicalHistory(status, activePresentation().id, slide.id),
+          onShortcut: direction => runGlobalHistory(direction)
         });
       }
       function createMainTextElement(slide, interactive = true) {
@@ -8169,8 +9658,9 @@
         element.style.color = slide.mainText.defaultTextColor;
         element.style.textAlign = slide.mainText.defaultTextAlign;
         if (interactive) {
-          element.addEventListener("focus", () => { editingMainText = true; editingBlockId = null; selectedBlockId = null; requestAnimationFrame(updateToolbar); });
-          element.addEventListener("click", event => { event.stopPropagation(); editingMainText = true; editingBlockId = null; selectedBlockId = null; requestAnimationFrame(updateToolbar); });
+          const clearImageSelection = () => v.mySlideCanvas.querySelectorAll(".visual-object-image.selected").forEach(image => image.classList.remove("selected"));
+          element.addEventListener("focus", () => { editingMainText = true; editingBlockId = null; selectedBlockId = null; clearImageSelection(); requestAnimationFrame(updateToolbar); });
+          element.addEventListener("click", event => { event.stopPropagation(); editingMainText = true; editingBlockId = null; selectedBlockId = null; clearImageSelection(); requestAnimationFrame(updateToolbar); });
         }
         return element;
       }
@@ -8204,9 +9694,35 @@
         block.text = element.innerText; editingBlockId = null; element.contentEditable = "false"; element.classList.remove("editing"); save(); renderSlides(); updateToolbar();
       }
       function updateUndoRedoButtons() {
-        const active = editingMainText && Boolean(lexicalMainText);
-        v.undoMyEdit.disabled = !active || !lexicalHistoryStatus.canUndo;
-        v.redoMyEdit.disabled = !active || !lexicalHistoryStatus.canRedo;
+        v.undoMyEdit.disabled = globalUndoStack.length === 0;
+        v.redoMyEdit.disabled = globalRedoStack.length === 0;
+      }
+      function applyGlobalAction(action, direction) {
+        const snapshot = direction === "undo" ? action.before : action.after;
+        const presentation = presentationById(action.presentationId); if (!presentation) return false;
+        if (action.source === "lexical") {
+          const slide = slideById(action.presentationId, action.slideId); if (!slide) return false;
+          slide.mainText.schemaVersion = 2; slide.mainText.editor = "lexical"; slide.mainText.editorState = cloneHistoryValue(snapshot.editorState); slide.mainText.html = snapshot.html;
+          if (data.activePresentationId === action.presentationId && presentation.activeSlideId === action.slideId && lexicalMainText) lexicalMainText.applySnapshot(snapshot); else renderSlides();
+        } else if (action.type === "slide-external") {
+          const slide = slideById(action.presentationId, action.slideId); if (!slide) return false;
+          restoreSlideExternal(slide, snapshot);
+          if (data.activePresentationId === action.presentationId) renderAll(); else renderSlides();
+        } else if (action.type === "slides-state") {
+          restoreSlides(presentation, snapshot); selectedBlockId = null; editingBlockId = null;
+          if (data.activePresentationId === action.presentationId) renderAll(); else renderSlides();
+        }
+        save(); return true;
+      }
+      function runGlobalHistory(direction) {
+        const from = direction === "undo" ? globalUndoStack : globalRedoStack;
+        const to = direction === "undo" ? globalRedoStack : globalUndoStack;
+        const action = from.pop(); if (!action) return;
+        snapshotActiveMainText(); historyApplying = true;
+        const applied = applyGlobalAction(action, direction);
+        if (applied) to.push(action); else from.push(action);
+        queueMicrotask(() => { historyApplying = false; updateUndoRedoButtons(); });
+        updateUndoRedoButtons();
       }
       function updateToolbar() {
         const block = selectedBlock(); const text = block?.type === "text"; const canFormat = text || editingMainText; v.myTextTools.style.opacity = canFormat || block ? "1" : ".55";
@@ -8223,41 +9739,87 @@
       }
       function rgbToHex(value, fallback) { const match=String(value||"").match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);if(!match)return /^#[0-9a-f]{6}$/i.test(String(value||""))?value:fallback;return `#${[match[1],match[2],match[3]].map(part=>Number(part).toString(16).padStart(2,"0")).join("")}`; }
       function updateTextBlock(patch) { const block = selectedBlock(); if (!block || block.type !== "text") return; Object.assign(block, patch); save(); renderAll(); }
-      function addText() { const slide = activeSlide(); if (!slide) return; const block = textBlock(); slide.blocks.push(block); editingMainText = false; selectedBlockId = block.id; save(); renderAll(); const element=v.mySlideCanvas.querySelector(`[data-block-id="${CSS.escape(block.id)}"]`); if(element){ enterBlockEdit(block, element); const range=document.createRange(); range.selectNodeContents(element); const selection=window.getSelection(); selection.removeAllRanges(); selection.addRange(range); } }
-      function deleteObject() { const slide=activeSlide(); if(!slide||!selectedBlockId)return; slide.blocks=slide.blocks.filter(b=>b.id!==selectedBlockId); selectedBlockId=null; save(); renderAll(); }
-      function duplicateObject() { const slide=activeSlide(), block=selectedBlock(); if(!slide||!block)return; const copy=normalizeBlock({...block,id:uid("block"),x:clamp(block.x+3,0,97),y:clamp(block.y+3,0,96)}); slide.blocks.push(copy); selectedBlockId=copy.id; save(); renderAll(); }
+      function addText() { const slide = activeSlide(); if (!slide) return; const before=snapshotSlideExternal(slide),block = textBlock(); slide.blocks.push(block); editingMainText = false; selectedBlockId = block.id; recordSlideExternal(before,"create-text",slide); save(); renderAll(); const element=v.mySlideCanvas.querySelector(`[data-block-id="${CSS.escape(block.id)}"]`); if(element){ enterBlockEdit(block, element); const range=document.createRange(); range.selectNodeContents(element); const selection=window.getSelection(); selection.removeAllRanges(); selection.addRange(range); } }
+      function deleteObject() { const slide=activeSlide(); if(!slide||!selectedBlockId)return;const before=snapshotSlideExternal(slide); slide.blocks=slide.blocks.filter(b=>b.id!==selectedBlockId); selectedBlockId=null; recordSlideExternal(before,"delete-object",slide); save(); renderAll(); }
+      function duplicateObject() { const slide=activeSlide(), block=selectedBlock(); if(!slide||!block)return;const before=snapshotSlideExternal(slide); const copy=normalizeBlock({...block,id:uid("block"),x:clamp(block.x+3,0,97),y:clamp(block.y+3,0,96)}); slide.blocks.push(copy); selectedBlockId=copy.id; recordSlideExternal(before,"duplicate-object",slide); save(); renderAll(); }
 
-      function pointerMetrics(event, block) { const rect=v.mySlideCanvas.getBoundingClientRect(); return { startX:event.clientX,startY:event.clientY,rect,original:{x:block.x,y:block.y,width:block.width,height:block.height,rotation:Number(block.rotation)||0},block }; }
+      function pointerMetrics(event, block) { const rect=v.mySlideCanvas.getBoundingClientRect(); return { startX:event.clientX,startY:event.clientY,rect,original:{x:block.x,y:block.y,width:block.width,height:block.height,rotation:Number(block.rotation)||0},historyBefore:snapshotSlideExternal(activeSlide()),block }; }
       function markBlockSelected(id) { editingMainText = false; editingBlockId = null; v.mySlideCanvas.querySelectorAll(".visual-object").forEach(element => { element.classList.toggle("selected", element.dataset.blockId === id); element.classList.remove("editing"); if (element.classList.contains("visual-object-text")) element.contentEditable = "false"; }); updateToolbar(); }
       function beginMove(event, block) { event.preventDefault();event.stopPropagation();selectedBlockId=block.id;markBlockSelected(block.id);interaction={type:"move",...pointerMetrics(event,block)}; event.currentTarget.setPointerCapture?.(event.pointerId); }
       function beginResize(event, block) { event.preventDefault();event.stopPropagation();selectedBlockId=block.id;markBlockSelected(block.id);interaction={type:"resize",...pointerMetrics(event,block)};event.currentTarget.setPointerCapture?.(event.pointerId); }
       function beginRotate(event, block) { event.preventDefault();event.stopPropagation();selectedBlockId=block.id;markBlockSelected(block.id);const element=v.mySlideCanvas.querySelector(`[data-block-id="${CSS.escape(block.id)}"]`),bounds=element.getBoundingClientRect(),centerX=bounds.left+bounds.width/2,centerY=bounds.top+bounds.height/2;interaction={type:"rotate",...pointerMetrics(event,block),centerX,centerY,startAngle:Math.atan2(event.clientY-centerY,event.clientX-centerX)};event.currentTarget.setPointerCapture?.(event.pointerId); }
       function handlePointerMove(event) { if(!interaction)return; const dx=(event.clientX-interaction.startX)/interaction.rect.width*100,dy=(event.clientY-interaction.startY)/interaction.rect.height*100,b=interaction.block,o=interaction.original; if(interaction.type==="move"){b.x=clamp(o.x+dx,0,100-b.width);b.y=clamp(o.y+dy,0,100-b.height);}else if(interaction.type==="resize"){b.width=clamp(o.width+dx,3,100-b.x);b.height=clamp(o.height+dy,4,100-b.y);}else{const angle=Math.atan2(event.clientY-interaction.centerY,event.clientX-interaction.centerX);b.rotation=((o.rotation+(angle-interaction.startAngle)*180/Math.PI)%360+540)%360-180;} const element=v.mySlideCanvas.querySelector(`[data-block-id="${CSS.escape(b.id)}"]`);if(element)styleBlockElement(element,b); }
-      function endPointer() { if(!interaction)return;interaction=null;save();renderSlides();updateToolbar(); }
+      function endPointer() { if(!interaction)return;const finished=interaction;interaction=null;recordSlideExternal(finished.historyBefore,`${finished.type}-object`);save();renderSlides();updateToolbar(); }
 
-      function addSlide() { const p=activePresentation();if(!p)return;const slide=defaultSlide();p.slides.push(slide);p.activeSlideId=slide.id;selectedBlockId=null;save();renderAll(); }
-      function duplicateSlide(index) { const p=activePresentation(),source=p?.slides[index];if(!source)return;const copy=normalizeSlide({...source,id:uid("slide"),blocks:source.blocks.map(b=>({...b,id:uid("block")}))});p.slides.splice(index+1,0,copy);p.activeSlideId=copy.id;selectedBlockId=null;save();renderAll(); }
-      function deleteSlide(index) { const p=activePresentation();if(!p)return;if(p.slides.length===1){showToast("La presentación debe conservar una diapositiva");return;}if(!window.confirm("¿Eliminar esta diapositiva?"))return;p.slides.splice(index,1);p.activeSlideId=p.slides[Math.min(index,p.slides.length-1)].id;selectedBlockId=null;save();renderAll(); }
-      function moveSlide(index,direction) { const p=activePresentation(),next=index+direction;if(!p||next<0||next>=p.slides.length)return;[p.slides[index],p.slides[next]]=[p.slides[next],p.slides[index]];save();renderSlides(); }
+      function addSlide() { const p=activePresentation();if(!p)return;const before=snapshotSlides(p),slide=defaultSlide();p.slides.push(slide);p.activeSlideId=slide.id;selectedBlockId=null;recordSlidesState(before,"create-slide",p);save();renderAll(); }
+      function duplicateSlide(index) { const p=activePresentation(),source=p?.slides[index];if(!source)return;const before=snapshotSlides(p),copy=normalizeSlide({...source,id:uid("slide"),blocks:source.blocks.map(b=>({...b,id:uid("block")}))});p.slides.splice(index+1,0,copy);p.activeSlideId=copy.id;selectedBlockId=null;recordSlidesState(before,"duplicate-slide",p);save();renderAll(); }
+      function deleteSlide(index) { const p=activePresentation();if(!p)return;if(p.slides.length===1){showToast("La presentación debe conservar una diapositiva");return;}if(!window.confirm("¿Eliminar esta diapositiva?"))return;const before=snapshotSlides(p);p.slides.splice(index,1);p.activeSlideId=p.slides[Math.min(index,p.slides.length-1)].id;selectedBlockId=null;recordSlidesState(before,"delete-slide",p);save();renderAll(); }
+      function moveSlide(index,direction) { const p=activePresentation(),next=index+direction;if(!p||next<0||next>=p.slides.length)return;const before=snapshotSlides(p);[p.slides[index],p.slides[next]]=[p.slides[next],p.slides[index]];recordSlidesState(before,"reorder-slide",p);save();renderSlides(); }
 
       function closePopovers() { v.myImageModal.hidden=true;v.myBackgroundModal.hidden=true;v.myObjectLibrary.hidden=true;v.myBackgroundLibrary.hidden=true; }
       function renderLibrary(tabs,grid,onChoose) { tabs.innerHTML="";grid.innerHTML="";Object.entries(WORSHIP_IMAGE_CATEGORIES).forEach(([key,config])=>{const tab=document.createElement("button");tab.type="button";tab.textContent=config.label;tab.className=key===libraryCategory?"primary":"";tab.addEventListener("click",()=>{libraryCategory=key;renderLibrary(tabs,grid,onChoose);});tabs.append(tab);});WORSHIP_IMAGE_CATEGORIES[libraryCategory].images.forEach((src,index)=>{const button=document.createElement("button");button.type="button";button.setAttribute("aria-label",`${WORSHIP_IMAGE_CATEGORIES[libraryCategory].label} ${index+1}`);button.innerHTML=`<img alt="" src="${src}">`;button.addEventListener("click",()=>onChoose(src));grid.append(button);}); }
       function openImageModal() { v.myImageModal.hidden=false;v.myObjectLibrary.hidden=true; }
-      function chooseObjectApp() { v.myObjectLibrary.hidden=false;renderLibrary(v.myObjectLibraryTabs,v.myObjectImageGrid,src=>{const slide=activeSlide();const block=imageBlock(src,"app");slide.blocks.push(block);selectedBlockId=block.id;closePopovers();save();renderAll();}); }
+      function chooseObjectApp() { v.myObjectLibrary.hidden=false;renderLibrary(v.myObjectLibraryTabs,v.myObjectImageGrid,src=>{const slide=activeSlide(),before=snapshotSlideExternal(slide),block=imageBlock(src,"app");slide.blocks.push(block);selectedBlockId=block.id;recordSlideExternal(before,"create-image",slide);closePopovers();save();renderAll();}); }
       async function fileAsDataUrl(file) { return readFileAsDataUrl(file); }
-      async function addObjectDevice(event) { const file=event.target.files?.[0];if(!file)return;try{const source=await fileAsDataUrl(file);const block=imageBlock(source,"device");activeSlide().blocks.push(block);selectedBlockId=block.id;closePopovers();save();renderAll();}catch{showToast("No se pudo cargar la imagen");}event.target.value=""; }
-      function openBackgroundModal() { const slide=activeSlide();if(!slide)return;v.myBackgroundColor.value=slide.backgroundColor||"#ffffff";v.myBackgroundOverlay.value=slide.overlay||0;v.myBackgroundOverlayValue.textContent=`${slide.overlay||0}%`;v.myBackgroundModal.hidden=false;v.myBackgroundLibrary.hidden=true; }
-      function chooseBackgroundApp() { v.myBackgroundLibrary.hidden=false;renderLibrary(v.myBackgroundLibraryTabs,v.myBackgroundImageGrid,src=>{const slide=activeSlide();slide.backgroundImage=src;slide.backgroundImageSource="app";save();renderAll();closePopovers();}); }
-      async function setBackgroundDevice(event) { const file=event.target.files?.[0];if(!file)return;try{const slide=activeSlide();slide.backgroundImage=await fileAsDataUrl(file);slide.backgroundImageSource="device";save();renderAll();closePopovers();}catch{showToast("No se pudo cargar el fondo");}event.target.value=""; }
+      async function addObjectDevice(event) {
+        const file=event.target.files?.[0];if(!file)return;const request=++objectImageRequest;
+        try { const source=await fileAsDataUrl(file);if(request!==objectImageRequest)return;const slide=activeSlide(),before=snapshotSlideExternal(slide),block=imageBlock(source,"device");slide.blocks.push(block);selectedBlockId=block.id;recordSlideExternal(before,"create-image",slide);closePopovers();save();renderAll(); }
+        catch(error){showToast("No se pudo cargar la imagen");throw error;} finally { if(request===objectImageRequest)event.target.value=""; }
+      }
+      function openBackgroundModal() { const slide=activeSlide();if(!slide)return;backgroundHistoryBefore=snapshotSlideExternal(slide);v.myBackgroundColor.value=slide.backgroundColor||"#ffffff";v.myBackgroundOverlay.value=slide.overlay||0;v.myBackgroundOverlayValue.textContent=`${slide.overlay||0}%`;v.myBackgroundModal.hidden=false;v.myBackgroundLibrary.hidden=true; }
+      function chooseBackgroundApp() { v.myBackgroundLibrary.hidden=false;renderLibrary(v.myBackgroundLibraryTabs,v.myBackgroundImageGrid,src=>{const slide=activeSlide(),before=snapshotSlideExternal(slide);slide.backgroundImage=src;slide.backgroundImageSource="app";recordSlideExternal(before,"change-background-image",slide);save();renderAll();closePopovers();}); }
+      async function setBackgroundDevice(event) {
+        const file=event.target.files?.[0];if(!file)return;const request=++backgroundImageRequest;
+        try { const source=await fileAsDataUrl(file);if(request!==backgroundImageRequest)return;const slide=activeSlide(),before=snapshotSlideExternal(slide);slide.backgroundImage=source;slide.backgroundImageSource="device";recordSlideExternal(before,"change-background-image",slide);save();renderAll();closePopovers(); }
+        catch(error){showToast("No se pudo cargar el fondo");throw error;} finally { if(request===backgroundImageRequest)event.target.value=""; }
+      }
 
-      function startPresentation() { const p=activePresentation();if(!p?.slides.length)return;presentationIndex=0;v.myPresentStage.classList.add("open");document.body.style.overflow="hidden";renderPresented();v.myPresentStage.requestFullscreen?.().catch(()=>{}); }
-      function renderPresented() { const p=activePresentation(),slide=p?.slides[presentationIndex];if(!slide)return;renderSlideInto(v.myPresentContent,slide);v.myPresentCount.textContent=`${presentationIndex+1}/${p.slides.length}`;v.myPresentPrev.disabled=presentationIndex===0;v.myPresentNext.disabled=presentationIndex===p.slides.length-1; }
+      function startPresentation(presentationId = null) { if (typeof presentationId === "string") data.activePresentationId = presentationId; const p=activePresentation();if(!p?.slides.length)return;presentationIndex=0;v.myPresentStage.classList.add("open");document.body.style.overflow="hidden";renderPresented();v.myPresentStage.requestFullscreen?.().catch(()=>{}); }
+      function renderPresented() { const p=activePresentation(),slide=p?.slides[presentationIndex];if(!slide)return;if(p.sourceType==="pptx")renderPptxSlide(v.myPresentContent,p.id,slide.pptxSlideIndex??presentationIndex).catch(error=>console.error("PPTX PRESENT render-failed",error));else renderSlideInto(v.myPresentContent,slide);v.myPresentCount.textContent=`${presentationIndex+1}/${p.slides.length}`;v.myPresentPrev.disabled=presentationIndex===0;v.myPresentNext.disabled=presentationIndex===p.slides.length-1; }
       function movePresentation(direction) { const p=activePresentation(),next=presentationIndex+direction;if(!p||next<0||next>=p.slides.length)return;presentationIndex=next;renderPresented(); }
       function exitPresentation() { const done=()=>{v.myPresentStage.classList.remove("open");document.body.style.overflow="hidden";};if(document.fullscreenElement===v.myPresentStage)document.exitFullscreen().catch(()=>{}).finally(done);else done(); }
+      async function addPresentationToWorship(presentation, synchronizeEditor = false) {
+        if (!presentation) return;
+        try {
+          if (synchronizeEditor) {
+            await waitForPendingResources();
+            snapshotActiveMainText();
+            save(false, false);
+            const libraryResult = await flushLibraryWrites(presentation);
+            if (!libraryResult.ok) { showToast("No se pudo sincronizar la presentación antes de agregarla al culto"); return; }
+          }
+          let items = normalizeWorshipSermonAssociation(worshipItems());
+          let sermonIndex = items.findIndex(isSermonWorshipItem);
+          if (sermonIndex < 0) { items.push(createDefaultSermonItem()); sermonIndex = items.length - 1; }
+          const currentId = items[sermonIndex].presentationId || "";
+          if (currentId === presentation.id) {
+            state.worshipPresentation.items = items;
+            if (!await saveWorshipPresentation()) return;
+            renderWorshipPresentationPanel();
+            showToast("Esta presentación ya está asociada al Sermón");
+            return;
+          }
+          if (currentId) {
+            const current = storedVisualPresentation(currentId);
+            const currentName = current?.name || "la presentación actual";
+            if (!window.confirm(`El Sermón ya tiene asociada ${currentName}. ¿Deseas reemplazarla?`)) return;
+          }
+          items[sermonIndex] = { ...items[sermonIndex], role: "sermon", presentationId: presentation.id };
+          state.worshipPresentation.items = items;
+          const worshipSaved = await saveWorshipPresentation();
+          if (!worshipSaved) return;
+          renderWorshipPresentationPanel();
+          showAddedToWorshipToast();
+        } catch (error) {
+          console.error("No se pudo asociar la presentación al Sermón", error);
+          showToast("No se pudo agregar la presentación al culto");
+        }
+      }
+      function addActiveToWorship() { return addPresentationToWorship(activePresentation(), true); }
 
-      v.newMyPresentation.addEventListener("click",createPresentation);v.backToMyPresentations.addEventListener("click",backToList);v.saveMyPresentation.addEventListener("click",()=>save(true));v.myPresentationName.addEventListener("input",()=>{const p=activePresentation();if(p){p.name=v.myPresentationName.value||"Presentación sin título";save();}});
+      v.newMyPresentation.addEventListener("click",createPresentation);v.openMyPresentationFile.addEventListener("click",openProjectFile);v.myPresentationFileInput.addEventListener("change",importProjectFileFallback);v.backToMyPresentations.addEventListener("click",backToList);v.saveMyPresentation.addEventListener("click",saveProjectFile);v.myPresentationName.addEventListener("input",()=>{const p=activePresentation();if(p){p.name=v.myPresentationName.value||"Presentación sin título";save();}});
       v.addMyText.addEventListener("click",addText);v.addMyImage.addEventListener("click",openImageModal);v.openMyBackground.addEventListener("click",openBackgroundModal);v.addMySlide.addEventListener("click",addSlide);v.deleteMyObject.addEventListener("click",deleteObject);v.duplicateMyObject.addEventListener("click",duplicateObject);
-      v.undoMyEdit.addEventListener("click",()=>{if(editingMainText)lexicalMainText?.undo();});v.redoMyEdit.addEventListener("click",()=>{if(editingMainText)lexicalMainText?.redo();});
+      v.undoMyEdit.addEventListener("click",()=>runGlobalHistory("undo"));v.redoMyEdit.addEventListener("click",()=>runGlobalHistory("redo"));
       v.myFontFamily.addEventListener("change",()=>{if(editingMainText)lexicalMainText?.setFontFamily(v.myFontFamily.value);else updateTextBlock({fontFamily:v.myFontFamily.value});});
       function commitFontSizeInput(force = false) {
         const raw = String(v.myFontSize.value || "").trim();
@@ -8319,13 +9881,19 @@
       v.myAlignCenter.addEventListener("click",()=>{if(editingMainText)lexicalMainText?.setAlignment("center");else updateTextBlock({textAlign:"center"});});
       v.myAlignRight.addEventListener("click",()=>{if(editingMainText)lexicalMainText?.setAlignment("right");else updateTextBlock({textAlign:"right"});});
       [v.undoMyEdit,v.redoMyEdit,v.myBold,v.myItalic,v.myUnderline,v.myAlignLeft,v.myAlignCenter,v.myAlignRight].forEach(button=>button.addEventListener("mousedown",event=>{if(editingMainText)event.preventDefault();}));
-      v.mySlideCanvas.addEventListener("click",event=>{if(event.target===v.mySlideCanvas){selectedBlockId=null;editingBlockId=null;editingMainText=true;lexicalMainText?.focus();updateToolbar();}});window.addEventListener("pointermove",handlePointerMove);window.addEventListener("pointerup",endPointer);
-      v.closeMyImageModal.addEventListener("click",closePopovers);v.myImageModal.addEventListener("click",event=>{if(event.target===v.myImageModal)closePopovers();});v.chooseMyObjectDeviceImage.addEventListener("click",()=>v.myObjectImageInput.click());v.chooseMyObjectAppImage.addEventListener("click",chooseObjectApp);v.myObjectImageInput.addEventListener("change",addObjectDevice);
-      v.closeMyBackgroundModal.addEventListener("click",closePopovers);v.myBackgroundModal.addEventListener("click",event=>{if(event.target===v.myBackgroundModal)closePopovers();});v.chooseMyBackgroundDevice.addEventListener("click",()=>v.myBackgroundImageInput.click());v.chooseMyBackgroundApp.addEventListener("click",chooseBackgroundApp);v.myBackgroundImageInput.addEventListener("change",setBackgroundDevice);v.clearMyBackgroundImage.addEventListener("click",()=>{const s=activeSlide();s.backgroundImage="";s.backgroundImageSource="";s.overlay=0;save();renderAll();closePopovers();});v.myBackgroundColor.addEventListener("input",()=>{const s=activeSlide();s.backgroundColor=v.myBackgroundColor.value;save();renderAll();});v.myBackgroundOverlay.addEventListener("input",()=>{const s=activeSlide();s.overlay=clamp(v.myBackgroundOverlay.value,0,80);v.myBackgroundOverlayValue.textContent=`${s.overlay}%`;save();renderAll();});
+      v.mySlideCanvas.addEventListener("click",event=>{if(event.target===v.mySlideCanvas){selectedBlockId=null;editingBlockId=null;editingMainText=true;v.mySlideCanvas.querySelectorAll(".visual-object-image.selected").forEach(image=>image.classList.remove("selected"));lexicalMainText?.focus();updateToolbar();}});window.addEventListener("pointermove",handlePointerMove);window.addEventListener("pointerup",endPointer);
+      v.closeMyImageModal.addEventListener("click",closePopovers);v.myImageModal.addEventListener("click",event=>{if(event.target===v.myImageModal)closePopovers();});v.chooseMyObjectDeviceImage.addEventListener("click",()=>v.myObjectImageInput.click());v.chooseMyObjectAppImage.addEventListener("click",chooseObjectApp);v.myObjectImageInput.addEventListener("change",event=>trackResourceOperation(addObjectDevice(event)));
+      v.closeMyBackgroundModal.addEventListener("click",closePopovers);v.myBackgroundModal.addEventListener("click",event=>{if(event.target===v.myBackgroundModal)closePopovers();});v.chooseMyBackgroundDevice.addEventListener("click",()=>v.myBackgroundImageInput.click());v.chooseMyBackgroundApp.addEventListener("click",chooseBackgroundApp);v.myBackgroundImageInput.addEventListener("change",event=>trackResourceOperation(setBackgroundDevice(event)));
+      v.clearMyBackgroundImage.addEventListener("click",()=>{const s=activeSlide(),before=snapshotSlideExternal(s);s.backgroundImage="";s.backgroundImageSource="";s.overlay=0;recordSlideExternal(before,"clear-background",s);save();renderAll();closePopovers();});
+      v.myBackgroundColor.addEventListener("input",()=>{const s=activeSlide();s.backgroundColor=v.myBackgroundColor.value;save();renderAll();});
+      v.myBackgroundColor.addEventListener("change",()=>{const s=activeSlide();if(backgroundHistoryBefore)recordSlideExternal(backgroundHistoryBefore,"background-color",s);backgroundHistoryBefore=snapshotSlideExternal(s);});
+      v.myBackgroundOverlay.addEventListener("input",()=>{const s=activeSlide();s.overlay=clamp(v.myBackgroundOverlay.value,0,80);v.myBackgroundOverlayValue.textContent=`${s.overlay}%`;save();renderAll();});
+      v.myBackgroundOverlay.addEventListener("change",()=>{const s=activeSlide();if(backgroundHistoryBefore)recordSlideExternal(backgroundHistoryBefore,"background-overlay",s);backgroundHistoryBefore=snapshotSlideExternal(s);});
       v.presentMyPresentation.addEventListener("click",startPresentation);v.myPresentPrev.addEventListener("click",()=>movePresentation(-1));v.myPresentNext.addEventListener("click",()=>movePresentation(1));v.myPresentExit.addEventListener("click",exitPresentation);
-      window.addEventListener("keydown",event=>{if(v.myPresentStage.classList.contains("open")){if(event.key==="ArrowRight"||event.key===" ")movePresentation(1);if(event.key==="ArrowLeft")movePresentation(-1);return;}if(!v.myPresentationsView.hidden&&(event.key==="Delete"||event.key==="Backspace")&&selectedBlockId&&!event.target.isContentEditable&&!/INPUT|TEXTAREA/.test(event.target.tagName)){event.preventDefault();deleteObject();}if(event.key==="Escape")closePopovers();});
+      v.addMyToWorship.addEventListener("click",addActiveToWorship);
+      window.addEventListener("keydown",event=>{if(v.myPresentStage.classList.contains("open")){if(event.key==="ArrowRight"||event.key===" ")movePresentation(1);if(event.key==="ArrowLeft")movePresentation(-1);return;}const key=String(event.key||"").toLowerCase();if(!v.myPresentationsView.hidden&&(event.ctrlKey||event.metaKey)&&!event.altKey&&(key==="z"||key==="y")&&!event.target.isContentEditable&&!/INPUT|TEXTAREA|SELECT/.test(event.target.tagName)){event.preventDefault();runGlobalHistory(key==="y"||(key==="z"&&event.shiftKey)?"redo":"undo");return;}if(!v.myPresentationsView.hidden&&(event.key==="Delete"||event.key==="Backspace")&&selectedBlockId&&!event.target.isContentEditable&&!/INPUT|TEXTAREA/.test(event.target.tagName)){event.preventDefault();deleteObject();}if(event.key==="Escape")closePopovers();});
       load();
-      return { openHome, closeView };
+      return { openHome, closeView, getPresentation: presentationById, renderExternalSlide: (container, slide) => renderSlideInto(container, normalizeSlide(slide)), renderPptxSlide, importPptxFile, importProjectFile, rollbackImportedPresentation };
     })();
 
     const visualMainNavigation = {
