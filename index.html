@@ -3018,11 +3018,342 @@
         display: none !important;
       }
     }
+
+    .main-menu-toggle {
+      position: fixed;
+      z-index: 181;
+      top: calc(14px + env(safe-area-inset-top));
+      left: max(12px, env(safe-area-inset-left));
+      width: 46px;
+      height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--button-bg);
+      color: var(--text);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .1);
+      font-size: 1.35rem;
+      font-weight: 850;
+      line-height: 1;
+    }
+
+    .main-navigation {
+      position: fixed;
+      inset: 0;
+      z-index: 250;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .main-navigation.open {
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .main-navigation-backdrop {
+      position: absolute;
+      inset: 0;
+      border: 0;
+      background: rgba(0, 0, 0, .42);
+      opacity: 0;
+      transition: opacity .18s ease;
+    }
+
+    .main-navigation.open .main-navigation-backdrop { opacity: 1; }
+
+    .main-navigation-panel {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: min(330px, calc(100vw - 48px));
+      max-height: 100dvh;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: calc(16px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));
+      border-right: 1px solid var(--line-strong);
+      background: var(--panel);
+      color: var(--text);
+      box-shadow: 12px 0 32px var(--shadow);
+      transform: translateX(-105%);
+      transition: transform .2s ease;
+    }
+
+    .main-navigation.open .main-navigation-panel { transform: translateX(0); }
+
+    .main-navigation-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .main-navigation-head strong { font-size: 1.15rem; }
+
+    .main-navigation-close {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--button-bg);
+      color: var(--text);
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+
+    .main-navigation-content { display: grid; gap: 18px; padding-top: 18px; }
+    .main-navigation-group { display: grid; gap: 7px; }
+    .main-navigation-group[hidden] { display: none !important; }
+    .main-navigation-label {
+      margin: 0;
+      padding: 0 8px;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .main-navigation-item {
+      width: 100%;
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text);
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .main-navigation-item:hover,
+    .main-navigation-item:focus-visible {
+      border-color: var(--line-strong);
+      background: var(--button-bg);
+    }
+
+    body.main-navigation-open { overflow: hidden; }
+
+    .app.admin-mode:not(.presentation-mode) .admin-menu {
+      left: calc(max(12px, env(safe-area-inset-left)) + 58px);
+    }
+
+    .my-presentations-view {
+      position: fixed;
+      inset: 0;
+      z-index: 180;
+      overflow: auto;
+      padding: clamp(16px, 3vw, 36px);
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .my-presentations-view[hidden],
+    .my-presentations-screen[hidden],
+    .my-slide-editor[hidden],
+    .my-image-library[hidden] { display: none !important; }
+
+    .my-presentations-shell { width: min(1420px, 100%); margin: 0 auto; }
+    .my-presentations-head,
+    .my-editor-toolbar,
+    .my-presentations-actions,
+    .my-slide-actions,
+    .my-library-tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .my-presentations-head { justify-content: space-between; margin-bottom: 20px; padding-left: 58px; min-height: 46px; }
+    .my-presentations-head h2, .my-editor-toolbar h2 { margin: 0; }
+    .my-presentations-actions { margin: 18px 0; }
+    .my-presentations-actions button,
+    .my-editor-toolbar button,
+    .my-slide-actions button,
+    .my-library-tabs button {
+      min-height: 40px;
+      padding: 8px 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--button-bg);
+      color: var(--text);
+      font-weight: 750;
+    }
+    .my-presentations-actions .primary,
+    .my-editor-toolbar .primary { background: var(--accent); color: var(--primary-text); border-color: var(--accent); }
+    .my-presentations-actions button:disabled { opacity: .55; cursor: not-allowed; }
+    .my-presentations-list { display: grid; gap: 10px; }
+    .my-presentation-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+    .my-presentation-card button { min-height: 40px; padding: 8px 14px; border-radius: 8px; background: var(--accent); color: var(--primary-text); font-weight: 800; }
+    .my-presentation-card small { display: block; margin-top: 4px; color: var(--muted); }
+    .my-editor-toolbar { justify-content: flex-end; margin-bottom: 14px; padding-left: 58px; min-height: 46px; }
+    .my-editor-toolbar h2 { margin-right: auto; }
+    .my-editor-layout { display: grid; grid-template-columns: minmax(260px, 330px) minmax(0, 1fr); gap: 18px; align-items: start; }
+    .my-slides-sidebar, .my-slide-workspace { padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+    .my-slides-sidebar > button { width: 100%; min-height: 44px; border-radius: 8px; background: var(--accent); color: var(--primary-text); font-weight: 800; }
+    .my-slides-list { display: grid; gap: 10px; margin-top: 12px; }
+    .my-slide-row { padding: 8px; border: 2px solid transparent; border-radius: 10px; background: var(--button-bg); }
+    .my-slide-row.selected { border-color: var(--accent); }
+    .my-slide-select { width: 100%; display: grid; grid-template-columns: 28px 1fr; gap: 8px; align-items: center; padding: 0; background: transparent; color: var(--text); text-align: left; }
+    .my-slide-number { font-weight: 850; text-align: center; }
+    .my-slide-thumb, .my-slide-preview { position: relative; overflow: hidden; aspect-ratio: 16 / 9; background: #11100e center/cover no-repeat; color: #fff; }
+    .my-slide-thumb { border-radius: 6px; }
+    .my-slide-thumb::before, .my-slide-preview::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,var(--my-overlay,0)); }
+    .my-slide-content { position: relative; z-index: 1; width: 100%; display: flex; flex-direction: column; justify-content: center; padding: 7%; text-align: center; }
+    .my-slide-thumb .my-slide-content { font-size: .58rem; }
+    .my-slide-content.align-left { text-align: left; align-items: flex-start; }
+    .my-slide-content.align-right { text-align: right; align-items: flex-end; }
+    .my-slide-content strong { font-size: clamp(1.4rem, 4vw, 3.4rem); line-height: 1.08; }
+    .my-slide-content span { margin-top: .55em; font-size: clamp(1rem, 2.2vw, 1.9rem); white-space: pre-wrap; }
+    .my-slide-thumb .my-slide-content strong { font-size: .8rem; }
+    .my-slide-thumb .my-slide-content span { font-size: .62rem; }
+    .my-slide-actions { margin-top: 7px; justify-content: center; }
+    .my-slide-actions button { min-height: 32px; padding: 4px 7px; font-size: .78rem; }
+    .my-slide-actions button:disabled { opacity: .4; }
+    .my-slide-preview { width: 100%; border-radius: 10px; }
+    .my-slide-editor { margin-top: 14px; }
+    .my-slide-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .my-slide-form label { display: grid; gap: 5px; font-weight: 750; }
+    .my-slide-form .wide { grid-column: 1 / -1; }
+    .my-slide-form input, .my-slide-form textarea, .my-slide-form select { width: 100%; padding: 10px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--input-bg); color: var(--text); }
+    .my-slide-form textarea { min-height: 84px; resize: vertical; }
+    .my-slide-form-actions { display: flex; justify-content: flex-end; gap: 8px; grid-column: 1 / -1; }
+    .my-slide-form-actions button { min-height: 42px; padding: 8px 16px; border-radius: 8px; font-weight: 800; }
+    .my-image-library { grid-column: 1 / -1; padding: 12px; border: 1px solid var(--line); border-radius: 10px; }
+    .my-image-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin-top: 10px; }
+    .my-image-grid button { padding: 0; border: 3px solid transparent; border-radius: 8px; overflow: hidden; background: #111; }
+    .my-image-grid button.selected { border-color: var(--accent); }
+    .my-image-grid img { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+    .my-present-stage { position: fixed; inset: 0; z-index: 300; display: none; background: #11100e center/cover no-repeat; color: #fff; }
+    .my-present-stage.open { display: flex; }
+    .my-present-stage::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,var(--my-overlay,0)); }
+    .my-present-stage .my-slide-content { min-height: 100%; }
+    .my-present-controls { position: absolute; z-index: 2; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); transform: translateX(-50%); display: flex; gap: 8px; }
+    .my-present-controls button { min-height: 46px; padding: 9px 18px; border-radius: 8px; background: rgba(20,20,20,.82); color: #fff; border: 1px solid rgba(255,255,255,.6); font-weight: 800; }
+    .my-present-count { position: absolute; z-index: 2; right: 18px; top: 18px; padding: 6px 9px; border-radius: 7px; background: rgba(0,0,0,.6); }
+
+    @media (max-width: 800px) {
+      .main-navigation-panel { width: min(310px, calc(100vw - 40px)); }
+      .my-editor-layout { grid-template-columns: 1fr; }
+      .my-slide-form { grid-template-columns: 1fr; }
+      .my-slide-form .wide { grid-column: 1; }
+      .my-editor-toolbar h2 { flex: 1 0 100%; }
+    }
+    /* Editor visual de Crear diapositivas */
+    .visual-editor-toolbar {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      min-height: 58px; margin: 0 0 12px; padding: 8px 10px 8px 58px;
+      border: 1px solid var(--line); border-radius: 10px; background: var(--panel);
+    }
+    .visual-presentation-name { flex: 1 1 210px; min-width: 170px; max-width: 340px; padding: 9px 10px; border: 1px solid var(--line-strong); border-radius: 7px; background: var(--input-bg); color: var(--text); font-weight: 800; }
+    .visual-tool-group, .visual-editor-actions, .visual-popover-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .visual-editor-toolbar button, .visual-editor-toolbar select, .visual-editor-toolbar input[type="number"], .visual-popover button {
+      min-height: 36px; padding: 6px 9px; border: 1px solid var(--line-strong); border-radius: 7px; background: var(--button-bg); color: var(--text); font-weight: 750;
+    }
+    .visual-editor-toolbar button.primary, .visual-add-slide.primary { background: var(--accent); color: var(--primary-text); border-color: var(--accent); }
+    .visual-editor-toolbar button.active { background: var(--accent); color: var(--primary-text); border-color: var(--accent); }
+    .visual-editor-toolbar button.danger { color: var(--danger); }
+    .visual-editor-toolbar button:disabled { opacity: .5; cursor: not-allowed; }
+    .visual-text-tools { flex: 1 1 auto; overflow-x: auto; flex-wrap: nowrap; padding: 2px; }
+    .visual-text-tools select { width: 130px; }
+    .visual-text-tools input[type="number"] { width: 64px; }
+    .visual-text-tools input[type="color"] { width: 38px; height: 36px; padding: 3px; border: 1px solid var(--line-strong); border-radius: 7px; background: var(--button-bg); }
+    .visual-editor-actions { margin-left: auto; }
+    .visual-editor-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 14px; min-height: calc(100dvh - 110px); }
+    .visual-slides-sidebar { min-height: 0; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); overflow-y: auto; }
+    .visual-add-slide { width: 100%; min-height: 42px; border-radius: 8px; font-weight: 850; }
+    .visual-canvas-workspace { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(10px, 2vw, 24px); border: 1px solid var(--line); border-radius: 10px; background: color-mix(in srgb, var(--bg) 70%, var(--line)); overflow: hidden; }
+    .visual-canvas-frame { width: min(100%, calc((100dvh - 210px) * 16 / 9)); min-width: 320px; }
+    .visual-slide-canvas, .my-slide-thumb, .my-present-canvas { position: relative; overflow: hidden; aspect-ratio: 16 / 9; container-type: inline-size; background-color: #fff; background-position: center; background-size: cover; color: #222; }
+    .visual-slide-canvas { width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,.22); user-select: none; touch-action: none; }
+    .visual-slide-canvas::before, .my-slide-thumb::before, .my-present-canvas::before { content: ""; position: absolute; inset: 0; z-index: 0; background: rgba(0,0,0,var(--visual-overlay,0)); pointer-events: none; }
+    .visual-main-text {
+      position: absolute; z-index: 1; inset: 6%; overflow: auto; padding: 0;
+      border: 0; outline: 0; background: transparent; white-space: pre-wrap;
+      line-height: 1.18; user-select: text; cursor: text;
+    }
+    .visual-main-text:empty::before { content: "Haz clic y escribe"; color: rgba(80,80,80,.46); pointer-events: none; }
+    .visual-main-text:focus::before { display: none; }
+    .visual-main-text p { margin: 0; }
+    .visual-main-text .lexical-bold { font-weight: 700; }
+    .visual-main-text .lexical-italic { font-style: italic; }
+    .visual-main-text .lexical-underline { text-decoration: underline; }
+    .my-slide-thumb .visual-main-text, .my-present-canvas .visual-main-text { overflow: hidden; cursor: default; pointer-events: none; }
+    .my-slide-thumb .visual-main-text:empty::before, .my-present-canvas .visual-main-text:empty::before { display: none; }
+    .visual-object { position: absolute; z-index: 2; min-width: 3%; min-height: 4%; border: 1px solid transparent; box-sizing: border-box; }
+    .visual-object.selected { border-color: var(--accent); outline: 1px solid rgba(255,255,255,.8); }
+    .visual-object-text { padding: .7%; white-space: pre-wrap; overflow: visible; cursor: default; line-height: 1.12; transform-origin: center center; }
+    .visual-object-text[contenteditable="true"] { overflow: hidden; cursor: text; user-select: text; touch-action: auto; }
+    .visual-object-image { cursor: move; }
+    .visual-object-image img { width: 100%; height: 100%; display: block; object-fit: contain; pointer-events: none; }
+    .visual-resize-handle { position: absolute; z-index: 3; right: -6px; bottom: -6px; width: 14px; height: 14px; border: 2px solid #fff; border-radius: 50%; background: var(--accent); cursor: nwse-resize; }
+    .visual-move-handle { position: absolute; z-index: 4; left: -7px; top: -7px; width: 14px; height: 14px; border: 2px solid #fff; border-radius: 4px; background: var(--accent); cursor: move; }
+    .visual-rotate-handle { position: absolute; z-index: 4; left: 50%; top: -28px; width: 15px; height: 15px; border: 2px solid #fff; border-radius: 50%; background: var(--accent); cursor: grab; transform: translateX(-50%); }
+    .visual-rotate-handle::after { content: ""; position: absolute; left: 50%; top: 13px; width: 1px; height: 13px; background: var(--accent); transform: translateX(-50%); }
+    .visual-rotate-handle:active { cursor: grabbing; }
+    .visual-object-text:not(.selected) > .visual-move-handle, .visual-object-text:not(.selected) > .visual-rotate-handle, .visual-object-text:not(.selected) > .visual-resize-handle, .visual-object-text.editing > .visual-move-handle, .visual-object-text.editing > .visual-rotate-handle, .visual-object-text.editing > .visual-resize-handle { display: none; }
+    .my-slide-thumb .visual-object { border: 0 !important; outline: 0 !important; pointer-events: none; }
+    .my-slide-thumb .visual-resize-handle, .my-slide-thumb .visual-move-handle, .my-slide-thumb .visual-rotate-handle, .my-present-canvas .visual-resize-handle, .my-present-canvas .visual-move-handle, .my-present-canvas .visual-rotate-handle { display: none; }
+    .my-slide-thumb .visual-object-text, .my-present-canvas .visual-object-text { overflow: hidden; }
+    .my-slide-row { padding: 7px; }
+    .my-slide-select { grid-template-columns: 24px 1fr; }
+    .my-slide-thumb { width: 100%; }
+    .visual-editor-hint { margin: 10px 0 0; color: var(--muted); font-size: .86rem; text-align: center; }
+    .visual-popover-modal { position: fixed; inset: 0; z-index: 290; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0,0,0,.42); }
+    .visual-popover-modal[hidden], .visual-library[hidden] { display: none !important; }
+    .visual-popover { width: min(720px, 100%); max-height: min(760px, calc(100dvh - 32px)); overflow-y: auto; padding: 16px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--panel); color: var(--text); box-shadow: 0 18px 45px var(--shadow); }
+    .visual-popover-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .visual-popover-head h3 { margin: 0; }
+    .visual-popover-head button { width: 40px; font-size: 1.3rem; }
+    .visual-library { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .visual-background-color, .visual-overlay-control { display: flex; align-items: center; gap: 10px; margin: 10px 0; font-weight: 750; }
+    .visual-overlay-control input { flex: 1; }
+    .my-present-stage { background: #000; }
+    .my-present-canvas { width: 100vw; height: 100vh; aspect-ratio: auto; }
+    .my-present-canvas .visual-object { border: 0; outline: 0; }
+    .my-present-canvas .visual-resize-handle { display: none; }
+    @media (max-width: 900px) {
+      .visual-editor-toolbar { padding-left: 58px; align-items: flex-start; }
+      .visual-editor-actions { flex: 1 0 100%; margin-left: 0; }
+      .visual-editor-layout { grid-template-columns: 170px minmax(0, 1fr); min-height: calc(100dvh - 165px); }
+      .visual-canvas-frame { min-width: 0; width: 100%; }
+    }
+    @media (max-width: 600px) {
+      .visual-editor-layout { grid-template-columns: 1fr; min-height: 0; }
+      .visual-slides-sidebar { display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; }
+      .visual-add-slide { flex: 0 0 120px; }
+      .my-slides-list { display: flex; margin: 0; }
+      .my-slide-row { flex: 0 0 150px; }
+      .visual-canvas-workspace { padding: 8px; }
+      .visual-editor-hint { font-size: .76rem; }
+    }
     </style>
 </head>
 <body>
+  <button class="main-menu-toggle" id="mainMenuToggle" type="button" aria-label="Abrir menú principal" aria-expanded="false" aria-controls="mainNavigation">☰</button>
   <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar a modo oscuro" title="Modo oscuro">☾</button>
-  <button class="open-presentation" id="openPresentation" type="button" aria-label="Abrir presentación" title="Abrir presentación">▣</button>
+  <div class="main-navigation" id="mainNavigation" aria-hidden="true">
+    <button class="main-navigation-backdrop" id="mainNavigationBackdrop" type="button" aria-label="Cerrar menú"></button>
+    <nav class="main-navigation-panel" aria-label="Navegación principal">
+      <div class="main-navigation-head">
+        <strong>Himnario</strong>
+        <button class="main-navigation-close" id="mainNavigationClose" type="button" aria-label="Cerrar menú">×</button>
+      </div>
+      <div class="main-navigation-content">
+        <div class="main-navigation-group">
+          <button class="main-navigation-item" id="mainNavigationHome" type="button">Inicio</button>
+        </div>
+        <div class="main-navigation-group">
+          <button class="main-navigation-item" id="mainNavigationWorship" type="button">Presentación del culto</button>
+          <button class="main-navigation-item" id="mainNavigationMyPresentations" type="button">Crear diapositivas</button>
+        </div>
+      </div>
+    </nav>
+  </div>
   <div class="app" id="app">
     <header>
       <div class="topbar">
@@ -3476,9 +3807,97 @@
     </div>
   </div>
 
+  <section class="my-presentations-view" id="myPresentationsView" aria-label="Mis presentaciones" hidden>
+    <div class="my-presentations-shell">
+      <div class="my-presentations-screen" id="myPresentationsHome">
+        <div class="my-presentations-head">
+          <h2>Mis presentaciones</h2>
+        </div>
+        <div class="my-presentations-actions">
+          <button class="primary" id="newMyPresentation" type="button">+ Nueva presentación</button>
+          <button id="openMyPresentationFile" type="button" disabled title="La importación estará disponible en una etapa futura">Abrir presentación</button>
+        </div>
+        <div class="my-presentations-list" id="myPresentationsList"></div>
+      </div>
+      <div class="my-presentations-screen" id="myPresentationEditor" hidden>
+        <div class="visual-editor-toolbar">
+          <input class="visual-presentation-name" id="myPresentationName" aria-label="Nombre de la presentación" maxlength="120">
+          <div class="visual-tool-group">
+            <button id="addMyText" type="button">+ Texto</button>
+            <button id="addMyImage" type="button">+ Imagen</button>
+            <button id="openMyBackground" type="button">Fondo</button>
+            <button id="undoMyEdit" type="button" title="Deshacer" aria-label="Deshacer" disabled>↶</button>
+            <button id="redoMyEdit" type="button" title="Rehacer" aria-label="Rehacer" disabled>↷</button>
+          </div>
+          <div class="visual-tool-group visual-text-tools" id="myTextTools" aria-label="Formato de texto">
+            <select id="myFontFamily" aria-label="Fuente">
+              <option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Times New Roman">Times New Roman</option><option value="Verdana">Verdana</option><option value="Trebuchet MS">Trebuchet MS</option><option value="Tahoma">Tahoma</option><option value="Courier New">Courier New</option>
+              <option value="Segoe Script, Brush Script MT, cursive">Segoe Script — manuscrita</option><option value="Comic Sans MS, cursive">Comic Sans MS — informal</option><option value="Garamond, Georgia, serif">Garamond — elegante</option><option value="Impact, Haettenschweiler, sans-serif">Impact — títulos fuertes</option><option value="Copperplate Gothic Bold, Copperplate, fantasy">Copperplate — decorativa</option><option value="Century Gothic, Segoe UI, sans-serif">Century Gothic — moderna</option>
+            </select>
+            <input id="myFontSize" type="number" min="8" max="160" step="1" value="36" aria-label="Tamaño de fuente">
+            <button id="myBold" type="button" aria-label="Negrita"><strong>N</strong></button>
+            <button id="myItalic" type="button" aria-label="Cursiva"><em>C</em></button>
+            <button id="myUnderline" type="button" aria-label="Subrayado"><u>S</u></button>
+            <input id="myTextColor" type="color" value="#222222" aria-label="Color del texto">
+            <button id="myAlignLeft" type="button" aria-label="Alinear a la izquierda">≡</button>
+            <button id="myAlignCenter" type="button" aria-label="Centrar">≡</button>
+            <button id="myAlignRight" type="button" aria-label="Alinear a la derecha">≡</button>
+            <button id="duplicateMyObject" type="button">Duplicar</button>
+            <button class="danger" id="deleteMyObject" type="button">Eliminar</button>
+          </div>
+          <div class="visual-editor-actions">
+            <button id="saveMyPresentation" type="button">Guardar</button>
+            <button class="primary" id="presentMyPresentation" type="button">Presentar</button>
+            <button id="addMyToWorship" type="button" disabled title="Disponible en una etapa futura">Agregar a Presentación del culto</button>
+            <button id="backToMyPresentations" type="button">Mis presentaciones</button>
+          </div>
+        </div>
+        <div class="visual-editor-layout">
+          <aside class="visual-slides-sidebar">
+            <button class="primary visual-add-slide" id="addMySlide" type="button">+ Diapositiva</button>
+            <div class="my-slides-list" id="mySlidesList"></div>
+          </aside>
+          <section class="visual-canvas-workspace">
+            <div class="visual-canvas-frame">
+              <div class="visual-slide-canvas" id="mySlideCanvas" tabindex="0" aria-label="Lienzo de diapositiva"></div>
+            </div>
+            <p class="visual-editor-hint" id="myEditorHint">Selecciona un objeto para editarlo. Arrastra para mover y usa el control de la esquina para cambiar su tamaño.</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="visual-popover-modal" id="myImageModal" hidden>
+    <div class="visual-popover" role="dialog" aria-modal="true" aria-labelledby="myImageModalTitle">
+      <div class="visual-popover-head"><h3 id="myImageModalTitle">Añadir imagen</h3><button id="closeMyImageModal" type="button" aria-label="Cerrar">×</button></div>
+      <div class="visual-popover-actions"><button id="chooseMyObjectDeviceImage" type="button">Desde dispositivo</button><button id="chooseMyObjectAppImage" type="button">Desde la aplicación</button></div>
+      <input id="myObjectImageInput" type="file" accept="image/*" hidden>
+      <div class="visual-library" id="myObjectLibrary" hidden><div class="my-library-tabs" id="myObjectLibraryTabs"></div><div class="my-image-grid" id="myObjectImageGrid"></div></div>
+    </div>
+  </div>
+
+  <div class="visual-popover-modal" id="myBackgroundModal" hidden>
+    <div class="visual-popover" role="dialog" aria-modal="true" aria-labelledby="myBackgroundTitle">
+      <div class="visual-popover-head"><h3 id="myBackgroundTitle">Fondo de diapositiva</h3><button id="closeMyBackgroundModal" type="button" aria-label="Cerrar">×</button></div>
+      <label class="visual-background-color">Color de fondo <input id="myBackgroundColor" type="color" value="#ffffff"></label>
+      <div class="visual-popover-actions"><button id="chooseMyBackgroundDevice" type="button">Imagen del dispositivo</button><button id="chooseMyBackgroundApp" type="button">Imagen de la aplicación</button><button id="clearMyBackgroundImage" type="button">Quitar imagen</button></div>
+      <input id="myBackgroundImageInput" type="file" accept="image/*" hidden>
+      <label class="visual-overlay-control">Capa oscura <span id="myBackgroundOverlayValue">0%</span><input id="myBackgroundOverlay" type="range" min="0" max="80" step="5" value="0"></label>
+      <div class="visual-library" id="myBackgroundLibrary" hidden><div class="my-library-tabs" id="myBackgroundLibraryTabs"></div><div class="my-image-grid" id="myBackgroundImageGrid"></div></div>
+    </div>
+  </div>
+
+  <div class="my-present-stage" id="myPresentStage" aria-live="polite">
+    <div class="my-present-count" id="myPresentCount"></div>
+    <div class="my-present-canvas" id="myPresentContent"></div>
+    <div class="my-present-controls"><button id="myPresentPrev" type="button">Anterior</button><button id="myPresentExit" type="button">Salir</button><button id="myPresentNext" type="button">Siguiente</button></div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./assets/main-text-editor.js?v=20260816-lexical4"></script>
   <script>
     const STORAGE_KEY = "cantos-iglesia-v1";
     const CONFIG_KEY = "cantos-iglesia-config-v1";
@@ -3586,7 +4005,6 @@
       readingFontSizeValue: document.querySelector("#readingFontSizeValue"),
       search: document.querySelector("#search"),
       searchBack: document.querySelector("#searchBack"),
-      openPresentation: document.querySelector("#openPresentation"),
       presentationView: document.querySelector("#presentationView"),
       closePresentationView: document.querySelector("#closePresentationView"),
       newSong: document.querySelector("#newSong"),
@@ -5053,7 +5471,6 @@
       el.adminProfileLabel.textContent = adminLabel;
       el.mobileAdminProfileLabel.textContent = adminLabel;
       el.themeToggle.style.display = !state.isAdmin && !state.selectedId && !state.presentationMode ? "inline-flex" : "none";
-      el.openPresentation.style.display = !state.isAdmin && !state.selectedId && !state.presentationMode && canUsePresentationViewport() ? "inline-flex" : "none";
       if (!state.isAdmin || state.presentationMode) closeAdminMenu();
 
       if (!state.songs.find(song => song.id === state.selectedId)) {
@@ -6951,7 +7368,6 @@
       closeAdminMenu();
       openSettings();
     });
-    el.openPresentation.addEventListener("click", openPresentationView);
     el.closePresentationView.addEventListener("click", closePresentationView);
     el.previewPresentation?.addEventListener("click", openPreview);
     el.startPresentation?.addEventListener("click", startPresentationMode);
@@ -7161,6 +7577,768 @@
         navigator.serviceWorker.register("service-worker.js").catch(() => {});
       });
     }
+
+    /* Módulo anterior conservado como referencia durante la migración; no se ejecuta. */
+    if (false) {
+    // Mis presentaciones: almacenamiento local independiente y editor base.
+    const MY_PRESENTATIONS_KEY = "himnario-mis-presentaciones-v1";
+    const myPresentationState = {
+      data: { presentations: [], activePresentationId: null },
+      selectedSlideId: null,
+      editingSlideId: null,
+      pendingImage: "",
+      pendingImageSource: "",
+      libraryCategory: "sermon",
+      presentIndex: 0
+    };
+
+    const myEl = Object.fromEntries([
+      "myPresentationsView", "myPresentationsHome",
+      "newMyPresentation", "myPresentationsList", "myPresentationEditor", "myPresentationTitle",
+      "saveMyPresentation", "presentMyPresentation", "backToMyPresentations", "addMySlide", "mySlidesList",
+      "mySlidePreview", "mySlideEditor", "mySlideForm", "mySlideTitle", "mySlideSubtitle", "mySlideAlignment",
+      "mySlideBackgroundMode", "mySlideBackgroundColor", "mySlideColorLabel", "mySlideOverlay", "mySlideOverlayLabel",
+      "mySlideOverlayValue", "mySlideImageControls", "chooseMyDeviceImage", "chooseMyAppImage", "clearMySlideImage",
+      "mySlideImageInput", "myImageLibrary", "myImageLibraryTabs", "myImageGrid", "cancelMySlideEdit",
+      "myPresentStage", "myPresentCount", "myPresentContent", "myPresentPrev", "myPresentExit", "myPresentNext"
+    ].map(id => [id, document.getElementById(id)]));
+
+    function myId(prefix) {
+      return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+    }
+
+    function normalizeMySlide(slide = {}) {
+      return {
+        id: slide.id || myId("slide"), type: "text", title: String(slide.title || ""), subtitle: String(slide.subtitle || ""),
+        alignment: ["left", "center", "right"].includes(slide.alignment) ? slide.alignment : "center",
+        backgroundMode: ["plain", "color", "image"].includes(slide.backgroundMode) ? slide.backgroundMode : "plain",
+        backgroundColor: slide.backgroundColor || "#11100e", backgroundImage: slide.backgroundImage || "",
+        backgroundImageSource: slide.backgroundImageSource || (String(slide.backgroundImage || "").startsWith("presentation-backgrounds/") ? "app" : slide.backgroundImage ? "device" : ""),
+        overlay: Math.max(0, Math.min(80, Number(slide.overlay) || 0)),
+        style: { fontFamily: "", fontSize: "", bold: false, italic: false, underline: false, textColor: "", verticalPosition: "center", ...(slide.style || {}) },
+        blocks: Array.isArray(slide.blocks) ? slide.blocks : []
+      };
+    }
+
+    function loadMyPresentations() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(MY_PRESENTATIONS_KEY) || "{}");
+        myPresentationState.data = {
+          presentations: Array.isArray(saved.presentations) ? saved.presentations.map(p => ({
+            id: p.id || myId("presentation"), name: String(p.name || "Presentación sin nombre"),
+            createdAt: p.createdAt || new Date().toISOString(), updatedAt: p.updatedAt || p.createdAt || new Date().toISOString(),
+            slides: Array.isArray(p.slides) ? p.slides.map(normalizeMySlide) : []
+          })) : [],
+          activePresentationId: saved.activePresentationId || null
+        };
+      } catch {
+        myPresentationState.data = { presentations: [], activePresentationId: null };
+      }
+    }
+
+    function saveMyPresentations(showMessage = false) {
+      const active = getActiveMyPresentation();
+      if (active) active.updatedAt = new Date().toISOString();
+      try {
+        localStorage.setItem(MY_PRESENTATIONS_KEY, JSON.stringify(myPresentationState.data));
+        if (showMessage) showToast("Presentación guardada");
+        return true;
+      } catch {
+        showToast("No hay espacio suficiente para guardar. Prueba con una imagen más pequeña");
+        return false;
+      }
+    }
+
+    function getActiveMyPresentation() {
+      return myPresentationState.data.presentations.find(p => p.id === myPresentationState.data.activePresentationId) || null;
+    }
+
+    function getSelectedMySlide() {
+      return getActiveMyPresentation()?.slides.find(s => s.id === myPresentationState.selectedSlideId) || null;
+    }
+
+    function openMyPresentationsHome() {
+      loadMyPresentations();
+      myEl.myPresentationsView.hidden = false;
+      myEl.myPresentationsHome.hidden = false;
+      myEl.myPresentationEditor.hidden = true;
+      document.body.style.overflow = "hidden";
+      renderMyPresentationsList();
+    }
+
+    function closeMyPresentationsView() {
+      myEl.myPresentationsView.hidden = true;
+      document.body.style.overflow = "";
+    }
+
+    function renderMyPresentationsList() {
+      myEl.myPresentationsList.innerHTML = "";
+      const presentations = myPresentationState.data.presentations;
+      if (!presentations.length) {
+        myEl.myPresentationsList.innerHTML = "<div class='empty'><strong>Todavía no hay presentaciones.</strong><br>Crea la primera para comenzar.</div>";
+        return;
+      }
+      presentations.slice().sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt))).forEach(presentation => {
+        const card = document.createElement("article");
+        card.className = "my-presentation-card";
+        const info = document.createElement("div");
+        const title = document.createElement("strong");
+        title.textContent = presentation.name;
+        const meta = document.createElement("small");
+        meta.textContent = `${presentation.slides.length} diapositiva${presentation.slides.length === 1 ? "" : "s"} · Actualizada ${new Date(presentation.updatedAt).toLocaleString("es")}`;
+        info.append(title, meta);
+        const button = document.createElement("button");
+        button.type = "button"; button.textContent = "Editar";
+        button.addEventListener("click", () => openMyPresentationEditor(presentation.id));
+        card.append(info, button); myEl.myPresentationsList.append(card);
+      });
+    }
+
+    function createMyPresentation() {
+      const name = window.prompt("Nombre de la presentación", "");
+      if (name === null) return;
+      const cleanName = name.trim();
+      if (!cleanName) { showToast("Escribe un nombre para la presentación"); return; }
+      const now = new Date().toISOString();
+      const presentation = { id: myId("presentation"), name: cleanName, createdAt: now, updatedAt: now, slides: [] };
+      myPresentationState.data.presentations.push(presentation);
+      myPresentationState.data.activePresentationId = presentation.id;
+      saveMyPresentations();
+      openMyPresentationEditor(presentation.id);
+    }
+
+    function openMyPresentationEditor(id) {
+      const presentation = myPresentationState.data.presentations.find(p => p.id === id);
+      if (!presentation) return;
+      myPresentationState.data.activePresentationId = id;
+      myPresentationState.selectedSlideId = presentation.slides[0]?.id || null;
+      myEl.myPresentationsHome.hidden = true;
+      myEl.myPresentationEditor.hidden = false;
+      myEl.myPresentationTitle.textContent = presentation.name;
+      closeMySlideEditor();
+      renderMySlides();
+      saveMyPresentations();
+    }
+
+    function backToMyPresentationsHome() {
+      saveMyPresentations();
+      myEl.myPresentationEditor.hidden = true;
+      myEl.myPresentationsHome.hidden = false;
+      renderMyPresentationsList();
+    }
+
+    function applyMySlideVisual(container, slide) {
+      const title = String(slide?.title || "").trim();
+      const subtitle = String(slide?.subtitle || "").trim();
+      const hasText = Boolean(title || subtitle);
+      const isImage = slide?.backgroundMode === "image" && slide.backgroundImage;
+      container.style.backgroundColor = slide?.backgroundMode === "color" ? slide.backgroundColor : "#11100e";
+      container.style.backgroundImage = isImage ? `url("${slide.backgroundImage}")` : "";
+      container.style.setProperty("--my-overlay", isImage && hasText ? String((slide.overlay || 0) / 100) : "0");
+      const content = container.querySelector(".my-slide-content") || container;
+      content.className = `my-slide-content align-${slide?.alignment || "center"}`;
+      content.querySelector("strong").textContent = title;
+      content.querySelector("span").textContent = subtitle;
+    }
+
+    function renderMySlides() {
+      const presentation = getActiveMyPresentation();
+      myEl.mySlidesList.innerHTML = "";
+      if (!presentation?.slides.length) {
+        myEl.mySlidesList.innerHTML = "<div class='empty'>Todavía no hay diapositivas.</div>";
+        applyMySlideVisual(myEl.mySlidePreview, normalizeMySlide());
+        return;
+      }
+      if (!presentation.slides.some(s => s.id === myPresentationState.selectedSlideId)) myPresentationState.selectedSlideId = presentation.slides[0].id;
+      presentation.slides.forEach((slide, index) => {
+        const row = document.createElement("article");
+        row.className = `my-slide-row${slide.id === myPresentationState.selectedSlideId ? " selected" : ""}`;
+        const select = document.createElement("button");
+        select.type = "button"; select.className = "my-slide-select";
+        select.innerHTML = `<span class="my-slide-number">${index + 1}</span><span class="my-slide-thumb"><span class="my-slide-content"><strong></strong><span></span></span></span>`;
+        applyMySlideVisual(select.querySelector(".my-slide-thumb"), slide);
+        select.addEventListener("click", () => { myPresentationState.selectedSlideId = slide.id; renderMySlides(); });
+        const actions = document.createElement("div"); actions.className = "my-slide-actions";
+        [["Editar", () => openMySlideEditor(slide.id)], ["Duplicar", () => duplicateMySlide(slide.id)], ["Eliminar", () => removeMySlide(slide.id)], ["Subir", () => moveMySlide(index, -1)], ["Bajar", () => moveMySlide(index, 1)]].forEach(([label, handler], actionIndex) => {
+          const button = document.createElement("button"); button.type = "button"; button.textContent = label;
+          if ((actionIndex === 3 && index === 0) || (actionIndex === 4 && index === presentation.slides.length - 1)) button.disabled = true;
+          button.addEventListener("click", handler); actions.append(button);
+        });
+        row.append(select, actions); myEl.mySlidesList.append(row);
+      });
+      applyMySlideVisual(myEl.mySlidePreview, getSelectedMySlide());
+    }
+
+    function openMySlideEditor(slideId = null) {
+      const slide = getActiveMyPresentation()?.slides.find(s => s.id === slideId) || normalizeMySlide();
+      myPresentationState.editingSlideId = slideId;
+      myPresentationState.pendingImage = slide.backgroundImage || "";
+      myPresentationState.pendingImageSource = slide.backgroundImageSource || "";
+      myEl.mySlideTitle.value = slide.title;
+      myEl.mySlideSubtitle.value = slide.subtitle;
+      myEl.mySlideAlignment.value = slide.alignment;
+      myEl.mySlideBackgroundMode.value = slide.backgroundMode;
+      myEl.mySlideBackgroundColor.value = slide.backgroundColor || "#11100e";
+      myEl.mySlideOverlay.value = slide.overlay ?? 45;
+      myEl.mySlideEditor.hidden = false;
+      myEl.myImageLibrary.hidden = true;
+      updateMySlideEditorPreview();
+      myEl.mySlideTitle.focus();
+    }
+
+    function closeMySlideEditor() {
+      myPresentationState.editingSlideId = null;
+      myEl.mySlideEditor.hidden = true;
+      myEl.myImageLibrary.hidden = true;
+      myEl.mySlideForm.reset();
+    }
+
+    function updateMySlideEditorPreview() {
+      const mode = myEl.mySlideBackgroundMode.value;
+      const draft = normalizeMySlide({ title: myEl.mySlideTitle.value, subtitle: myEl.mySlideSubtitle.value,
+        alignment: myEl.mySlideAlignment.value, backgroundMode: mode, backgroundColor: myEl.mySlideBackgroundColor.value,
+        backgroundImage: mode === "image" ? myPresentationState.pendingImage : "", overlay: myEl.mySlideOverlay.value });
+      applyMySlideVisual(myEl.mySlidePreview, draft);
+      myEl.mySlideColorLabel.hidden = mode !== "color";
+      myEl.mySlideOverlayLabel.hidden = mode !== "image";
+      myEl.mySlideImageControls.hidden = mode !== "image";
+      myEl.mySlideOverlayValue.textContent = `${myEl.mySlideOverlay.value}%`;
+    }
+
+    async function handleMyDeviceImage(event) {
+      const file = event.target.files?.[0]; if (!file) return;
+      try {
+        myPresentationState.pendingImage = await readFileAsDataUrl(file);
+        myPresentationState.pendingImageSource = "device";
+        myEl.mySlideBackgroundMode.value = "image";
+        myEl.myImageLibrary.hidden = true;
+        updateMySlideEditorPreview();
+      } catch { showToast("No se pudo cargar la imagen"); }
+    }
+
+    function renderMyImageLibrary() {
+      myEl.myImageLibrary.hidden = false;
+      myEl.myImageLibraryTabs.innerHTML = ""; myEl.myImageGrid.innerHTML = "";
+      Object.entries(WORSHIP_IMAGE_CATEGORIES).forEach(([key, config]) => {
+        const tab = document.createElement("button"); tab.type = "button"; tab.textContent = config.label;
+        if (key === myPresentationState.libraryCategory) tab.className = "primary";
+        tab.addEventListener("click", () => { myPresentationState.libraryCategory = key; renderMyImageLibrary(); });
+        myEl.myImageLibraryTabs.append(tab);
+      });
+      const config = WORSHIP_IMAGE_CATEGORIES[myPresentationState.libraryCategory];
+      config.images.forEach((src, index) => {
+        const button = document.createElement("button"); button.type = "button";
+        button.className = src === myPresentationState.pendingImage ? "selected" : "";
+        button.setAttribute("aria-label", `${config.label} ${index + 1}`);
+        button.innerHTML = `<img alt="" loading="lazy" src="${src}">`;
+        button.addEventListener("click", () => { myPresentationState.pendingImage = src; myPresentationState.pendingImageSource = "app"; renderMyImageLibrary(); updateMySlideEditorPreview(); });
+        myEl.myImageGrid.append(button);
+      });
+    }
+
+    function submitMySlide(event) {
+      event.preventDefault();
+      const presentation = getActiveMyPresentation(); if (!presentation) return;
+      const mode = myEl.mySlideBackgroundMode.value;
+      const existing = presentation.slides.find(s => s.id === myPresentationState.editingSlideId);
+      const slide = normalizeMySlide({ ...existing, id: existing?.id || myId("slide"), title: myEl.mySlideTitle.value.trim(), subtitle: myEl.mySlideSubtitle.value.trim(),
+        alignment: myEl.mySlideAlignment.value, backgroundMode: mode, backgroundColor: myEl.mySlideBackgroundColor.value,
+        backgroundImage: mode === "image" ? myPresentationState.pendingImage : "", backgroundImageSource: mode === "image" ? myPresentationState.pendingImageSource : "",
+        overlay: myEl.mySlideOverlay.value });
+      if (existing) presentation.slides = presentation.slides.map(s => s.id === existing.id ? slide : s); else presentation.slides.push(slide);
+      myPresentationState.selectedSlideId = slide.id;
+      if (!saveMyPresentations()) return;
+      closeMySlideEditor(); renderMySlides();
+    }
+
+    function duplicateMySlide(id) {
+      const presentation = getActiveMyPresentation(); const index = presentation?.slides.findIndex(s => s.id === id) ?? -1; if (index < 0) return;
+      const copy = normalizeMySlide({ ...presentation.slides[index], id: myId("slide"), style: { ...presentation.slides[index].style }, blocks: [...presentation.slides[index].blocks] });
+      presentation.slides.splice(index + 1, 0, copy); myPresentationState.selectedSlideId = copy.id; saveMyPresentations(); renderMySlides();
+    }
+
+    function removeMySlide(id) {
+      const presentation = getActiveMyPresentation(); if (!presentation || !window.confirm("¿Eliminar esta diapositiva?")) return;
+      const index = presentation.slides.findIndex(s => s.id === id); presentation.slides = presentation.slides.filter(s => s.id !== id);
+      myPresentationState.selectedSlideId = presentation.slides[Math.min(index, presentation.slides.length - 1)]?.id || null;
+      closeMySlideEditor(); saveMyPresentations(); renderMySlides();
+    }
+
+    function moveMySlide(index, direction) {
+      const slides = getActiveMyPresentation()?.slides; const next = index + direction; if (!slides || next < 0 || next >= slides.length) return;
+      [slides[index], slides[next]] = [slides[next], slides[index]]; saveMyPresentations(); renderMySlides();
+    }
+
+    function startMyPresentation() {
+      const presentation = getActiveMyPresentation();
+      if (!presentation?.slides.length) { showToast("Añade una diapositiva para presentar"); return; }
+      myPresentationState.presentIndex = 0; myEl.myPresentStage.classList.add("open"); document.body.style.overflow = "hidden"; renderMyPresentedSlide();
+      myEl.myPresentStage.requestFullscreen?.().catch(() => {});
+    }
+
+    function renderMyPresentedSlide() {
+      const slides = getActiveMyPresentation()?.slides || []; const slide = slides[myPresentationState.presentIndex]; if (!slide) return;
+      applyMySlideVisual(myEl.myPresentStage, slide); myEl.myPresentCount.textContent = `${myPresentationState.presentIndex + 1}/${slides.length}`;
+      myEl.myPresentPrev.disabled = myPresentationState.presentIndex === 0; myEl.myPresentNext.disabled = myPresentationState.presentIndex === slides.length - 1;
+    }
+
+    function moveMyPresentation(direction) {
+      const slides = getActiveMyPresentation()?.slides || []; const next = myPresentationState.presentIndex + direction;
+      if (next >= 0 && next < slides.length) { myPresentationState.presentIndex = next; renderMyPresentedSlide(); }
+    }
+
+    function exitMyPresentation() {
+      const close = () => { myEl.myPresentStage.classList.remove("open"); document.body.style.overflow = "hidden"; };
+      if (document.fullscreenElement === myEl.myPresentStage) document.exitFullscreen().catch(() => {}).finally(close); else close();
+    }
+
+    const mainNavigationEl = {
+      toggle: document.getElementById("mainMenuToggle"),
+      root: document.getElementById("mainNavigation"),
+      backdrop: document.getElementById("mainNavigationBackdrop"),
+      close: document.getElementById("mainNavigationClose"),
+      home: document.getElementById("mainNavigationHome"),
+      worship: document.getElementById("mainNavigationWorship"),
+      myPresentations: document.getElementById("mainNavigationMyPresentations")
+    };
+
+    function setMainNavigationOpen(open) {
+      const shouldOpen = Boolean(open);
+      mainNavigationEl.root.classList.toggle("open", shouldOpen);
+      mainNavigationEl.root.setAttribute("aria-hidden", String(!shouldOpen));
+      mainNavigationEl.toggle.setAttribute("aria-expanded", String(shouldOpen));
+      document.body.classList.toggle("main-navigation-open", shouldOpen);
+      if (shouldOpen) mainNavigationEl.close.focus();
+      else mainNavigationEl.toggle.focus();
+    }
+
+    function closeMainNavigation() {
+      if (mainNavigationEl.root.classList.contains("open")) setMainNavigationOpen(false);
+    }
+
+    function navigateMainHome() {
+      closeMainNavigation();
+      if (!myEl.myPresentationsView.hidden) closeMyPresentationsView();
+      state.presentationMode = false;
+      state.selectedId = null;
+      state.query = "";
+      el.search.value = "";
+      state.readingOptionsOpen = false;
+      render();
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
+
+    function navigateMainWorship() {
+      closeMainNavigation();
+      if (!myEl.myPresentationsView.hidden) closeMyPresentationsView();
+      openPresentationView();
+    }
+
+    function navigateMainMyPresentations() {
+      closeMainNavigation();
+      if (state.presentationMode) closePresentationView();
+      openMyPresentationsHome();
+    }
+
+    mainNavigationEl.toggle.addEventListener("click", () => setMainNavigationOpen(!mainNavigationEl.root.classList.contains("open")));
+    mainNavigationEl.close.addEventListener("click", closeMainNavigation);
+    mainNavigationEl.backdrop.addEventListener("click", closeMainNavigation);
+    mainNavigationEl.home.addEventListener("click", navigateMainHome);
+    mainNavigationEl.worship.addEventListener("click", navigateMainWorship);
+    mainNavigationEl.myPresentations.addEventListener("click", navigateMainMyPresentations);
+    window.addEventListener("keydown", event => {
+      if (event.key === "Escape" && mainNavigationEl.root.classList.contains("open")) closeMainNavigation();
+    });
+
+    myEl.newMyPresentation.addEventListener("click", createMyPresentation);
+    myEl.backToMyPresentations.addEventListener("click", backToMyPresentationsHome);
+    myEl.saveMyPresentation.addEventListener("click", () => saveMyPresentations(true));
+    myEl.addMySlide.addEventListener("click", () => openMySlideEditor());
+    myEl.cancelMySlideEdit.addEventListener("click", closeMySlideEditor);
+    myEl.mySlideForm.addEventListener("submit", submitMySlide);
+    [myEl.mySlideTitle, myEl.mySlideSubtitle, myEl.mySlideAlignment, myEl.mySlideBackgroundMode, myEl.mySlideBackgroundColor, myEl.mySlideOverlay].forEach(input => {
+      input.addEventListener("input", updateMySlideEditorPreview); input.addEventListener("change", updateMySlideEditorPreview);
+    });
+    myEl.chooseMyDeviceImage.addEventListener("click", () => myEl.mySlideImageInput.click());
+    myEl.mySlideImageInput.addEventListener("change", handleMyDeviceImage);
+    myEl.chooseMyAppImage.addEventListener("click", renderMyImageLibrary);
+    myEl.clearMySlideImage.addEventListener("click", () => { myPresentationState.pendingImage = ""; myPresentationState.pendingImageSource = ""; myEl.mySlideBackgroundMode.value = "plain"; myEl.myImageLibrary.hidden = true; updateMySlideEditorPreview(); });
+    myEl.presentMyPresentation.addEventListener("click", startMyPresentation);
+    myEl.myPresentPrev.addEventListener("click", () => moveMyPresentation(-1));
+    myEl.myPresentNext.addEventListener("click", () => moveMyPresentation(1));
+    myEl.myPresentExit.addEventListener("click", exitMyPresentation);
+    window.addEventListener("keydown", event => {
+      if (!myEl.myPresentStage.classList.contains("open")) return;
+      if (event.key === "ArrowRight" || event.key === " ") moveMyPresentation(1);
+      if (event.key === "ArrowLeft") moveMyPresentation(-1);
+      if (event.key === "Escape" && !document.fullscreenElement) exitMyPresentation();
+    });
+    loadMyPresentations();
+
+    }
+
+    // Editor visual basado en bloques.
+    const visualEditor = (() => {
+      const KEY = "himnario-mis-presentaciones-v1";
+      const fonts = ["Arial", "Georgia", "Times New Roman", "Verdana", "Trebuchet MS", "Tahoma", "Courier New", "Segoe Script, Brush Script MT, cursive", "Comic Sans MS, cursive", "Garamond, Georgia, serif", "Impact, Haettenschweiler, sans-serif", "Copperplate Gothic Bold, Copperplate, fantasy", "Century Gothic, Segoe UI, sans-serif"];
+      const data = { presentations: [], activePresentationId: null };
+      let selectedBlockId = null;
+      let editingBlockId = null;
+      let libraryCategory = "sermon";
+      let presentationIndex = 0;
+      let interaction = null;
+      let editingMainText = false;
+      let lexicalMainText = null;
+      let lexicalSlideId = null;
+      let mainTextSaveTimer = null;
+      let fontSizeInputFocused = false;
+      let fontSizeInputDraft = false;
+      let lastValidFontSize = 32;
+      let lexicalHistoryStatus = { canUndo: false, canRedo: false };
+
+      const v = Object.fromEntries([
+        "myPresentationsView", "myPresentationsHome", "newMyPresentation", "myPresentationsList", "myPresentationEditor",
+        "myPresentationName", "addMyText", "addMyImage", "openMyBackground", "undoMyEdit", "redoMyEdit", "myTextTools", "myFontFamily", "myFontSize",
+        "myBold", "myItalic", "myUnderline", "myTextColor", "myAlignLeft", "myAlignCenter", "myAlignRight",
+        "duplicateMyObject", "deleteMyObject", "saveMyPresentation", "presentMyPresentation", "addMyToWorship",
+        "backToMyPresentations", "addMySlide", "mySlidesList", "mySlideCanvas", "myEditorHint", "myImageModal",
+        "closeMyImageModal", "chooseMyObjectDeviceImage", "chooseMyObjectAppImage", "myObjectImageInput", "myObjectLibrary",
+        "myObjectLibraryTabs", "myObjectImageGrid", "myBackgroundModal", "closeMyBackgroundModal", "myBackgroundColor",
+        "chooseMyBackgroundDevice", "chooseMyBackgroundApp", "clearMyBackgroundImage", "myBackgroundImageInput",
+        "myBackgroundOverlay", "myBackgroundOverlayValue", "myBackgroundLibrary", "myBackgroundLibraryTabs",
+        "myBackgroundImageGrid", "myPresentStage", "myPresentCount", "myPresentContent", "myPresentPrev", "myPresentExit", "myPresentNext"
+      ].map(id => [id, document.getElementById(id)]));
+
+      function uid(prefix) { return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`; }
+      function clamp(value, min, max) { return Math.max(min, Math.min(max, Number(value) || 0)); }
+      function defaultSlide() {
+        return { id: uid("slide"), type: "visual", title: "", subtitle: "", alignment: "center", backgroundMode: "color", backgroundColor: "#ffffff", backgroundImage: "", backgroundImageSource: "", overlay: 0, mainText: { schemaVersion: 2, editor: "lexical", editorState: null, html: "", defaultFontFamily: "Arial", defaultFontSize: 32, defaultTextColor: "#222222", defaultTextAlign: "left" }, style: { fontFamily: "", fontSize: "", bold: false, italic: false, underline: false, textColor: "", verticalPosition: "center" }, blocks: [] };
+      }
+      function escapeMainText(value) { const node = document.createElement("div"); node.textContent = String(value || ""); return node.innerHTML; }
+      function textBlock(text = "Escribe aquí", options = {}) {
+        return { id: uid("block"), type: "text", text, x: 20, y: 25, width: 60, height: 22, rotation: 0, fontFamily: "Arial", fontSize: 40, bold: false, italic: false, underline: false, textColor: "#222222", textAlign: "center", ...options };
+      }
+      function imageBlock(source, sourceType = "device") {
+        return { id: uid("block"), type: "image", source, sourceType, x: 25, y: 20, width: 50, height: 55 };
+      }
+      function normalizeBlock(block = {}) {
+        if (block.type === "image") return { id: block.id || uid("block"), type: "image", source: block.source || block.src || "", sourceType: block.sourceType || (String(block.source || "").startsWith("presentation-backgrounds/") ? "app" : "device"), x: clamp(block.x ?? 25, 0, 97), y: clamp(block.y ?? 20, 0, 96), width: clamp(block.width ?? 50, 3, 100), height: clamp(block.height ?? 55, 4, 100) };
+        return { id: block.id || uid("block"), type: "text", text: String(block.text || ""), x: clamp(block.x ?? 20, 0, 97), y: clamp(block.y ?? 25, 0, 96), width: clamp(block.width ?? 60, 3, 100), height: clamp(block.height ?? 22, 4, 100), rotation: ((Number(block.rotation) || 0) % 360 + 540) % 360 - 180, fontFamily: fonts.includes(block.fontFamily) ? block.fontFamily : "Arial", fontSize: clamp(block.fontSize || 40, 8, 160), bold: Boolean(block.bold), italic: !block.bold && Boolean(block.italic), underline: !block.bold && !block.italic && Boolean(block.underline), textColor: block.textColor || "#222222", textAlign: ["left", "center", "right"].includes(block.textAlign) ? block.textAlign : "center" };
+      }
+      function normalizeSlide(slide = {}) {
+        let blocks = Array.isArray(slide.blocks) ? slide.blocks.map(normalizeBlock).filter(block => block.type !== "image" || block.source) : [];
+        const legacyTitle = String(slide.title || "").trim();
+        const legacySubtitle = String(slide.subtitle || "").trim();
+        const legacyColor = slide.backgroundMode === "plain" || !slide.backgroundImage ? "#222222" : "#ffffff";
+        const migratedHtml = [legacyTitle ? `<div style="font-size:150%;font-weight:700">${escapeMainText(legacyTitle)}</div>` : "", legacySubtitle ? `<div style="font-size:94%;margin-top:.4em">${escapeMainText(legacySubtitle)}</div>` : ""].filter(Boolean).join("");
+        const mainText = { schemaVersion: slide.mainText?.editorState ? 2 : 1, editor: slide.mainText?.editorState ? "lexical" : "html", editorState: slide.mainText?.editorState || null, html: String(slide.mainText?.html || migratedHtml).replace(/\u200B/g, ""), defaultFontFamily: slide.mainText?.defaultFontFamily || "Arial", defaultFontSize: clamp(slide.mainText?.defaultFontSize || 32, 8, 160), defaultTextColor: slide.mainText?.defaultTextColor || legacyColor, defaultTextAlign: ["left", "center", "right"].includes(slide.mainText?.defaultTextAlign) ? slide.mainText.defaultTextAlign : (slide.alignment || "left") };
+        if (!slide.mainText && (legacyTitle || legacySubtitle)) blocks = blocks.filter(block => block.type !== "text" || ![legacyTitle, legacySubtitle].includes(String(block.text || "").trim()));
+        return { id: slide.id || uid("slide"), type: "visual", title: legacyTitle, subtitle: legacySubtitle, alignment: slide.alignment || "center", backgroundMode: slide.backgroundImage ? "image" : "color", backgroundColor: slide.backgroundColor || (slide.backgroundMode === "plain" ? "#ffffff" : "#11100e"), backgroundImage: slide.backgroundImage || "", backgroundImageSource: slide.backgroundImageSource || (String(slide.backgroundImage || "").startsWith("presentation-backgrounds/") ? "app" : slide.backgroundImage ? "device" : ""), overlay: clamp(slide.overlay || 0, 0, 80), mainText, style: { fontFamily: "", fontSize: "", bold: false, italic: false, underline: false, textColor: "", verticalPosition: "center", ...(slide.style || {}) }, blocks };
+      }
+      function load() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(KEY) || "{}");
+          data.presentations = Array.isArray(saved.presentations) ? saved.presentations.map(p => ({ id: p.id || uid("presentation"), name: String(p.name || "Presentación sin título"), createdAt: p.createdAt || new Date().toISOString(), updatedAt: p.updatedAt || p.createdAt || new Date().toISOString(), slides: Array.isArray(p.slides) ? p.slides.map(normalizeSlide) : [] })) : [];
+          data.activePresentationId = saved.activePresentationId || null;
+        } catch { data.presentations = []; data.activePresentationId = null; }
+      }
+      function activePresentation() { return data.presentations.find(p => p.id === data.activePresentationId) || null; }
+      function activeSlide() { const p = activePresentation(); return p?.slides.find(s => s.id === p.activeSlideId) || p?.slides[0] || null; }
+      function selectedBlock() { return activeSlide()?.blocks.find(block => block.id === selectedBlockId) || null; }
+      function save(showMessage = false) {
+        snapshotActiveMainText();
+        const p = activePresentation(); if (p) p.updatedAt = new Date().toISOString();
+        try { localStorage.setItem(KEY, JSON.stringify(data)); if (showMessage) showToast("Presentación guardada"); return true; }
+        catch { showToast("No hay espacio suficiente para guardar. Usa imágenes más pequeñas"); return false; }
+      }
+
+      function openHome() { load(); v.myPresentationsView.hidden = false; v.myPresentationsHome.hidden = false; v.myPresentationEditor.hidden = true; document.body.style.overflow = "hidden"; renderPresentationList(); }
+      function closeView() { destroyActiveMainText(true); v.myPresentationsView.hidden = true; document.body.style.overflow = ""; closePopovers(); }
+      function renderPresentationList() {
+        v.myPresentationsList.innerHTML = "";
+        if (!data.presentations.length) { v.myPresentationsList.innerHTML = "<div class='empty'><strong>Todavía no hay presentaciones.</strong><br>Crea una y comienza directamente.</div>"; return; }
+        data.presentations.slice().sort((a,b) => String(b.updatedAt).localeCompare(String(a.updatedAt))).forEach(p => {
+          const card = document.createElement("article"); card.className = "my-presentation-card";
+          const info = document.createElement("div"); const strong = document.createElement("strong"); strong.textContent = p.name;
+          const small = document.createElement("small"); small.textContent = `${p.slides.length} diapositiva${p.slides.length === 1 ? "" : "s"}`; info.append(strong, small);
+          const button = document.createElement("button"); button.type = "button"; button.textContent = "Editar"; button.addEventListener("click", () => openEditor(p.id));
+          card.append(info, button); v.myPresentationsList.append(card);
+        });
+      }
+      function createPresentation() {
+        const now = new Date().toISOString(); const slide = defaultSlide();
+        const p = { id: uid("presentation"), name: "Presentación sin título", createdAt: now, updatedAt: now, slides: [slide], activeSlideId: slide.id };
+        data.presentations.push(p); data.activePresentationId = p.id; save(); openEditor(p.id);
+      }
+      function openEditor(id) {
+        const p = data.presentations.find(item => item.id === id); if (!p) return;
+        data.activePresentationId = id; if (!p.slides.length) p.slides.push(defaultSlide());
+        if (!p.slides.some(s => s.id === p.activeSlideId)) p.activeSlideId = p.slides[0].id;
+        selectedBlockId = null; v.myPresentationsHome.hidden = true; v.myPresentationEditor.hidden = false; v.myPresentationName.value = p.name || "Presentación sin título"; renderAll(); save();
+      }
+      function backToList() { destroyActiveMainText(true); save(); selectedBlockId = null; v.myPresentationEditor.hidden = true; v.myPresentationsHome.hidden = false; renderPresentationList(); }
+
+      function applySlideBackground(container, slide) {
+        container.style.backgroundColor = slide?.backgroundColor || "#ffffff";
+        container.style.backgroundImage = slide?.backgroundImage ? `url("${slide.backgroundImage}")` : "";
+        container.style.setProperty("--visual-overlay", String((slide?.backgroundImage ? slide.overlay : 0) / 100));
+      }
+      function styleBlockElement(element, block) {
+        element.style.left = `${block.x}%`; element.style.top = `${block.y}%`; element.style.width = `${block.width}%`; element.style.height = `${block.height}%`;
+        if (block.type === "text") { element.style.fontFamily = block.fontFamily; element.style.fontSize = `${block.fontSize / 9.6}cqw`; element.style.fontWeight = block.bold ? "700" : "400"; element.style.fontStyle = block.italic ? "italic" : "normal"; element.style.textDecoration = block.underline ? "underline" : "none"; element.style.color = block.textColor; element.style.textAlign = block.textAlign; element.style.transform = `rotate(${Number(block.rotation) || 0}deg)`; }
+      }
+      function createBlockElement(block, interactive = true) {
+        const isEditing = interactive && block.type === "text" && block.id === editingBlockId;
+        const element = document.createElement("div"); element.className = `visual-object visual-object-${block.type}${interactive && block.id === selectedBlockId ? " selected" : ""}${isEditing ? " editing" : ""}`; element.dataset.blockId = block.id; styleBlockElement(element, block);
+        if (block.type === "text") {
+          element.textContent = block.text; element.contentEditable = isEditing ? "true" : "false"; element.spellcheck = true;
+          if (interactive) {
+            element.addEventListener("input", () => { block.text = element.innerText; save(); renderSlides(); });
+            element.addEventListener("blur", () => exitBlockEdit(block, element));
+            element.addEventListener("dblclick", event => { event.stopPropagation(); enterBlockEdit(block, element); });
+          }
+        } else { const image = document.createElement("img"); image.src = block.source; image.alt = ""; element.append(image); }
+        if (interactive) {
+          if (block.type === "image") element.addEventListener("pointerdown", event => beginMove(event, block));
+          element.addEventListener("click", event => { event.stopPropagation(); if (block.type === "text" && selectedBlockId === block.id) enterBlockEdit(block, element); else selectBlock(block.id); });
+          if (block.type === "text") {
+            const moveHandle = document.createElement("span"); moveHandle.className = "visual-move-handle"; moveHandle.title = "Mover"; moveHandle.addEventListener("pointerdown", event => beginMove(event, block)); element.append(moveHandle);
+            const rotateHandle = document.createElement("span"); rotateHandle.className = "visual-rotate-handle"; rotateHandle.title = "Girar"; rotateHandle.addEventListener("pointerdown", event => beginRotate(event, block)); element.append(rotateHandle);
+          }
+          const handle = document.createElement("span"); handle.className = "visual-resize-handle"; handle.addEventListener("pointerdown", event => beginResize(event, block)); element.append(handle);
+        }
+        return element;
+      }
+      function applyMainTextSnapshot(slide, snapshot) {
+        if (!slide?.mainText || !snapshot) return;
+        slide.mainText.schemaVersion = 2;
+        slide.mainText.editor = "lexical";
+        slide.mainText.editorState = snapshot.editorState;
+        slide.mainText.html = snapshot.html;
+      }
+      function snapshotActiveMainText() {
+        const slide = activePresentation()?.slides.find(item => item.id === lexicalSlideId);
+        if (slide && lexicalMainText) applyMainTextSnapshot(slide, lexicalMainText.snapshot());
+      }
+      function queueMainTextSave() {
+        clearTimeout(mainTextSaveTimer);
+        mainTextSaveTimer = setTimeout(() => { mainTextSaveTimer = null; save(); renderSlides(); }, 450);
+      }
+      function destroyActiveMainText(persist = true) {
+        clearTimeout(mainTextSaveTimer); mainTextSaveTimer = null;
+        if (!lexicalMainText) return;
+        const slide = activePresentation()?.slides.find(item => item.id === lexicalSlideId);
+        const instance = lexicalMainText;
+        lexicalMainText = null; lexicalSlideId = null;
+        if (slide) applyMainTextSnapshot(slide, instance.destroy()); else instance.destroy();
+        if (persist) save();
+      }
+      function applyLexicalToolbar(state) {
+        if (!editingMainText || !state) return;
+        v.myFontFamily.value = fonts.includes(state.fontFamily) ? state.fontFamily : activeSlide().mainText.defaultFontFamily;
+        const toolbarSize = Math.round(clamp(state.fontSize || activeSlide().mainText.defaultFontSize, 8, 160));
+        lastValidFontSize = toolbarSize;
+        if (!(fontSizeInputFocused && fontSizeInputDraft)) v.myFontSize.value = toolbarSize;
+        v.myTextColor.value = rgbToHex(state.color, activeSlide().mainText.defaultTextColor);
+        [[v.myBold,state.bold],[v.myItalic,state.italic],[v.myUnderline,state.underline]].forEach(([button,active]) => button.classList.toggle("active", Boolean(active)));
+        [v.myAlignLeft,v.myAlignCenter,v.myAlignRight].forEach(button => button.classList.remove("active"));
+        ({left:v.myAlignLeft,center:v.myAlignCenter,right:v.myAlignRight}[state.alignment] || v.myAlignLeft).classList.add("active");
+      }
+      function mountMainText(element, slide) {
+        if (!window.HimnarioMainText) { showToast("No se pudo cargar el editor de texto"); return; }
+        lexicalSlideId = slide.id;
+        lexicalMainText = window.HimnarioMainText.create({
+          rootElement: element,
+          defaults: slide.mainText,
+          editorState: slide.mainText.editorState,
+          html: slide.mainText.html,
+          onReady: snapshot => { applyMainTextSnapshot(slide, snapshot); queueMainTextSave(); renderSlides(); },
+          onChange: snapshot => { applyMainTextSnapshot(slide, snapshot); queueMainTextSave(); },
+          onToolbar: applyLexicalToolbar,
+          onHistory: status => { lexicalHistoryStatus = status; updateUndoRedoButtons(); }
+        });
+      }
+      function createMainTextElement(slide, interactive = true) {
+        const element = document.createElement("div");
+        element.className = "visual-main-text";
+        if (!interactive) element.innerHTML = slide.mainText?.html || "";
+        element.contentEditable = interactive ? "true" : "false";
+        element.spellcheck = true;
+        element.style.fontFamily = slide.mainText.defaultFontFamily;
+        element.style.fontSize = `${slide.mainText.defaultFontSize / 9.6}cqw`;
+        element.style.color = slide.mainText.defaultTextColor;
+        element.style.textAlign = slide.mainText.defaultTextAlign;
+        if (interactive) {
+          element.addEventListener("focus", () => { editingMainText = true; editingBlockId = null; selectedBlockId = null; requestAnimationFrame(updateToolbar); });
+          element.addEventListener("click", event => { event.stopPropagation(); editingMainText = true; editingBlockId = null; selectedBlockId = null; requestAnimationFrame(updateToolbar); });
+        }
+        return element;
+      }
+      function renderCanvas() {
+        destroyActiveMainText(true);
+        const slide = activeSlide(); editingMainText = false; v.mySlideCanvas.innerHTML = ""; if (!slide) return;
+        applySlideBackground(v.mySlideCanvas, slide); const mainElement=createMainTextElement(slide, true);v.mySlideCanvas.append(mainElement);slide.blocks.forEach(block => v.mySlideCanvas.append(createBlockElement(block, true)));mountMainText(mainElement,slide);updateToolbar();
+      }
+      function renderSlideInto(container, slide) { container.innerHTML = ""; applySlideBackground(container, slide); container.append(createMainTextElement(slide, false)); slide.blocks.forEach(block => container.append(createBlockElement(block, false))); }
+      function renderSlides() {
+        const p = activePresentation(); v.mySlidesList.innerHTML = ""; if (!p) return;
+        p.slides.forEach((slide, index) => {
+          const row = document.createElement("article"); row.className = `my-slide-row${slide.id === p.activeSlideId ? " selected" : ""}`;
+          const select = document.createElement("button"); select.type = "button"; select.className = "my-slide-select"; const number = document.createElement("span"); number.className = "my-slide-number"; number.textContent = index + 1;
+          const thumb = document.createElement("span"); thumb.className = "my-slide-thumb"; renderSlideInto(thumb, slide); select.append(number, thumb); select.addEventListener("click", () => { p.activeSlideId = slide.id; selectedBlockId = null; renderAll(); });
+          const actions = document.createElement("div"); actions.className = "my-slide-actions";
+          [["Duplicar", () => duplicateSlide(index)], ["Eliminar", () => deleteSlide(index)], ["Subir", () => moveSlide(index,-1)], ["Bajar", () => moveSlide(index,1)]].forEach(([label, fn], i) => { const button = document.createElement("button"); button.type="button"; button.textContent=label; button.disabled=(i===2&&index===0)||(i===3&&index===p.slides.length-1); button.addEventListener("click",fn); actions.append(button); });
+          row.append(select, actions); v.mySlidesList.append(row);
+        });
+      }
+      function renderAll() { renderSlides(); renderCanvas(); }
+
+      function selectBlock(id) { editingMainText = false; editingBlockId = null; selectedBlockId = id; renderCanvas(); }
+      function enterBlockEdit(block, element) {
+        if (!block || block.type !== "text") return;
+        editingMainText = false; editingBlockId = block.id; selectedBlockId = block.id;
+        element.classList.add("selected", "editing"); element.contentEditable = "true"; element.focus(); updateToolbar();
+      }
+      function exitBlockEdit(block, element) {
+        if (editingBlockId !== block.id) return;
+        block.text = element.innerText; editingBlockId = null; element.contentEditable = "false"; element.classList.remove("editing"); save(); renderSlides(); updateToolbar();
+      }
+      function updateUndoRedoButtons() {
+        const active = editingMainText && Boolean(lexicalMainText);
+        v.undoMyEdit.disabled = !active || !lexicalHistoryStatus.canUndo;
+        v.redoMyEdit.disabled = !active || !lexicalHistoryStatus.canRedo;
+      }
+      function updateToolbar() {
+        const block = selectedBlock(); const text = block?.type === "text"; const canFormat = text || editingMainText; v.myTextTools.style.opacity = canFormat || block ? "1" : ".55";
+        [v.myFontFamily,v.myFontSize,v.myBold,v.myItalic,v.myUnderline,v.myTextColor,v.myAlignLeft,v.myAlignCenter,v.myAlignRight].forEach(control => control.disabled = !canFormat);
+        v.duplicateMyObject.disabled = !block; v.deleteMyObject.disabled = !block;
+        updateUndoRedoButtons();
+        if (editingMainText) { lexicalMainText?.readToolbar(); return; }
+        if (!text) return;
+        v.myFontFamily.value = block.fontFamily; v.myFontSize.value = block.fontSize; v.myTextColor.value = block.textColor;
+        [v.myBold,v.myItalic,v.myUnderline].forEach(button=>button.classList.remove("active"));
+        if (block.bold) v.myBold.classList.add("active"); else if (block.italic) v.myItalic.classList.add("active"); else if (block.underline) v.myUnderline.classList.add("active");
+        [v.myAlignLeft,v.myAlignCenter,v.myAlignRight].forEach(button=>button.classList.remove("active"));
+        ({left:v.myAlignLeft,center:v.myAlignCenter,right:v.myAlignRight}[block.textAlign] || v.myAlignLeft).classList.add("active");
+      }
+      function rgbToHex(value, fallback) { const match=String(value||"").match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);if(!match)return /^#[0-9a-f]{6}$/i.test(String(value||""))?value:fallback;return `#${[match[1],match[2],match[3]].map(part=>Number(part).toString(16).padStart(2,"0")).join("")}`; }
+      function updateTextBlock(patch) { const block = selectedBlock(); if (!block || block.type !== "text") return; Object.assign(block, patch); save(); renderAll(); }
+      function addText() { const slide = activeSlide(); if (!slide) return; const block = textBlock(); slide.blocks.push(block); editingMainText = false; selectedBlockId = block.id; save(); renderAll(); const element=v.mySlideCanvas.querySelector(`[data-block-id="${CSS.escape(block.id)}"]`); if(element){ enterBlockEdit(block, element); const range=document.createRange(); range.selectNodeContents(element); const selection=window.getSelection(); selection.removeAllRanges(); selection.addRange(range); } }
+      function deleteObject() { const slide=activeSlide(); if(!slide||!selectedBlockId)return; slide.blocks=slide.blocks.filter(b=>b.id!==selectedBlockId); selectedBlockId=null; save(); renderAll(); }
+      function duplicateObject() { const slide=activeSlide(), block=selectedBlock(); if(!slide||!block)return; const copy=normalizeBlock({...block,id:uid("block"),x:clamp(block.x+3,0,97),y:clamp(block.y+3,0,96)}); slide.blocks.push(copy); selectedBlockId=copy.id; save(); renderAll(); }
+
+      function pointerMetrics(event, block) { const rect=v.mySlideCanvas.getBoundingClientRect(); return { startX:event.clientX,startY:event.clientY,rect,original:{x:block.x,y:block.y,width:block.width,height:block.height,rotation:Number(block.rotation)||0},block }; }
+      function markBlockSelected(id) { editingMainText = false; editingBlockId = null; v.mySlideCanvas.querySelectorAll(".visual-object").forEach(element => { element.classList.toggle("selected", element.dataset.blockId === id); element.classList.remove("editing"); if (element.classList.contains("visual-object-text")) element.contentEditable = "false"; }); updateToolbar(); }
+      function beginMove(event, block) { event.preventDefault();event.stopPropagation();selectedBlockId=block.id;markBlockSelected(block.id);interaction={type:"move",...pointerMetrics(event,block)}; event.currentTarget.setPointerCapture?.(event.pointerId); }
+      function beginResize(event, block) { event.preventDefault();event.stopPropagation();selectedBlockId=block.id;markBlockSelected(block.id);interaction={type:"resize",...pointerMetrics(event,block)};event.currentTarget.setPointerCapture?.(event.pointerId); }
+      function beginRotate(event, block) { event.preventDefault();event.stopPropagation();selectedBlockId=block.id;markBlockSelected(block.id);const element=v.mySlideCanvas.querySelector(`[data-block-id="${CSS.escape(block.id)}"]`),bounds=element.getBoundingClientRect(),centerX=bounds.left+bounds.width/2,centerY=bounds.top+bounds.height/2;interaction={type:"rotate",...pointerMetrics(event,block),centerX,centerY,startAngle:Math.atan2(event.clientY-centerY,event.clientX-centerX)};event.currentTarget.setPointerCapture?.(event.pointerId); }
+      function handlePointerMove(event) { if(!interaction)return; const dx=(event.clientX-interaction.startX)/interaction.rect.width*100,dy=(event.clientY-interaction.startY)/interaction.rect.height*100,b=interaction.block,o=interaction.original; if(interaction.type==="move"){b.x=clamp(o.x+dx,0,100-b.width);b.y=clamp(o.y+dy,0,100-b.height);}else if(interaction.type==="resize"){b.width=clamp(o.width+dx,3,100-b.x);b.height=clamp(o.height+dy,4,100-b.y);}else{const angle=Math.atan2(event.clientY-interaction.centerY,event.clientX-interaction.centerX);b.rotation=((o.rotation+(angle-interaction.startAngle)*180/Math.PI)%360+540)%360-180;} const element=v.mySlideCanvas.querySelector(`[data-block-id="${CSS.escape(b.id)}"]`);if(element)styleBlockElement(element,b); }
+      function endPointer() { if(!interaction)return;interaction=null;save();renderSlides();updateToolbar(); }
+
+      function addSlide() { const p=activePresentation();if(!p)return;const slide=defaultSlide();p.slides.push(slide);p.activeSlideId=slide.id;selectedBlockId=null;save();renderAll(); }
+      function duplicateSlide(index) { const p=activePresentation(),source=p?.slides[index];if(!source)return;const copy=normalizeSlide({...source,id:uid("slide"),blocks:source.blocks.map(b=>({...b,id:uid("block")}))});p.slides.splice(index+1,0,copy);p.activeSlideId=copy.id;selectedBlockId=null;save();renderAll(); }
+      function deleteSlide(index) { const p=activePresentation();if(!p)return;if(p.slides.length===1){showToast("La presentación debe conservar una diapositiva");return;}if(!window.confirm("¿Eliminar esta diapositiva?"))return;p.slides.splice(index,1);p.activeSlideId=p.slides[Math.min(index,p.slides.length-1)].id;selectedBlockId=null;save();renderAll(); }
+      function moveSlide(index,direction) { const p=activePresentation(),next=index+direction;if(!p||next<0||next>=p.slides.length)return;[p.slides[index],p.slides[next]]=[p.slides[next],p.slides[index]];save();renderSlides(); }
+
+      function closePopovers() { v.myImageModal.hidden=true;v.myBackgroundModal.hidden=true;v.myObjectLibrary.hidden=true;v.myBackgroundLibrary.hidden=true; }
+      function renderLibrary(tabs,grid,onChoose) { tabs.innerHTML="";grid.innerHTML="";Object.entries(WORSHIP_IMAGE_CATEGORIES).forEach(([key,config])=>{const tab=document.createElement("button");tab.type="button";tab.textContent=config.label;tab.className=key===libraryCategory?"primary":"";tab.addEventListener("click",()=>{libraryCategory=key;renderLibrary(tabs,grid,onChoose);});tabs.append(tab);});WORSHIP_IMAGE_CATEGORIES[libraryCategory].images.forEach((src,index)=>{const button=document.createElement("button");button.type="button";button.setAttribute("aria-label",`${WORSHIP_IMAGE_CATEGORIES[libraryCategory].label} ${index+1}`);button.innerHTML=`<img alt="" src="${src}">`;button.addEventListener("click",()=>onChoose(src));grid.append(button);}); }
+      function openImageModal() { v.myImageModal.hidden=false;v.myObjectLibrary.hidden=true; }
+      function chooseObjectApp() { v.myObjectLibrary.hidden=false;renderLibrary(v.myObjectLibraryTabs,v.myObjectImageGrid,src=>{const slide=activeSlide();const block=imageBlock(src,"app");slide.blocks.push(block);selectedBlockId=block.id;closePopovers();save();renderAll();}); }
+      async function fileAsDataUrl(file) { return readFileAsDataUrl(file); }
+      async function addObjectDevice(event) { const file=event.target.files?.[0];if(!file)return;try{const source=await fileAsDataUrl(file);const block=imageBlock(source,"device");activeSlide().blocks.push(block);selectedBlockId=block.id;closePopovers();save();renderAll();}catch{showToast("No se pudo cargar la imagen");}event.target.value=""; }
+      function openBackgroundModal() { const slide=activeSlide();if(!slide)return;v.myBackgroundColor.value=slide.backgroundColor||"#ffffff";v.myBackgroundOverlay.value=slide.overlay||0;v.myBackgroundOverlayValue.textContent=`${slide.overlay||0}%`;v.myBackgroundModal.hidden=false;v.myBackgroundLibrary.hidden=true; }
+      function chooseBackgroundApp() { v.myBackgroundLibrary.hidden=false;renderLibrary(v.myBackgroundLibraryTabs,v.myBackgroundImageGrid,src=>{const slide=activeSlide();slide.backgroundImage=src;slide.backgroundImageSource="app";save();renderAll();closePopovers();}); }
+      async function setBackgroundDevice(event) { const file=event.target.files?.[0];if(!file)return;try{const slide=activeSlide();slide.backgroundImage=await fileAsDataUrl(file);slide.backgroundImageSource="device";save();renderAll();closePopovers();}catch{showToast("No se pudo cargar el fondo");}event.target.value=""; }
+
+      function startPresentation() { const p=activePresentation();if(!p?.slides.length)return;presentationIndex=0;v.myPresentStage.classList.add("open");document.body.style.overflow="hidden";renderPresented();v.myPresentStage.requestFullscreen?.().catch(()=>{}); }
+      function renderPresented() { const p=activePresentation(),slide=p?.slides[presentationIndex];if(!slide)return;renderSlideInto(v.myPresentContent,slide);v.myPresentCount.textContent=`${presentationIndex+1}/${p.slides.length}`;v.myPresentPrev.disabled=presentationIndex===0;v.myPresentNext.disabled=presentationIndex===p.slides.length-1; }
+      function movePresentation(direction) { const p=activePresentation(),next=presentationIndex+direction;if(!p||next<0||next>=p.slides.length)return;presentationIndex=next;renderPresented(); }
+      function exitPresentation() { const done=()=>{v.myPresentStage.classList.remove("open");document.body.style.overflow="hidden";};if(document.fullscreenElement===v.myPresentStage)document.exitFullscreen().catch(()=>{}).finally(done);else done(); }
+
+      v.newMyPresentation.addEventListener("click",createPresentation);v.backToMyPresentations.addEventListener("click",backToList);v.saveMyPresentation.addEventListener("click",()=>save(true));v.myPresentationName.addEventListener("input",()=>{const p=activePresentation();if(p){p.name=v.myPresentationName.value||"Presentación sin título";save();}});
+      v.addMyText.addEventListener("click",addText);v.addMyImage.addEventListener("click",openImageModal);v.openMyBackground.addEventListener("click",openBackgroundModal);v.addMySlide.addEventListener("click",addSlide);v.deleteMyObject.addEventListener("click",deleteObject);v.duplicateMyObject.addEventListener("click",duplicateObject);
+      v.undoMyEdit.addEventListener("click",()=>{if(editingMainText)lexicalMainText?.undo();});v.redoMyEdit.addEventListener("click",()=>{if(editingMainText)lexicalMainText?.redo();});
+      v.myFontFamily.addEventListener("change",()=>{if(editingMainText)lexicalMainText?.setFontFamily(v.myFontFamily.value);else updateTextBlock({fontFamily:v.myFontFamily.value});});
+      function commitFontSizeInput(force = false) {
+        const raw = String(v.myFontSize.value || "").trim();
+        const numeric = Number(raw);
+        if (!raw || !Number.isFinite(numeric) || numeric < 8 || numeric > 160) {
+          v.myFontSize.value = lastValidFontSize;
+          fontSizeInputDraft = false;
+          return false;
+        }
+        const size = Math.round(numeric);
+        const changed = size !== lastValidFontSize;
+        v.myFontSize.value = size;
+        fontSizeInputDraft = false;
+        if (!force && !changed) return true;
+        lastValidFontSize = size;
+        if (editingMainText) lexicalMainText?.setFontSize(size); else updateTextBlock({fontSize:size});
+        return true;
+      }
+      v.myFontSize.addEventListener("focus", () => {
+        fontSizeInputFocused = true;
+        const current = Number(v.myFontSize.value);
+        if (Number.isFinite(current) && current >= 8 && current <= 160) lastValidFontSize = Math.round(current);
+      });
+      v.myFontSize.addEventListener("beforeinput", event => {
+        if (event.inputType?.startsWith("insert") || event.inputType?.startsWith("delete")) fontSizeInputDraft = true;
+      });
+      v.myFontSize.addEventListener("input", () => {
+        if (!fontSizeInputDraft) commitFontSizeInput();
+      });
+      v.myFontSize.addEventListener("keydown", event => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          commitFontSizeInput(true);
+          return;
+        }
+        if (event.key === "Tab") {
+          commitFontSizeInput(true);
+          return;
+        }
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+          event.preventDefault();
+          const current = Number(v.myFontSize.value);
+          const base = Number.isFinite(current) && current >= 8 && current <= 160 ? Math.round(current) : lastValidFontSize;
+          v.myFontSize.value = clamp(base + (event.key === "ArrowUp" ? 1 : -1), 8, 160);
+          fontSizeInputDraft = false;
+          commitFontSizeInput(true);
+        }
+      });
+      v.myFontSize.addEventListener("change", () => commitFontSizeInput());
+      v.myFontSize.addEventListener("blur", () => {
+        fontSizeInputFocused = false;
+        commitFontSizeInput();
+      });
+      v.myBold.addEventListener("click",()=>{const b=selectedBlock();if(editingMainText)lexicalMainText?.toggleFormat("bold");else if(b)updateTextBlock({bold:!b.bold,italic:false,underline:false});});
+      v.myItalic.addEventListener("click",()=>{const b=selectedBlock();if(editingMainText)lexicalMainText?.toggleFormat("italic");else if(b)updateTextBlock({bold:false,italic:!b.italic,underline:false});});
+      v.myUnderline.addEventListener("click",()=>{const b=selectedBlock();if(editingMainText)lexicalMainText?.toggleFormat("underline");else if(b)updateTextBlock({bold:false,italic:false,underline:!b.underline});});
+      v.myTextColor.addEventListener("input",()=>{if(editingMainText)lexicalMainText?.setColor(v.myTextColor.value);else updateTextBlock({textColor:v.myTextColor.value});});
+      v.myAlignLeft.addEventListener("click",()=>{if(editingMainText)lexicalMainText?.setAlignment("left");else updateTextBlock({textAlign:"left"});});
+      v.myAlignCenter.addEventListener("click",()=>{if(editingMainText)lexicalMainText?.setAlignment("center");else updateTextBlock({textAlign:"center"});});
+      v.myAlignRight.addEventListener("click",()=>{if(editingMainText)lexicalMainText?.setAlignment("right");else updateTextBlock({textAlign:"right"});});
+      [v.undoMyEdit,v.redoMyEdit,v.myBold,v.myItalic,v.myUnderline,v.myAlignLeft,v.myAlignCenter,v.myAlignRight].forEach(button=>button.addEventListener("mousedown",event=>{if(editingMainText)event.preventDefault();}));
+      v.mySlideCanvas.addEventListener("click",event=>{if(event.target===v.mySlideCanvas){selectedBlockId=null;editingBlockId=null;editingMainText=true;lexicalMainText?.focus();updateToolbar();}});window.addEventListener("pointermove",handlePointerMove);window.addEventListener("pointerup",endPointer);
+      v.closeMyImageModal.addEventListener("click",closePopovers);v.myImageModal.addEventListener("click",event=>{if(event.target===v.myImageModal)closePopovers();});v.chooseMyObjectDeviceImage.addEventListener("click",()=>v.myObjectImageInput.click());v.chooseMyObjectAppImage.addEventListener("click",chooseObjectApp);v.myObjectImageInput.addEventListener("change",addObjectDevice);
+      v.closeMyBackgroundModal.addEventListener("click",closePopovers);v.myBackgroundModal.addEventListener("click",event=>{if(event.target===v.myBackgroundModal)closePopovers();});v.chooseMyBackgroundDevice.addEventListener("click",()=>v.myBackgroundImageInput.click());v.chooseMyBackgroundApp.addEventListener("click",chooseBackgroundApp);v.myBackgroundImageInput.addEventListener("change",setBackgroundDevice);v.clearMyBackgroundImage.addEventListener("click",()=>{const s=activeSlide();s.backgroundImage="";s.backgroundImageSource="";s.overlay=0;save();renderAll();closePopovers();});v.myBackgroundColor.addEventListener("input",()=>{const s=activeSlide();s.backgroundColor=v.myBackgroundColor.value;save();renderAll();});v.myBackgroundOverlay.addEventListener("input",()=>{const s=activeSlide();s.overlay=clamp(v.myBackgroundOverlay.value,0,80);v.myBackgroundOverlayValue.textContent=`${s.overlay}%`;save();renderAll();});
+      v.presentMyPresentation.addEventListener("click",startPresentation);v.myPresentPrev.addEventListener("click",()=>movePresentation(-1));v.myPresentNext.addEventListener("click",()=>movePresentation(1));v.myPresentExit.addEventListener("click",exitPresentation);
+      window.addEventListener("keydown",event=>{if(v.myPresentStage.classList.contains("open")){if(event.key==="ArrowRight"||event.key===" ")movePresentation(1);if(event.key==="ArrowLeft")movePresentation(-1);return;}if(!v.myPresentationsView.hidden&&(event.key==="Delete"||event.key==="Backspace")&&selectedBlockId&&!event.target.isContentEditable&&!/INPUT|TEXTAREA/.test(event.target.tagName)){event.preventDefault();deleteObject();}if(event.key==="Escape")closePopovers();});
+      load();
+      return { openHome, closeView };
+    })();
+
+    const visualMainNavigation = {
+      toggle: document.getElementById("mainMenuToggle"), root: document.getElementById("mainNavigation"), backdrop: document.getElementById("mainNavigationBackdrop"), close: document.getElementById("mainNavigationClose"), home: document.getElementById("mainNavigationHome"), worship: document.getElementById("mainNavigationWorship"), myPresentations: document.getElementById("mainNavigationMyPresentations")
+    };
+    function setVisualMainNavigationOpen(open) { const yes=Boolean(open);visualMainNavigation.root.classList.toggle("open",yes);visualMainNavigation.root.setAttribute("aria-hidden",String(!yes));visualMainNavigation.toggle.setAttribute("aria-expanded",String(yes));document.body.classList.toggle("main-navigation-open",yes);if(yes)visualMainNavigation.close.focus(); }
+    function closeVisualMainNavigation(){setVisualMainNavigationOpen(false);}
+    visualMainNavigation.toggle.addEventListener("click",()=>setVisualMainNavigationOpen(!visualMainNavigation.root.classList.contains("open")));
+    visualMainNavigation.close.addEventListener("click",closeVisualMainNavigation);visualMainNavigation.backdrop.addEventListener("click",closeVisualMainNavigation);
+    visualMainNavigation.home.addEventListener("click",()=>{closeVisualMainNavigation();visualEditor.closeView();state.presentationMode=false;state.selectedId=null;state.query="";el.search.value="";render();window.scrollTo({top:0,left:0,behavior:"auto"});});
+    visualMainNavigation.worship.addEventListener("click",()=>{closeVisualMainNavigation();visualEditor.closeView();openPresentationView();});
+    visualMainNavigation.myPresentations.addEventListener("click",()=>{closeVisualMainNavigation();if(state.presentationMode)closePresentationView();visualEditor.openHome();});
+    window.addEventListener("keydown",event=>{if(event.key==="Escape"&&visualMainNavigation.root.classList.contains("open"))closeVisualMainNavigation();});
 
     initializeApp();
   </script>
